@@ -1,0 +1,66 @@
+---
+title: "Bayesian Analysis Project"
+author: "Maxime Jurado and Mathieu Marauri"
+date: "Tuesday, May 26, 2015"
+output:
+  pdf_document:
+    fig_caption: yes
+    keep_tex: no
+    number_sections: yes
+    toc: yes
+header-includes: \usepackage{float}
+---
+
+```{r initial_chunk, echo = FALSE, warning = FALSE, message = FALSE}
+library("knitr")
+library("ggplot2")
+library("xtable")
+library("dplyr")
+library("gridExtra")
+library("xlsx")
+library("xtable")
+opts_chunk$set(echo = FALSE, eval = TRUE, warning = FALSE, message = FALSE)
+options("xtable.comment" = FALSE)
+options("xtable.table.placement" = "H")
+```
+
+```{r data}
+data <- read.xlsx("Data/data.xlsx",sheetIndex=1,header=TRUE)
+data <- subset(data,time!="TP")
+data1 <- data[rep(1:nrow(data),each=5),]
+data2 <- data.frame(data$X1,data$X2,data$X3,data$X4,data$X5)
+data3 <- data.frame(data1$id,data1$time,data1$sexe)
+vec <- NULL
+for(i in 1:nrow(data2)){
+  vec1 <- data2[i,]
+  vec <- c(vec,t(vec1))
+}
+vec <- as.data.frame(vec)
+data4 <- data.frame(data3,vec)
+cat <- c(rep(c(1,2,3,4,5),132))
+data <- data.frame(data4,cat)
+data$time <- factor(data$CE, levels = c("TNC", "TC"))
+colnames(data) <- c("id","time","sexe","salary","spc")
+attach(data)
+salary<-as.numeric(salary)
+```
+
+# Abstract
+
+# Introduction
+
+# Dataset
+
+# Statistical methods
+
+# Descriptive analysis
+
+# Bayesian model 
+
+# Bayesian model with random effects
+
+# COnclusion
+
+# Bibliographie
+
+# Appendix
