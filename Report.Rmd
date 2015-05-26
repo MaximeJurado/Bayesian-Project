@@ -48,6 +48,22 @@ salary<-as.numeric(salary)
 # Introduction
 
 # Dataset
+\label{dataset}
+
+The dataset comes from the *Institut National de la Statistique et des Etudes Economiques* or INSEE in France. It s the statistical instuitute of France. The dataset contains 33 sectors of activity that are identified by the *id* variable. The classification can be found in table \ref{indexSector}. 
+
+The variables reported in this study are listed below:
+
+* Time is an indicator which takes value 1 for a full-time work and 0 for a part-time work. _time_
+* Sexe is a binary variable with value 1 for male and 0 for female. _sexe_
+* Socio-Professional Category: it takes values between 1 and 5. Table \ref{indexCat} shows the classification. _spc_
+* Salary: it is the response variable. _salary_
+
+The _time_ variable is divided based on the contract
+
+The salary is the average gross income for an hour. For instance it can be the average income of female employees working full-time in the extractive industry.
+
+
 
 # Statistical methods
 
@@ -62,3 +78,9 @@ salary<-as.numeric(salary)
 # Bibliographie
 
 # Appendix
+
+## Classification tables
+
+TODO: add the tables with the label. 
+
+Reurn to section \ref{dataset} Dataset.
