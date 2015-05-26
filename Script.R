@@ -1,11 +1,11 @@
 # Packages ----------------------------------------------------------------
 
-#install.packages("xlsx")
-library(xlsx)
+library("xlsx")
+library("ggplot2")
 
 # Data --------------------------------------------------------------------
 
-data <- read.xlsx("Data/data.xslx",sheetIndex=1,header=TRUE)
+data <- read.xlsx("Data/data.xlsx",sheetIndex=1,header=TRUE)
 data <- subset(data,time!="TP")
 
 data1 <- data[rep(1:nrow(data),each=5),]
@@ -32,7 +32,8 @@ attach(data)
 
 salary<-as.numeric(salary)
 
+
 # Descriptive analysis ----------------------------------------------------
 
-boxplot(salary,data=data)
-lapply(data,class)
+
+
