@@ -1,0 +1,35 @@
+1-Agriculture, sylviculture et pêche - Agriculture, silviculture and fishing
+2-Industrie manufacturière, industries extractives et autres - Shaper industry, extractable industry
+3-Industries extractives, énergie, eau, gestion des déchets et dépollution - Extractable industry, energy, water, trash management and remediation
+4-Industries extractives - Extractable industry
+5-Production et distribution d'eau ; assainissement, gestion des déchets et dépollution - Water production and distribution; remediation, trash management
+6-Fabrication de denrées alimentaires, de boissons et de produits à base de tabac - Food, drink and tabacoo based production
+7-Fabrication d'équipements électriques, électroniques, informatiques ; fabrication de machines - Electric components, electronic and informatic manufacture
+8-Fabrication de matériels de transport - Transportation equipment manufacture
+9-Fabrication d'autres produits industriels - other industrial products
+10-Fabrication de textiles, industries de l'habillement, industrie du cuir et de la chaussure - Textile, clothing industry, leather and shoe industry
+11-Travail du bois, industries du papier et imprimerie - wood working, paper and printing industry
+12-Fabrication de produits en caoutchouc et en plastique ainsi que d'autres produits minéraux non métalliques - rubber and plastic materials and other non metallic products
+13-Métallurgie et fabrication de produits métalliques à l'exception des machines et des équipements - metalworking industry and production of metallic products except machine and equipments
+14-Autres industries manufacturières ; réparation et installation de machines et d'équipements -Other manufacture industry ; repair and installation of machines and equipments
+15-Construction - Construction
+16-Commerce de gros et de détail, transports, hébergement et restauration - Wholesale trade and retailling, transport, accomodation and restoration
+17-Commerce ; réparation d'automobiles et de motocycles - Trade ; automobile and motorcycle repairs
+18-Transports et entreposage - Transportation and stocking
+19-Hébergement et restauration - Accomodation and food service industry
+20-Services divers - Diverse services
+21-Information et communication - Information and communication
+22-Edition, audiovisuel et diffusion - Edition, audiovisual and diffusion
+23-Activités informatiques et services d'information - Computer activities and information services
+24-Activités financières et d'assurance - Financial and insurance activities
+25-Activités scientifiques et techniques ; services administratifs et de soutien - Scientific and tecnical activites ; administrative and support services
+26-Activités juridiques, comptables, de gestion, d'architecture, d'ingénierie, de contrôle et d'analyses techniques - legal, accounting, management, architecture, control and tecnical analysis activities
+27-Autres activités spécialisées, scientifiques et techniques - Other specialized activities, scientific and tecnical
+28-Activités de services administratifs et de soutien - Administrative services and support activities
+29-Autres activités de services - Other service activities
+30-Arts, spectacles et activités récréatives - Art and entertainment
+31-Autres activités de services - Other service activities 
+32-Administration publique, enseignement, santé et action sociale - Public administration, teaching, health and social action
+33-Hébergement médico-social et social et action sociale sans hébergement - Medico-social accomodation, social, and social action without accomodation
+
+	
