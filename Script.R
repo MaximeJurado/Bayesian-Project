@@ -36,4 +36,24 @@ salary<-as.numeric(salary)
 # Descriptive analysis ----------------------------------------------------
 
 
+boxplot(salary, data=data)
+boxplot(salary~time,data=data)
+boxplot(salary~sexe,data=data)
+boxplot(salary~spc,data=data)
 
+boxplot(salary~time+sexe+spc,data=data)
+
+?barplot
+
+dataH<-subset(data,sexe=="H")
+dataF<-subset(data,sexe=="F")
+
+s.mean<-mean(data$salary,na.rm=TRUE)
+s.mean.H<-mean(dataH$salary,na.rm=TRUE)
+s.mean.F<-mean(dataF$salary,na.rm = TRUE)
+
+?barplot
+barplot(c(s.mean,s.mean.H,s.mean.F),col=c(1,4,2),main = "Mean salary by gender", ylim=c(0,20) , ylab="Mean Salary",xlab="Gender")
+legend("bottom", c("Total","Male","Female")
+       , lty=c(1,1,1) , lwd=c(2,2,2), 
+       col=c(1,4,2))
