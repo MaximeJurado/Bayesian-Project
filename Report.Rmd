@@ -59,10 +59,7 @@ The variables reported in this study are listed below:
 * Socio-Professional Category: it takes values between 1 and 5. Table \ref{indexCat} shows the classification. _spc_
 * Salary: it is the response variable. _salary_
 
-The _time_ variable is divided based on the contract
-
 The salary is the average gross income for an hour. For instance it can be the average income of female employees working full-time in the extractive industry.
-
 
 
 # Statistical methods
