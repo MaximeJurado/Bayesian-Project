@@ -27,7 +27,6 @@ colnames(data) <- c("id","time","sexe","salary","spc")
 attach(data)
 salary<-as.numeric(salary)
 
-
 # Descriptive analysis ----------------------------------------------------
 
 theme <- theme(plot.title = element_text(size=16, face="bold"), axis.title.x = element_text(
@@ -43,15 +42,47 @@ ggplot(data, aes(factor(spc), salary)) + geom_boxplot(aes(fill = factor(time))) 
   theme + scale_fill_manual(name="Time", values=c("orange", "mediumpurple"), labels=c("0"="Part-time", 
   "1"="Full-time"))
 
-dataH<-subset(data,sexe=="H")
-dataF<-subset(data,sexe=="F")
+
+##
+dataH<-subset(data,sexe==1)
+dataF<-subset(data,sexe==0)
+dataTC<-subset(data,time==1)
+dataTNC<-subset(data,time==0)
+data.spc1<-subset(data,spc==1)
+data.spc2<-subset(data,spc==2)
+data.spc3<-subset(data,spc==3)
+data.spc4<-subset(data,spc==4)
+data.spc5<-subset(data,spc==5)
+
 
 s.mean<-mean(data$salary,na.rm=TRUE)
 s.mean.H<-mean(dataH$salary,na.rm=TRUE)
 s.mean.F<-mean(dataF$salary,na.rm = TRUE)
+s.mean.TC<-mean(dataTC$salary,na.rm = TRUE)
+s.mean.TNC<-mean(dataTNC$salary,na.rm = TRUE)
+s.mean.spc.1<-mean(data.spc1$salary,na.rm = TRUE)
+s.mean.spc.2<-mean(data.spc2$salary,na.rm = TRUE)
+s.mean.spc.3<-mean(data.spc3$salary,na.rm = TRUE)
+s.mean.spc.4<-mean(data.spc4$salary,na.rm = TRUE)
+s.mean.spc.5<-mean(data.spc5$salary,na.rm = TRUE)
 
-?barplot
-barplot(c(s.mean,s.mean.H,s.mean.F),col=c(1,4,2),main = "Mean salary by gender", ylim=c(0,20) , ylab="Mean Salary",xlab="Gender")
-legend("bottom", c("Total","Male","Female")
-       , lty=c(1,1,1) , lwd=c(2,2,2), 
-       col=c(1,4,2))
+vec.mean<-data.frame(s.mean,s.mean.H,s.mean.F,s.mean.TC,s.mean.TNC,s.mean.spc.1,
+            s.mean.spc.2,s.mean.spc.3,s.mean.spc.4,s.mean.spc.5)
+colnames(vec.mean)<-c("Total","Male","Female","TC","TNC","SPC1","SPC2",
+                      "SPC3","SPC4","SPC5")
+
+ggplot(data, aes(factor(spc), salary)) + geom_bar()
+
+
+barplot(c(s.mean,s.mean.H,s.mean.F),col=c(1,4,2),main = "Mean salary by gender", ylim=c(0,20) , ylab="Mean Salary",xlab="Total                                Male                                Female")
+
+barplot(c(s.mean,s.mean.TC,s.mean.TNC),col=c(1,4,2),main = "Mean salary by time", ylim=c(0,20) , ylab="Mean Salary",xlab="Total                                TC                                TNC")
+
+barplot(c(s.mean,s.mean.spc.1,s.mean.spc.2,s.mean.spc.3,s.mean.spc.4,s.mean.spc.5),col=c(1,2,3,4,5,6),main = "Mean salary by SPC", ylim=c(0,35) , ylab="Mean Salary",xlab="Total          SPC1           SPC2            SPC3            SPC4             SPC5")
+
+
+
+# Missings ----------------------------------------------------------------
+
+length(which(is.na(data)))
+
