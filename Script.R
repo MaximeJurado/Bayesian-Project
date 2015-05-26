@@ -1,11 +1,11 @@
 # Packages ----------------------------------------------------------------
 
-library("xlsx")
 library("ggplot2")
+
 
 # Data --------------------------------------------------------------------
 
-data <- read.xlsx("Data/data.xlsx",sheetIndex=1,header=TRUE)
+data <- read.csv2("Data/data.csv",header=TRUE)
 data <- subset(data,time!="TP")
 
 data1 <- data[rep(1:nrow(data),each=5),]
@@ -25,7 +25,7 @@ data4 <- data.frame(data3,vec)
 cat <- c(rep(c(1,2,3,4,5),132))
 
 data <- data.frame(data4,cat)
-data$time <- factor(data$CE, levels = c("TNC", "TC"))
+
 colnames(data) <- c("id","time","sexe","salary","spc")
 
 attach(data)
