@@ -19,31 +19,29 @@ for(i in 1:nrow(data2)){
 }
 
 vec <- as.data.frame(vec)
-
 data4 <- data.frame(data3,vec)
-
 cat <- c(rep(c(1,2,3,4,5),132))
 
 data <- data.frame(data4,cat)
-
 colnames(data) <- c("id","time","sexe","salary","spc")
-
 attach(data)
-
 salary<-as.numeric(salary)
 
 
 # Descriptive analysis ----------------------------------------------------
 
+theme <- theme(plot.title = element_text(size=16, face="bold"), axis.title.x = element_text(
+              size=15), axis.title.y = element_text(size=15), axis.text.x = element_text(
+              size=15, face="bold"),axis.text.y = element_text(size=15, face="bold"))
 
-boxplot(salary, data=data)
-boxplot(salary~time,data=data)
-boxplot(salary~sexe,data=data)
-boxplot(salary~spc,data=data)
+ggplot(data, aes(factor(spc), salary)) + geom_boxplot(aes(fill = factor(spc))) + 
+  xlab("Socio-Professional Category") + ylab("Salary") + guides(fill=guide_legend(title=NULL)) + 
+  ggtitle("Boxplot of the salary for each category") + theme
 
-boxplot(salary~time+sexe+spc,data=data)
-
-?barplot
+ggplot(data, aes(factor(spc), salary)) + geom_boxplot(aes(fill = factor(time))) +
+  labs(x="SPC", y="Salary", title="Boxplot of the salary for each SPC and each time") + 
+  theme + scale_fill_manual(name="Time", values=c("orange", "mediumpurple"), labels=c("0"="Part-time", 
+  "1"="Full-time"))
 
 dataH<-subset(data,sexe=="H")
 dataF<-subset(data,sexe=="F")
