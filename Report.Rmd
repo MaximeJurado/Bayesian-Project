@@ -78,13 +78,21 @@ The salary is the average gross income for an hour. For instance it can be the a
 
 ## Classification tables
 
-TODO: add the table for the sectors. 
+Here are presented the classification tables for the Socio-Professional Categories (Table \ref{tableIndexSpc}) and for the Sectors (Table \ref{tableIndexSectors}).
 
 ```{r classification table spc, results='asis'}
 categories <- read.table("Data/Index SCP.txt", sep="-", header=FALSE)
 categories <- data.frame(categories$V2)
 colnames(categories) <- "Category"
-print(xtable(categories, caption="Classification table of the Socio-Professional Categories"), comment = FALSE, , table.placement = "H")
+print(xtable(categories, caption="Classification table of the Socio-Professional Categories. \\label{tableIndexSpc}"), comment = FALSE, , table.placement = "H")
 ```
+
+```{r classification table sectors, results='asis'}
+sectors <- read.table("Data/Index Sectors.txt", sep=";", header=FALSE)
+sectors <- data.frame(sectors$V2)
+colnames(sectors) <- "Sector"
+print(xtable(sectors, caption="Classification table of the Sectors. \\label{tableIndexSectors}"), comment = FALSE, , table.placement = "H")
+```
+
 
 Reurn to section \ref{dataset} Dataset.
