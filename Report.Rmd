@@ -6,10 +6,9 @@ output:
   pdf_document:
     fig_caption: yes
     keep_tex: no
-    number_sections: yes
+    number_sections: no
     toc: yes
 header-includes: \usepackage{float} \usepackage{graphicx}
-
 ---
 
 ```{r initial_chunk, echo = FALSE, warning = FALSE, message = FALSE}
@@ -62,39 +61,45 @@ The variables reported in this study are listed below:
 
 The salary is the average gross income for an hour. For instance it can be the average income of female employees working full-time in the extractive industry.
 
+TODO: something about the construction of the dataset (more than 5 per cell...)
 
 # Descriptive analysis
 
-We can explore the dataset trough a descriptive analysis.
+An exploration of the data through a descriptive analysis gives first insights on the behavior of the variables. The point here is to see graphically if some varirables seem to have an impact on the response variable, the salary.
 
-```{r fig1,echo=FALSE,fig.cap="Boxplot of the salary for each category",fig.pos="H",fig.align='left'}
+## The Socio-Professional Categories
 
-theme <- theme(plot.title = element_text(size=16, face="bold"), axis.title.x = element_text(
-              size=15), axis.title.y = element_text(size=15), axis.text.x = element_text(
-              size=15, face="bold"),axis.text.y = element_text(size=15, face="bold"))
-
-ggplot(data, aes(factor(spc), salary)) + geom_boxplot(aes(fill = factor(spc))) + 
-  xlab("Socio-Professional Category") + ylab("Salary") + guides(fill=guide_legend(title=NULL)) + 
-  ggtitle("Boxplot of the salary for each category") + theme
-
-
+The first idea is that the salary is supposed to be different based on the different Socio-Professional Categories. The following graph (Figure \ref{BoxplotCat}) shows the mean of the salary by SPC.
+```{r boxplotcat, fig.cap="Boxplot of the salary for each category. \\label{BoxplotCat}", fig.pos="H", fig.align='left'}
+theme <- theme(plot.title = element_text(size=10, face="bold"), axis.title.x = element_text(size=10), axis.title.y = element_text(size=10), axis.text.x = element_text(size=10, face="bold"),axis.text.y = element_text(size=10, face="bold"))
+ggplot(data, aes(factor(spc), salary)) + geom_boxplot(aes(fill = factor(spc))) + xlab("Socio-Professional Category") + ylab("Salary") + guides(fill=guide_legend(title=NULL)) + theme
 ```
 
-```{r fig2,echo=FALSE,fig.cap="Boxplot of the salary for each SPC and each time",fig.pos="H",fig.align='left'}
-ggplot(data, aes(factor(spc), salary)) + geom_boxplot(aes(fill = factor(time))) +
-  labs(x="SPC", y="Salary", title="Boxplot of the salary for each SPC and each time") + 
-  theme + scale_fill_manual(name="Time", values=c("orange", "mediumpurple"), labels=c("0"="Part-time", 
-  "1"="Full-time"))
+One can clearly see that being in the category 1 (Higher managerial and professional positions) increases the salary as compared to the other categories. If one considers the categories to be ordered from 1 to 5 then he would be able to say that _SPC_ seems to have a negative impact on the salary.
+
+In order to see more clearly the way _SPC_ influences the salary Figure \ref{completeplot} shows the evolution of the salary for each SPC for each sector. The means were calculated on all the values of salary for the SPC by id.
+```{r completeplot, fig.cap="Evolution of the salary for each SPC by id. \\label{completeplot}", fig.pos="H", fig.align='left'}
+datamean <- aggregate(data.frame(salaryMean = data$salary), by = list(id = data$id, spc = data$spc),mean)
+ggplot(datamean, aes(spc, salaryMean)) + facet_wrap(facets=~ id, ncol=10) + geom_line(colour="blue") + geom_point(colour="red") + theme
 ```
 
-```{r fig3,echo=FALSE,fig.cap="Evolution of the salary for each SPC by id",fig.pos="H",fig.align='left'}
-datamean <- aggregate(data.frame(salaryMean = data$salary), by = list(id = data$id, spc = data$spc), 
-                      mean)
+As seen previously _SPC_ seems to have a negative impact on the salary for every sectors but sector 6 (Manufacture of food, drink and tabacoo based products), sector 21 (Information and communication) and sector 30 (Arts and entertainment). This may be due to the definitions of the SPC. In most of the sectors they are ordered from 1 to 5 but in some other sectors this order can be different. 
 
-ggplot(datamean, aes(spc, salaryMean)) + facet_wrap(facets=~ id, ncol=10) + 
-  geom_line(colour="blue") + geom_point(colour="red") + theme
+## The time
 
+TODO: salary per hour definition
+
+
+```{r boxplottime, fig.cap="Boxplot of the salary for each time. \\label{boxplottime}", fig.pos="H", fig.align='left'}
+ggplot(data, aes(factor(time), salary)) + geom_boxplot(aes(fill = factor(time))) + labs(x="Time", y="Salary", title="Boxplot of the salary for each time") + theme + scale_fill_manual(name="Time", values=c("orange", "mediumpurple"), labels=c("0"="Part-time", "1"="Full-time"))
 ```
+
+
+
+```{r boxplotspctime, fig.cap="Boxplot of the salary for each SPC and each time. \\label{boxplotspctime}", fig.pos="H", fig.align='left'}
+ggplot(data, aes(factor(spc), salary)) + geom_boxplot(aes(fill = factor(time))) + labs(x="SPC", y="Salary") + theme + scale_fill_manual(name="Time", values=c("orange", "mediumpurple"), labels=c("0"="Part-time", "1"="Full-time"))
+```
+
 
 # Statistical methods
 
@@ -116,14 +121,14 @@ Here are presented the classification tables for the Socio-Professional Categori
 categories <- read.table("Data/Index SCP.txt", sep="-", header=FALSE)
 categories <- data.frame(categories$V2)
 colnames(categories) <- "Category"
-print(xtable(categories, align=c("c","c"), caption="Classification table of the Socio-Professional Categories. \\label{tableIndexSpc}"), comment = FALSE, , table.placement = "H")
+print(xtable(categories, align=c("c","c"), caption="Classification table of the Socio-Professional Categories. \\label{tableIndexSpc}"))
 ```
 
 ```{r classification table sectors, results='asis'}
 sectors <- read.table("Data/Index Sectors.txt", sep=";", header=FALSE)
 sectors <- data.frame(sectors$V2)
 colnames(sectors) <- "Sector"
-print(xtable(sectors, align=c("c","c"), caption="Classification table of the Sectors. \\label{tableIndexSectors}"), comment = FALSE, , table.placement = "H")
+print(xtable(sectors, align=c("c","c"), caption="Classification table of the Sectors. \\label{tableIndexSectors}"))
 ```
 
 Reurn to section \nameref{dataset}.

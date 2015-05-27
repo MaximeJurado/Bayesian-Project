@@ -33,14 +33,10 @@ theme <- theme(plot.title = element_text(size=16, face="bold"), axis.title.x = e
               size=15), axis.title.y = element_text(size=15), axis.text.x = element_text(
               size=15, face="bold"),axis.text.y = element_text(size=15, face="bold"))
 
+# SPC
 ggplot(data, aes(factor(spc), salary)) + geom_boxplot(aes(fill = factor(spc))) + 
   xlab("Socio-Professional Category") + ylab("Salary") + guides(fill=guide_legend(title=NULL)) + 
   ggtitle("Boxplot of the salary for each category") + theme
-
-ggplot(data, aes(factor(spc), salary)) + geom_boxplot(aes(fill = factor(time))) +
-  labs(x="SPC", y="Salary", title="Boxplot of the salary for each SPC and each time") + 
-  theme + scale_fill_manual(name="Time", values=c("orange", "mediumpurple"), labels=c("0"="Part-time", 
-  "1"="Full-time"))
 
 datamean <- aggregate(data.frame(salaryMean = data$salary), by = list(id = data$id, spc = data$spc), 
                       mean)
@@ -48,6 +44,20 @@ datamean <- aggregate(data.frame(salaryMean = data$salary), by = list(id = data$
 ggplot(datamean, aes(spc, salaryMean)) + facet_wrap(facets=~ id, ncol=10) + 
   geom_line(colour="blue") + geom_point(colour="red") + theme
 
+# Time
+ggplot(data, aes(factor(time), salary)) + geom_boxplot(aes(fill = factor(time))) +
+  labs(x="Time", y="Salary", title="Boxplot of the salary for each time") + theme +
+  scale_fill_manual(name="Time", values=c("orange", "mediumpurple"), labels=c("0"="Part-time", 
+  "1"="Full-time"))
+  
+ggplot(data, aes(factor(spc), salary)) + geom_boxplot(aes(fill = factor(time))) +
+  labs(x="SPC", y="Salary", title="Boxplot of the salary for each SPC and each time") + 
+  theme + scale_fill_manual(name="Time", values=c("orange", "mediumpurple"), labels=c("0"="Part-time", 
+  "1"="Full-time"))
+
+# TODO: test whether time1>time0 or not.
+
+# Sexe
 data.m <- aggregate(data.frame(salary.m = data$salary), by = list(sexe = data$sexe, 
                     spc = data$spc,time = data$time), mean, na.rm=TRUE)
 
@@ -59,7 +69,6 @@ ggplot(subset(data.m,time==0),aes(x=factor(sexe),y=salary.m,fill=factor(sexe))) 
   size=18, face="bold"),legend.position=c(.85,.15),legend.background = element_rect(size=25),
   legend.text = element_text(size = 16))
  
-
 ggplot(subset(data.m,time==0),aes(x=factor(sexe),y=salary.m,fill=factor(sexe))) + 
   geom_bar(stat = "identity") + facet_wrap(~ spc) + 
   labs(title="Mean salary by gender and spc at time=1 (Full Time)", x="Sexe", y="Mean salary") +
@@ -68,6 +77,7 @@ ggplot(subset(data.m,time==0),aes(x=factor(sexe),y=salary.m,fill=factor(sexe))) 
   size=18, face="bold"),legend.position=c(.85,.15),legend.background = element_rect(size=25),
   legend.text = element_text(size = 16))
 
+# TODO: test whether sexe1>sexe0 or not.
 
 # Missings ----------------------------------------------------------------
 
