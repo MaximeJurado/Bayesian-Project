@@ -84,14 +84,14 @@ Here are presented the classification tables for the Socio-Professional Categori
 categories <- read.table("Data/Index SCP.txt", sep="-", header=FALSE)
 categories <- data.frame(categories$V2)
 colnames(categories) <- "Category"
-print(xtable(categories, caption="Classification table of the Socio-Professional Categories. \\label{tableIndexSpc}"), comment = FALSE, , table.placement = "H")
+print(xtable(categories, align=c("c","c"), caption="Classification table of the Socio-Professional Categories. \\label{tableIndexSpc}"), comment = FALSE, , table.placement = "H")
 ```
 
 ```{r classification table sectors, results='asis'}
 sectors <- read.table("Data/Index Sectors.txt", sep=";", header=FALSE)
 sectors <- data.frame(sectors$V2)
 colnames(sectors) <- "Sector"
-print(xtable(sectors, caption="Classification table of the Sectors. \\label{tableIndexSectors}"), comment = FALSE, , table.placement = "H")
+print(xtable(sectors, align=c("c","c"), caption="Classification table of the Sectors. \\label{tableIndexSectors}"), comment = FALSE, , table.placement = "H")
 ```
 
 
