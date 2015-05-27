@@ -42,6 +42,11 @@ ggplot(data, aes(factor(spc), salary)) + geom_boxplot(aes(fill = factor(time))) 
   theme + scale_fill_manual(name="Time", values=c("orange", "mediumpurple"), labels=c("0"="Part-time", 
   "1"="Full-time"))
 
+datamean <- aggregate(data.frame(salaryMean = data$salary), by = list(id = data$id, spc = data$spc), 
+                      mean)
+
+ggplot(datamean, aes(spc, salaryMean)) + facet_wrap(facets=~ id, ncol=10) + 
+  geom_line(colour="blue") + geom_point(colour="red") + theme
 
 ##
 dataH<-subset(data,sexe==1)
