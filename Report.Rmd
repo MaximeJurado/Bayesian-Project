@@ -94,5 +94,4 @@ colnames(sectors) <- "Sector"
 print(xtable(sectors, align=c("c","c"), caption="Classification table of the Sectors. \\label{tableIndexSectors}"), comment = FALSE, , table.placement = "H")
 ```
 
-
 Reurn to section \ref{dataset} Dataset.
