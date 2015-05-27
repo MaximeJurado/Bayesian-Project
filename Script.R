@@ -67,7 +67,7 @@ s.mean.spc.4<-mean(data.spc4$salary,na.rm = TRUE)
 s.mean.spc.5<-mean(data.spc5$salary,na.rm = TRUE)
 
 vec.mean<-data.frame(s.mean,s.mean.H,s.mean.F,s.mean.TC,s.mean.TNC,s.mean.spc.1,
-            s.mean.spc.2,s.mean.spc.3,s.mean.spc.4,s.mean.spc.5)
+                     s.mean.spc.2,s.mean.spc.3,s.mean.spc.4,s.mean.spc.5)
 colnames(vec.mean)<-c("Total","Male","Female","TC","TNC","SPC1","SPC2",
                       "SPC3","SPC4","SPC5")
 
@@ -80,6 +80,62 @@ barplot(c(s.mean,s.mean.TC,s.mean.TNC),col=c(1,4,2),main = "Mean salary by time"
 
 barplot(c(s.mean,s.mean.spc.1,s.mean.spc.2,s.mean.spc.3,s.mean.spc.4,s.mean.spc.5),col=c(1,2,3,4,5,6),main = "Mean salary by SPC", ylim=c(0,35) , ylab="Mean Salary",xlab="Total          SPC1           SPC2            SPC3            SPC4             SPC5")
 
+
+data.t0.H.spc1<-subset(data,time==0 & sexe==1 & spc==1)
+data.t0.H.spc2<-subset(data,time==0 & sexe==1 & spc==2)
+data.t0.H.spc3<-subset(data,time==0 & sexe==1 & spc==3)
+data.t0.H.spc4<-subset(data,time==0 & sexe==1 & spc==4)
+data.t0.H.spc5<-subset(data,time==0 & sexe==1 & spc==5)
+data.t0.F.spc1<-subset(data,time==0 & sexe==0 & spc==1)
+data.t0.F.spc2<-subset(data,time==0 & sexe==0 & spc==2)
+data.t0.F.spc3<-subset(data,time==0 & sexe==0 & spc==3)
+data.t0.F.spc4<-subset(data,time==0 & sexe==0 & spc==4)
+data.t0.F.spc5<-subset(data,time==0 & sexe==0 & spc==5)
+data.t1.H.spc1<-subset(data,time==1 & sexe==1 & spc==1)
+data.t1.H.spc2<-subset(data,time==1 & sexe==1 & spc==2)
+data.t1.H.spc3<-subset(data,time==1 & sexe==1 & spc==3)
+data.t1.H.spc4<-subset(data,time==1 & sexe==1 & spc==4)
+data.t1.H.spc5<-subset(data,time==1 & sexe==1 & spc==5)
+data.t1.F.spc1<-subset(data,time==1 & sexe==0 & spc==1)
+data.t1.F.spc2<-subset(data,time==1 & sexe==0 & spc==2)
+data.t1.F.spc3<-subset(data,time==1 & sexe==0 & spc==3)
+data.t1.F.spc4<-subset(data,time==1 & sexe==0 & spc==4)
+data.t1.F.spc5<-subset(data,time==1 & sexe==0 & spc==5)
+
+time.m<-c(rep(0,10),rep(1,10))
+sexe.m<-c(rep(1,5),rep(0,5),rep(1,5),rep(0,5))
+spc.m<-c(rep(1:5,4))
+
+s.mean.t0.H.spc1<-mean(data.t0.H.spc1$salary,na.rm=TRUE)
+s.mean.t0.H.spc2<-mean(data.t0.H.spc2$salary,na.rm=TRUE)
+s.mean.t0.H.spc3<-mean(data.t0.H.spc3$salary,na.rm=TRUE)
+s.mean.t0.H.spc4<-mean(data.t0.H.spc4$salary,na.rm=TRUE)
+s.mean.t0.H.spc5<-mean(data.t0.H.spc5$salary,na.rm=TRUE)
+s.mean.t0.F.spc1<-mean(data.t0.F.spc1$salary,na.rm=TRUE)
+s.mean.t0.F.spc2<-mean(data.t0.F.spc2$salary,na.rm=TRUE)
+s.mean.t0.F.spc3<-mean(data.t0.F.spc3$salary,na.rm=TRUE)
+s.mean.t0.F.spc4<-mean(data.t0.F.spc4$salary,na.rm=TRUE)
+s.mean.t0.F.spc5<-mean(data.t0.F.spc5$salary,na.rm=TRUE)
+s.mean.t1.H.spc1<-mean(data.t1.H.spc1$salary,na.rm=TRUE)
+s.mean.t1.H.spc2<-mean(data.t1.H.spc2$salary,na.rm=TRUE)
+s.mean.t1.H.spc3<-mean(data.t1.H.spc3$salary,na.rm=TRUE)
+s.mean.t1.H.spc4<-mean(data.t1.H.spc4$salary,na.rm=TRUE)
+s.mean.t1.H.spc5<-mean(data.t1.H.spc5$salary,na.rm=TRUE)
+s.mean.t1.F.spc1<-mean(data.t1.F.spc1$salary,na.rm=TRUE)
+s.mean.t1.F.spc2<-mean(data.t1.F.spc2$salary,na.rm=TRUE)
+s.mean.t1.F.spc3<-mean(data.t1.F.spc3$salary,na.rm=TRUE)
+s.mean.t1.F.spc4<-mean(data.t1.F.spc4$salary,na.rm=TRUE)
+s.mean.t1.F.spc5<-mean(data.t1.F.spc5$salary,na.rm=TRUE)
+
+salary.m<-c(s.mean.t0.H.spc1,s.mean.t0.H.spc2,s.mean.t0.H.spc3,s.mean.t0.H.spc4,s.mean.t0.H.spc5,
+            s.mean.t0.F.spc1,s.mean.t0.F.spc2,s.mean.t0.F.spc3,s.mean.t0.F.spc4,s.mean.t0.F.spc5,
+            s.mean.t1.H.spc1,s.mean.t1.H.spc2,s.mean.t1.H.spc3,s.mean.t1.H.spc4,s.mean.t1.H.spc5,
+            s.mean.t1.F.spc1,s.mean.t1.F.spc2,s.mean.t1.F.spc3,s.mean.t1.F.spc4,s.mean.t1.F.spc5)
+
+data.m<-data.frame(time.m,sexe.m,spc.m,salary.m)
+
+
+ggplot(data.m, aes(factor(spc.m), salary.m,)) + geom_bar(stat = "identity")
 
 
 # Missings ----------------------------------------------------------------
