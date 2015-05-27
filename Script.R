@@ -135,7 +135,18 @@ salary.m<-c(s.mean.t0.H.spc1,s.mean.t0.H.spc2,s.mean.t0.H.spc3,s.mean.t0.H.spc4,
 data.m<-data.frame(time.m,sexe.m,spc.m,salary.m)
 
 
-ggplot(data.m, aes(factor(spc.m), salary.m,)) + geom_bar(stat = "identity")
+
+ggplot(data.m[1:10,],aes(x=factor(sexe.m),y=salary.m,fill=factor(sexe.m))) + 
+  geom_bar(stat = "identity") + facet_wrap(~ spc.m) + 
+  scale_fill_discrete(name="Gender",  labels=c("Female", "Male"),guide = guide_legend(reverse=TRUE)) + 
+  theme(legend.title = element_text(colour="black", size=18, face="bold"),legend.position=c(.85,.15),legend.background = element_rect(size=25),legend.text = element_text(size = 16))
+ 
+
+
+ggplot(data.m[11:20,],aes(factor(sexe.m),salary.m,fill=factor(sexe.m))) + 
+  geom_bar(stat = "identity") + 
+  facet_wrap(~ spc.m)
+
 
 
 # Missings ----------------------------------------------------------------
