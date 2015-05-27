@@ -48,28 +48,25 @@ datamean <- aggregate(data.frame(salaryMean = data$salary), by = list(id = data$
 ggplot(datamean, aes(spc, salaryMean)) + facet_wrap(facets=~ id, ncol=10) + 
   geom_line(colour="blue") + geom_point(colour="red") + theme
 
-##
+data.m <- aggregate(data.frame(salary.m = data$salary), by = list(sexe = data$sexe, 
+                    spc = data$spc,time = data$time), mean, na.rm=TRUE)
 
-data.m <- aggregate(data.frame(salary.m = data$salary), by = list(sexe.m = data$sexe, spc.m = data$spc,time.m=data$time), 
-                      mean,na.rm=TRUE)
-
-
-
-ggplot(subset(data.m,time.m==0),aes(x=factor(sexe.m),y=salary.m,fill=factor(sexe.m))) + 
-  geom_bar(stat = "identity") + facet_wrap(~ spc.m) + 
-  labs(title="Mean salary by gender and spc at time=0 (Part-Time)") +
+ggplot(subset(data.m,time==0),aes(x=factor(sexe),y=salary.m,fill=factor(sexe))) + 
+  geom_bar(stat = "identity") + facet_wrap(~ spc) + 
+  labs(title="Mean salary by gender and spc at time=0 (Part-Time)", x="Sexe", y="Mean salary") +
   scale_fill_discrete(name="Gender",  labels=c("Female", "Male"),guide = guide_legend(reverse=TRUE)) + 
-  theme(plot.title = element_text(size=16, face="bold"), legend.title = element_text(colour="black", size=18, face="bold"),legend.position=c(.85,.15),legend.background = element_rect(size=25),legend.text = element_text(size = 16))
+  theme(plot.title = element_text(size=16, face="bold"), legend.title = element_text(colour="black",
+  size=18, face="bold"),legend.position=c(.85,.15),legend.background = element_rect(size=25),
+  legend.text = element_text(size = 16))
  
 
-ggplot(subset(data.m,time.m==0),aes(x=factor(sexe.m),y=salary.m,fill=factor(sexe.m))) + 
-  geom_bar(stat = "identity") + facet_wrap(~ spc.m) + 
-  labs(title="Mean salary by gender and spc at time=1 (Full Time)") +
+ggplot(subset(data.m,time==0),aes(x=factor(sexe),y=salary.m,fill=factor(sexe))) + 
+  geom_bar(stat = "identity") + facet_wrap(~ spc) + 
+  labs(title="Mean salary by gender and spc at time=1 (Full Time)", x="Sexe", y="Mean salary") +
   scale_fill_discrete(name="Gender",  labels=c("Female", "Male"),guide = guide_legend(reverse=TRUE)) + 
-  theme(plot.title = element_text(size=16, face="bold"),legend.title = element_text(colour="black", size=18, face="bold"),legend.position=c(.85,.15),legend.background = element_rect(size=25),legend.text = element_text(size = 16))
-
-
-
+  theme(plot.title = element_text(size=16, face="bold"),legend.title = element_text(colour="black",
+  size=18, face="bold"),legend.position=c(.85,.15),legend.background = element_rect(size=25),
+  legend.text = element_text(size = 16))
 
 
 # Missings ----------------------------------------------------------------
