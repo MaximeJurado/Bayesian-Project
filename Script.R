@@ -71,5 +71,12 @@ ggplot(subset(data.m,time==0),aes(x=factor(sexe),y=salary.m,fill=factor(sexe))) 
 
 # Missings ----------------------------------------------------------------
 
-length(which(is.na(data)))
+dataMissing <- data[which(is.na(data$salary)),]
+
+length(dataMissing)
+
+id1 <- data[which(data$id==1),]
+id8 <- data[which(data$id==8),]
+id22 <- data[which(data$id==22),]
+
 
