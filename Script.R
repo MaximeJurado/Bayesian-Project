@@ -76,7 +76,10 @@ dataMissing <- data[which(is.na(data$salary)),]
 length(dataMissing)
 
 id1 <- data[which(data$id==1),]
+# Missing in the data
 id8 <- data[which(data$id==8),]
+# Secret data
 id22 <- data[which(data$id==22),]
+# Missing in the data
 
 
