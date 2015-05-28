@@ -77,6 +77,14 @@ ggplot(subset(data.m,time==0),aes(x=factor(sexe),y=salary.m,fill=factor(sexe))) 
   size=18, face="bold"),legend.position=c(.85,.15),legend.background = element_rect(size=25),
   legend.text = element_text(size = 16))
 
+ggplot(data.m,aes(x=factor(sexe),y=salary.m,fill=factor(sexe))) + geom_bar(stat = "identity") + 
+  facet_wrap(~ spc) + labs(title="Mean salary by gender and spc", x="Sexe", y="Mean salary") + 
+  scale_fill_discrete(name="Gender",labels=c("Female","Male"),guide = guide_legend(reverse=TRUE)) +
+  theme(plot.title = element_text(size=16, face="bold"),legend.title = element_text(colour="black",
+  size=18, face="bold"),legend.position=c(.85,.15),legend.background = element_rect(size=25),
+  legend.text = element_text(size = 16))
+
+
 # TODO: test whether sexe1>sexe0 or not.
 
 # Missings ----------------------------------------------------------------

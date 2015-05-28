@@ -11,6 +11,8 @@ output:
 header-includes: \usepackage{float} \usepackage{graphicx}
 ---
 
+TODO: find a title
+
 ```{r initial_chunk, echo = FALSE, warning = FALSE, message = FALSE}
 library("knitr")
 library("ggplot2")
@@ -45,7 +47,11 @@ salary<-as.numeric(salary)
 
 # Abstract
 
+TODO: abstract
+
 # Introduction
+
+TODO: introduction
 
 # Dataset
 \label{dataset}
@@ -65,9 +71,9 @@ TODO: something about the construction of the dataset (more than 5 per cell...)
 
 # Descriptive analysis
 
-An exploration of the data through a descriptive analysis gives first insights on the behavior of the variables. The point here is to see graphically if some varirables seem to have an impact on the response variable, the salary.
+An exploration of the data through a descriptive analysis gives first insights on the behavior of the variables. The point here is to see graphically if some varirables seem to have an impact on the response variable, the salary. A basic linear regression and some tests give also some insights.
 
-## The Socio-Professional Categories
+## Influence of the variable _spc_
 
 The first idea is that the salary is supposed to be different based on the different Socio-Professional Categories. The following graph (Figure \ref{BoxplotCat}) shows the mean of the salary by SPC.
 ```{r boxplotcat, fig.cap="Boxplot of the salary for each category. \\label{BoxplotCat}", fig.pos="H", fig.align='left'}
@@ -85,19 +91,30 @@ ggplot(datamean, aes(spc, salaryMean)) + facet_wrap(facets=~ id, ncol=10) + geom
 
 As seen previously _SPC_ seems to have a negative impact on the salary for every sectors but sector 6 (Manufacture of food, drink and tabacoo based products), sector 21 (Information and communication) and sector 30 (Arts and entertainment). This may be due to the definitions of the SPC. In most of the sectors they are ordered from 1 to 5 but in some other sectors this order can be different. 
 
-## The time
+## Influence of the variable _time_
 
-TODO: salary per hour definition
-
-
+The salary is given per hour, hence no differences between full-time and part-time jobs should be observed. The following figure confirms this.
 ```{r boxplottime, fig.cap="Boxplot of the salary for each time. \\label{boxplottime}", fig.pos="H", fig.align='left'}
-ggplot(data, aes(factor(time), salary)) + geom_boxplot(aes(fill = factor(time))) + labs(x="Time", y="Salary", title="Boxplot of the salary for each time") + theme + scale_fill_manual(name="Time", values=c("orange", "mediumpurple"), labels=c("0"="Part-time", "1"="Full-time"))
+ggplot(data, aes(factor(time), salary)) + geom_boxplot(aes(fill = factor(time))) + labs(x="Time", y="Salary") + theme + scale_fill_manual(name="Time", values=c("orange", "mediumpurple"), labels=c("0"="Part-time", "1"="Full-time"))
 ```
 
+The salaries for the full-time workers ant the salaries for the part-time workers seem to be the same. 
 
-
+The same graph was repeated for each category and the followinf results were obtained. Figure \ref{boxplotspctime}.
 ```{r boxplotspctime, fig.cap="Boxplot of the salary for each SPC and each time. \\label{boxplotspctime}", fig.pos="H", fig.align='left'}
 ggplot(data, aes(factor(spc), salary)) + geom_boxplot(aes(fill = factor(time))) + labs(x="SPC", y="Salary") + theme + scale_fill_manual(name="Time", values=c("orange", "mediumpurple"), labels=c("0"="Part-time", "1"="Full-time"))
+```
+
+One could say that for some categories a small difference is observed. For instance salaries for full-time workers in the category of the higher managerial and professional positions seem to be higher than the ones for the part-time workers.
+
+## Influence of the variable _sexe_
+
+Inequality in the salary regarding the gender is a matter of discussion in France. The issue is that salaries are said to be higher for males than they are for females. Therefore some differences are expected.
+
+The means of the salaries for females and males were plotted for each Socio-Professional Category and it seems that no differences appear except maybe for the category 1. Figure \ref{barplotsexespc} shows the results.
+```{r barplotsexespc, fig.cap="Barplot of the mean salary by sexe for each category. \\label{barplotsexespc}", fig.pos="H", fig.align='left'}
+data.m <- aggregate(data.frame(salary.m = data$salary), by = list(sexe = data$sexe, spc = data$spc,time = data$time), mean, na.rm=TRUE)
+ggplot(data.m,aes(x=factor(sexe),y=salary.m,fill=factor(sexe))) + geom_bar(stat = "identity") + facet_wrap(~ spc) + labs(x="Sexe", y="Mean salary") +scale_fill_discrete(name="Gender",  labels=c("Female", "Male"),guide = guide_legend(reverse=TRUE)) + theme(plot.title = element_text(size=16, face="bold"), legend.title = element_text(colour="black",size=18, face="bold"),legend.position=c(.85,.15),legend.background = element_rect(size=25),legend.text = element_text(size = 16))
 ```
 
 
