@@ -115,16 +115,16 @@ A t-test was performed to see if there is a difference between the salaries of f
   \hline
  & p-value & mean of the differences \\ 
   \hline
-dataset & 0.000 & -0.788 \\ 
-category 1 & 0.000 & -1.982 \\ 
-category 2 & 0.298 & -0.277 \\ 
-category 3 & 0.000 & -1.027 \\ 
-category 4 & 0.316 & -0.188 \\ 
-category 5 & 0.051 & -0.427 \\ 
+ dataset & 0.000 & -0.788 \\ 
+ category 1 & 0.000 & -1.982 \\ 
+ category 2 & 0.298 & -0.277 \\ 
+ category 3 & 0.000 & -1.027 \\ 
+ category 4 & 0.316 & -0.188 \\ 
+ category 5 & 0.051 & -0.427 \\ 
    \hline
 \end{tabular}
 \caption{P-values and mean of the differences 
-             of the tests. \label{tabletesttime} 
+             of the tests. \label{tabletesttime}} 
 \end{table}
 
 One can see that the p-values for the tests performed on the whole dataset, on the category 1 and on the category 3 are below 0.05. In those cases the mean of the differences can be up to almost 2 euros per hour. It represents a difference of 6.2%. 
@@ -143,7 +143,19 @@ For every categories the mean salary for males seems to be higher than the mean 
 
 ## A linear regression
 
-A basic linear regression was performed to see the impact of the covariates on the salary.
+A basic linear regression was performed to see the impact of the covariates on the salary. The model that was used is:
+  $Salary = \beta_0 + \beta_1time + \beta_2sexe +\beta_3spc + \beta_4sexe*spc$
+
+The following table (Table \ref{tablereg}) shows the estimates and the p-values obtained with the linear regression model.
+
+```{r reg, results='asis'}
+reg <- lm(salary~time+sexe*spc, data=data)
+table.reg <- data.frame(coefficients(reg),summary(reg)[[4]][,4])
+colnames(table.reg) <- c("estimates","p-value")
+print(xtable(table.reg, digits=3, align=c("c","c","c"),caption="Results of the linear regression. \\label{tablereg}"))
+```
+
+As for the graphical analysis _spc_ has a negative impact on th salary (we consider here that the categories are ordered from 1 to 5). The variable _sexe_ has a quite important positive effect on the salary. It means that males are paid around 4 euros per hour more than females. The fact that the interaction between _sexe_ and _spc_ has a negative effect on the salary means that the positive effect of being a male does not counterbalance the negative impact of the _spc_. 
 
 # Statistical methods
 
