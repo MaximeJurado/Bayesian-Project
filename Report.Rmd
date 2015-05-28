@@ -107,6 +107,28 @@ ggplot(data, aes(factor(spc), salary)) + geom_boxplot(aes(fill = factor(time))) 
 
 One could say that for some categories a small difference is observed. For instance salaries for full-time workers in the category of the higher managerial and professional positions seem to be higher than the ones for the part-time workers.
 
+A t-test was performed to see if there is a difference between the salaries of full-time workers and part-time workers. This test was performed on the whole dataset and then by category. Table \ref{tabletesttime} shows the results.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{ccc}
+  \hline
+ & p-value & mean of the differences \\ 
+  \hline
+dataset & 0.000 & -0.788 \\ 
+category 1 & 0.000 & -1.982 \\ 
+category 2 & 0.298 & -0.277 \\ 
+category 3 & 0.000 & -1.027 \\ 
+category 4 & 0.316 & -0.188 \\ 
+category 5 & 0.051 & -0.427 \\ 
+   \hline
+\end{tabular}
+\caption{P-values and mean of the differences 
+             of the tests. \label{tabletesttime} 
+\end{table}
+
+One can see that the p-values for the tests performed on the whole dataset, on the category 1 and on the category 3 are below 0.05. In those cases the mean of the differences can be up to almost 2 euros per hour. It represents a difference of 6.2%. 
+
 ## Influence of the variable _sexe_
 
 Inequality in the salary regarding the gender is a matter of discussion in France. The issue is that salaries are said to be higher for males than they are for females. Therefore some differences are expected.
@@ -117,6 +139,11 @@ data.m <- aggregate(data.frame(salary.m = data$salary), by = list(sexe = data$se
 ggplot(data.m,aes(x=factor(sexe),y=salary.m,fill=factor(sexe))) + geom_bar(stat = "identity") + facet_wrap(~ spc) + labs(x="Sexe", y="Mean salary") +scale_fill_discrete(name="Gender",  labels=c("Female", "Male"),guide = guide_legend(reverse=TRUE)) + theme(plot.title = element_text(size=16, face="bold"), legend.title = element_text(colour="black",size=18, face="bold"),legend.position=c(.85,.15),legend.background = element_rect(size=25),legend.text = element_text(size = 16))
 ```
 
+For every categories the mean salary for males seems to be higher than the mean salary for females. A t-test confirmed this result. A significant mean of the differences of 2 was observed. It means that males have in mean a salary per hour higher by 2 euros than the one of the females.
+
+## A linear regression
+
+A basic linear regression was performed to see the impact of the covariates on the salary.
 
 # Statistical methods
 

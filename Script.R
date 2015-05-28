@@ -1,6 +1,7 @@
 # Packages ----------------------------------------------------------------
 
 library("ggplot2")
+library("xtable")
 
 
 # Data --------------------------------------------------------------------
@@ -55,7 +56,50 @@ ggplot(data, aes(factor(spc), salary)) + geom_boxplot(aes(fill = factor(time))) 
   theme + scale_fill_manual(name="Time", values=c("orange", "mediumpurple"), labels=c("0"="Part-time", 
   "1"="Full-time"))
 
-# TODO: test whether time1>time0 or not.
+## Test on the differences between time1 and time0.
+data.sort <- data[with(data, order(id, spc)), ]
+row.names(data.sort) <- c(1:nrow(data.sort))
+data.sort.time0 <- NULL
+data.sort.time1 <- NULL
+for(i in 1:nrow(data.sort)){
+  newline <- data.sort[i,]
+  if(i%%2==0){
+    data.sort.time0 <- rbind(data.sort.time0, newline)
+  }
+  else{
+    data.sort.time1 <- rbind(data.sort.time1, newline)
+  }
+}
+data.time.paired <- as.data.frame(cbind(data.sort.time0$spc,data.sort.time0[,4],data.sort.time1[,4]))
+colnames(data.time.paired) <- c("spc", "salary0", "salary1")
+
+test.time.all <- t.test(data.time.paired[,2], data.time.paired[,3], paired=TRUE)
+
+data.time.paired.spc1 <- subset(data.time.paired, spc==1)
+data.time.paired.spc2 <- subset(data.time.paired, spc==2)
+data.time.paired.spc3 <- subset(data.time.paired, spc==3)
+data.time.paired.spc4 <- subset(data.time.paired, spc==4)
+data.time.paired.spc5 <- subset(data.time.paired, spc==5)
+
+test.time.spc1 <- t.test(data.time.paired.spc1[,2], data.time.paired.spc1[,3], paired=TRUE)
+test.time.spc2 <- t.test(data.time.paired.spc2[,2], data.time.paired.spc2[,3], paired=TRUE)
+test.time.spc3 <- t.test(data.time.paired.spc3[,2], data.time.paired.spc3[,3], paired=TRUE)
+test.time.spc4 <- t.test(data.time.paired.spc4[,2], data.time.paired.spc4[,3], paired=TRUE)
+test.time.spc5 <- t.test(data.time.paired.spc5[,2], data.time.paired.spc5[,3], paired=TRUE)
+
+table.test.time <- data.frame(c("dataset","category 1","category 2","category 3","category 4",
+                   "category 5"),c(test.time.all$p.value,test.time.spc1$p.value,
+                   test.time.spc2$p.value,test.time.spc3$p.value,test.time.spc4$p.value,
+                   test.time.spc5$p.value), c(test.time.all$estimate,test.time.spc1$estimate,
+                   test.time.spc2$estimate,test.time.spc3$estimate,test.time.spc4$estimate,
+                   test.time.spc5$estimate))
+colnames(table.test.time) <- c("","p-value","mean of the differences")
+print(xtable(table.test.time, align=c("c","c","c","c"), caption="P-values and mean of the differences 
+             of the tests. \\label{tabletesttime", digits=3))
+
+salary.mean.spc <- aggregate(data.frame(salaryMean=data$salary),by=list(time=data$time,
+                             spc=data$spc),mean,na.rm=TRUE)
+(table.test.time[2,3]/salary.mean.spc[2,3])*100
 
 # Sexe
 data.m <- aggregate(data.frame(salary.m = data$salary), by = list(sexe = data$sexe, 
@@ -84,8 +128,30 @@ ggplot(data.m,aes(x=factor(sexe),y=salary.m,fill=factor(sexe))) + geom_bar(stat 
   size=18, face="bold"),legend.position=c(.85,.15),legend.background = element_rect(size=25),
   legend.text = element_text(size = 16))
 
+## Test on the differences between time1 and time0.
+data.sort2 <- data[with(data, order(id, spc, time)), ]
+row.names(data.sort2) <- c(1:nrow(data.sort2))
+data.sort.sexe0 <- NULL
+data.sort.sexe1 <- NULL
+for(i in 1:nrow(data.sort2)){
+  newline <- data.sort2[i,]
+  if(i%%2==0){
+    data.sort.sexe0 <- rbind(data.sort.sexe0, newline)
+  }
+  else{
+    data.sort.sexe1 <- rbind(data.sort.sexe1, newline)
+  }
+}
+data.sexe.paired <- as.data.frame(cbind(data.sort.sexe0$spc,data.sort.sexe0[,4],data.sort.sexe1[,4]))
+colnames(data.sexe.paired) <- c("spc", "salary0", "salary1")
 
-# TODO: test whether sexe1>sexe0 or not.
+test.sexe.all <- t.test(data.sexe.paired[,2], data.sexe.paired[,3], paired=TRUE)
+
+# Linear regression
+
+reg <- lm(salary~time+sexe*spc, data=data)
+summary(reg)
+
 
 # Missings ----------------------------------------------------------------
 
