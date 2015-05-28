@@ -168,5 +168,3 @@ id8 <- data[which(data$id==8),]
 # Secret data
 id22 <- data[which(data$id==22),]
 # Missing in the data
-
-bla
