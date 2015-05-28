@@ -95,7 +95,7 @@ table.test.time <- data.frame(c("dataset","category 1","category 2","category 3"
                    test.time.spc5$estimate))
 colnames(table.test.time) <- c("","p-value","mean of the differences")
 print(xtable(table.test.time, align=c("c","c","c","c"), caption="P-values and mean of the differences 
-             of the tests. \\label{tabletesttime", digits=3))
+             of the tests. \\label{tabletesttime}", digits=3))
 
 salary.mean.spc <- aggregate(data.frame(salaryMean=data$salary),by=list(time=data$time,
                              spc=data$spc),mean,na.rm=TRUE)
@@ -151,6 +151,9 @@ test.sexe.all <- t.test(data.sexe.paired[,2], data.sexe.paired[,3], paired=TRUE)
 
 reg <- lm(salary~time+sexe*spc, data=data)
 summary(reg)
+
+table.reg <- data.frame(coefficients(reg),summary(reg)[[4]][,4])
+colnames(table.reg) <- c("estimates","p-value")
 
 
 # Missings ----------------------------------------------------------------
