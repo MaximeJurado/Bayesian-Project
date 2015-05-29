@@ -152,11 +152,18 @@ colnames(data.sexe.paired) <- c("spc", "salary0", "salary1")
 test.sexe.all <- t.test(data.sexe.paired[,2], data.sexe.paired[,3], paired=TRUE)
 
 # Linear regression
+data.spc2 <- cbind(data,data$spc^2)
+colnames(data.spc2) <- c("id","time","sexe","salary","spc","spc2")
 
 reg <- lm(salary~time+sexe*spc, data=data)
 summary(reg)
 
-table.reg <- data.frame(coefficients(reg),summary(reg)[[4]][,4])
+reg.spc2 <- lm(salary~time+sexe*spc+spc2, data=data.spc2)
+summary(reg.spc2)
+
+anova(reg,reg.spc2)
+
+table.reg <- data.frame(coefficients(reg.spc2),summary(reg.spc2)[[4]][,4])
 colnames(table.reg) <- c("estimates","p-value")
 
 
