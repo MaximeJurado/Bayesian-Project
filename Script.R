@@ -185,7 +185,7 @@ id22 <- data[which(data$id==22),]
 
 library(R2WinBUGS)
 
-path.bug <- "C:/Users/Mathieu/Documents/Cours/2A/Erasmus/Cours/Bayesian analysis/Bayesian-Project/"
+path.bug <- "C:/Users/Mathieu/Documents/Cours/2A/Erasmus/Cours/Bayesian analysis/Bayesian-Project/modelBug/"
 path.WBS <- "C:/Users/Mathieu/Documents/Logiciels/WinBuggs/WinBUGS14/"
 
 Iter <- 1000
@@ -194,21 +194,105 @@ Chain <- 2
 Thin <- 1
 n <- nrow(data)
 
-datalist <- list(salary=data$salary, time=data$time, sexe=data$sexe, spc=data$spc,n=n)
+datalist <- list(salary=data$salary, time=data$time, sexe=data$sexe, spc=data$spc, n=n)
+datalist2 <- list(salary=data$salary,time=data$time, sexe=data$sexe, spc=data$spc, 
+                  spc2=(data$spc)^2, n=n)
 
-parameters1 <- c("alpha","beta1","beta2","beta3","tau","mu")
-inits1 <- list(list(tau=1),list(tau=5))
-
-model1 <- bugs(datalist1,inits=inits1,parameters.to.save=parameters1,
-               model=paste(path.bug,"modelWin1.bug",sep=""),bugs.directory=path.WBS,
+# sexe,time and spc
+parameters10 <- c("alpha","beta1","beta2","beta3","tau","mu")
+inits10 <- list(list(tau=1),list(tau=5))
+model10 <- bugs(datalist,inits=inits10,parameters.to.save=parameters10,
+               model=paste(path.bug,"modelWin10.bug",sep=""),bugs.directory=path.WBS,
                n.iter=(Iter*Thin+Burn),n.burnin=Burn,n.thin=Thin,n.chains=Chain, DIC=F,debug=T)
-print(model1, digits=4)
+print(model10, digits=4)
+# DIC=3455.6
 
-parameters2 <- c("alpha", "beta1", "beta2", "beta3", "tau1", "tau2", "mu")
-inits2 <- list(list(tau1=1,tau2=1), list(tau1=2,tau2=2))
+# Sexe, time, spc and spc²
+parameters11 <- c("alpha", "beta1", "beta2", "beta3","beta4", "tau", "mu")
+inits11 <- list(list(tau=1), list(tau=5))
+model11 <- bugs(datalist2, inits=inits11, parameters.to.save=parameters11,
+                model=paste(path.bug,"modelWin11.bug",sep=""),
+                bugs.directory=path.WBS,               
+                n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+print(model11, digits=4)
+# DIC=2987.5
 
-model2 <- bugs(datalist, inits=inits2, parameters.to.save=parameters2,
-               model=paste(path.bug,"modelWin2.bug",sep=""),
+# sexe, time, spc and spc*sexe
+parameters12 <- c("alpha", "beta1", "beta2", "beta3","beta4", "tau", "mu")
+inits12 <- list(list(tau=1), list(tau=5))
+model12 <- bugs(datalist, inits=inits12, parameters.to.save=parameters12,
+                model=paste(path.bug,"modelWin12.bug",sep=""),
+                bugs.directory=path.WBS,               
+                n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+print(model12, digits=4)
+# DIC=3444.8
+
+# sexe, time, spc, spc*sexe and spc²
+parameters13 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau", "mu")
+inits13 <- list(list(tau=1), list(tau=5))
+model13 <- bugs(datalist2, inits=inits13, parameters.to.save=parameters13,
+             model=paste(path.bug,"modelWin13.bug",sep=""),
+             bugs.directory=path.WBS,               
+             n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+print(model13, digits=4) 
+# DIC=2962.9
+
+results <- t(as.data.frame(c(model13$mean[1],model13$mean[2],model13$mean[3],model13$mean[4],
+             model13$mean[5],model13$mean[6])))
+colnames(results) <- c("mean")
+rownames(results) <- c("intercept", "time", "sexe", "spc", "spc*sexe", "spc²")
+
+# Random effects on time
+parameters21 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau","tau2", "mu")
+inits21 <- list(list(tau=1,tau2=1), list(tau=2,tau2=2))
+model21 <- bugs(datalist2, inits=inits21, parameters.to.save=parameters21,
+               model=paste(path.bug,"modelWin21.bug",sep=""),
                bugs.directory=path.WBS,               
                n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
-print(model2, digits=4)
+print(model21, digits=4) 
+# DIC=2964.1
+
+# Random effects on sexe
+parameters22 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau","tau2", "mu")
+inits22 <- list(list(tau=1,tau2=1), list(tau=2,tau2=2))
+model22 <- bugs(datalist2, inits=inits22, parameters.to.save=parameters22,
+               model=paste(path.bug,"modelWin22.bug",sep=""),
+               bugs.directory=path.WBS,               
+               n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+print(model22, digits=4) 
+# DIC=2881.2
+
+# Random effects on spc
+parameters23 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau","tau2", "mu")
+inits23 <- list(list(tau=1,tau2=1), list(tau=2,tau2=2))
+model23 <- bugs(datalist2, inits=inits23, parameters.to.save=parameters23,
+               model=paste(path.bug,"modelWin23.bug",sep=""),
+               bugs.directory=path.WBS,               
+               n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+print(model23, digits=4)
+# DIC=2970.0
+
+# Random effects on spc²
+parameters24 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau","tau2", "mu")
+inits24 <- list(list(tau=1,tau2=1), list(tau=2,tau2=2))
+model24 <- bugs(datalist2, inits=inits24, parameters.to.save=parameters24,
+               model=paste(path.bug,"modelWin24.bug",sep=""),
+               bugs.directory=path.WBS,               
+               n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+print(model24, digits=4)
+# DIC=2986.1
+
+# Random effects sexe and intercept
+parameters221 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau","tau2", "tau3", "mu")
+inits221 <- list(list(tau=1,tau2=1, tau3=1), list(tau=2,tau2=2, tau3=2))
+model221 <- bugs(datalist2, inits=inits221, parameters.to.save=parameters221,
+                model=paste(path.bug,"modelWin221.bug",sep=""),
+                bugs.directory=path.WBS,               
+                n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+print(model221, digits=4) 
+# DIC=2682.4
+
+results2 <- t(as.data.frame(c(model221$mean[1],model221$mean[2],model221$mean[3],model221$mean[4],
+                             model221$mean[5],model221$mean[6])))
+colnames(results2) <- c("mean")
+rownames(results2) <- c("intercept", "time", "sexe", "spc", "spc*sexe", "spc²")

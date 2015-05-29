@@ -212,9 +212,53 @@ print(xtable(table.reg, digits=3, align=c("c","c","c"),caption="Results of the l
 As for the graphical analysis _spc_ has a negative impact on the salary (we consider here that the categories are ordered from 1 to 5). The variable _sexe_ has a quite important positive effect on the salary. It means that males are paid around 4 euros per hour more than females. The fact that the interaction between _sexe_ and _spc_ has a negative effect on the salary means that the positive effect of being a male does not counterbalance the negative impact of the _spc_. 
 
 
-# Bayesian model 
+# Gaussian Bayesian model 
 
-# Bayesian model with random effects
+```{r bug}
+library(R2WinBUGS)
+path.bug <- "C:/Users/Mathieu/Documents/Cours/2A/Erasmus/Cours/Bayesian analysis/Bayesian-Project/modelBug/"
+path.WBS <- "C:/Users/Mathieu/Documents/Logiciels/WinBuggs/WinBUGS14/"
+Iter <- 1000
+Burn <- 500
+Chain <- 2
+Thin <- 1
+n <- nrow(data)
+datalist <- list(salary=data$salary, time=data$time, sexe=data$sexe, spc=data$spc, n=n)
+datalist2 <- list(salary=data$salary,time=data$time, sexe=data$sexe, spc=data$spc, spc2=(data$spc)^2, n=n)
+```
+
+
+```{r model}
+parameters13 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau", "mu")
+inits13 <- list(list(tau=1), list(tau=5))
+model13 <- bugs(datalist2, inits=inits13, parameters.to.save=parameters13,model=paste(path.bug,"modelWin13.bug",sep=""),bugs.directory=path.WBS,n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+```
+
+```{r resultsmodel, results='asis'}
+results <- t(as.data.frame(c(model13$mean[1],model13$mean[2],model13$mean[3],model13$mean[4],
+             model13$mean[5],model13$mean[6])))
+colnames(results) <- c("mean")
+rownames(results) <- c("intercept", "time", "sexe", "spc", "spc*sexe", "spc²")
+print(xtable(results, digits=4, align=c("c","c"), caption="Mean for the Bayesian model."))
+```
+
+
+# Gaussian hierarchical Bayesian model
+
+```{r model2}
+parameters221 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau","tau2", "tau3", "mu")
+inits221 <- list(list(tau=1,tau2=1, tau3=1), list(tau=2,tau2=2, tau3=2))
+model221 <- bugs(datalist2, inits=inits221, parameters.to.save=parameters221,model=paste(path.bug,"modelWin221.bug",sep=""),bugs.directory=path.WBS,n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+```
+
+```{r resultsmodel2, results='asis'}
+results2 <- t(as.data.frame(c(model221$mean[1],model221$mean[2],model221$mean[3],model221$mean[4],
+                             model221$mean[5],model221$mean[6])))
+colnames(results2) <- c("mean")
+rownames(results2) <- c("intercept", "time", "sexe", "spc", "spc*sexe", "spc²")
+print(xtable(results2, digits=4, align=c("c","c"), caption="Mean for the hierarchical model."))
+```
+
 
 # Conclusion
 
