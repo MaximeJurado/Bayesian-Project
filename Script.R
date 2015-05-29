@@ -264,6 +264,11 @@ res<-c(s10,s11,s12,s13)
 
 tab1 <- data.frame(DIC,res)
 
+print(xtable(tab1,align=c("c","c","c"),caption="Table for the selection of the Bayesian models. 
+             \\label{tableselectionmodel}"))
+
+
+# Hierarchical Bayesian model ---------------------------------------------
 
 # Random effects on time
 parameters21 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau","tau2", "mu")
@@ -330,7 +335,7 @@ results2 <- t(as.data.frame(c(model221$mean[1],model221$mean[2],model221$mean[3]
 colnames(results2) <- c("mean")
 rownames(results2) <- c("intercept", "time", "sexe", "spc", "spc*sexe", "spc²")
 
-DIC2 <- c(2881.2,2964.1,2970.0,2986.1,2869.3,2682.4)
+DIC2 <- c(2962.9,2881.2,2964.1,2970.0,2986.1,2869.3,2682.4)
 
 pred22 <- model22$mean$mu
 res22 <- pred22 - salary
@@ -356,6 +361,9 @@ pred221 <- model221$mean$mu
 res221 <- pred221 - salary
 s221 <- sum(res221^2,na.rm=TRUE)
 
-res2 <- c(s22,s21,s23,s24,s241,s221)
+res2 <- c(s13,s22,s21,s23,s24,s241,s221)
 
 tab2 <- data.frame(DIC2,res2)
+
+print(xtable(tab2,align=c("c","c","c"),caption="Table for the selection of the hierarchical Bayesian models. 
+             \\label{tableselectionmodel}"))
