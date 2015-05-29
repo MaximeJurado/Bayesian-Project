@@ -1,0 +1,18 @@
+model{
+for(i in 1:n){
+salary[i]~dnorm(mu[i],tau)
+mu[i] <- alpha + (beta1+b[i])*time[i] + (beta2+b2[i])*sexe[i] + (beta3+b3[i])*spc[i] + beta4*spc[i]*sexe[i] 
+b[i] ~ dnorm(0,tau2)
+b2[i] ~ dnorm(0,tau3)
+b3[i] ~ dnorm(0,tau4)
+}
+tau~dgamma(0.01,0.01)
+alpha~dnorm(0,0.01)
+beta1~dnorm(0,0.01)
+beta2~dnorm(0,0.01)
+beta3~dnorm(0,0.01)
+beta4~dnorm(0,0.01)
+tau2~dgamma(0.01, 0.01)
+tau3~dgamma(0.01, 0.01)
+tau4~dgamma(0.01, 0.01)
+}
