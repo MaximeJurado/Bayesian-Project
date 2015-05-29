@@ -1,11 +1,10 @@
 ---
 title: "Salaries in the industry, trade and services in 2011"
 author: "Maxime Jurado and Mathieu Marauri"
-date: "Tuesday, May 26, 2015"
 output:
   pdf_document:
     fig_caption: yes
-    keep_tex: no
+    keep_tex: yes
     number_sections: no
     toc: yes
 header-includes: \usepackage{float} \usepackage{graphicx}
@@ -44,7 +43,11 @@ attach(data)
 salary<-as.numeric(salary)
 ```
 
+\newpage
+
 # Abstract
+
+We analyzed the impact of the gender, socio-professional categories and time (part-time / full-time job) on the salary. We performed Bayesian Gaussian Regression and Gaussian hierarchical Bayesian regression (with random effects) to carry this study. Both of them leaded to same conclusion. If we order the socio-professional categories from 1 to 5, 1 being considered the "best", people from category 1 will earn more than people in 5. We also see that men earn more than women.
 
 # Introduction
 
@@ -70,16 +73,16 @@ The salary is the average gross income for an hour. For instance it can be the a
 
 In the original dataset there were a cell by combination of the different variables. It was built so that no cell contains less than 5 entries and that no entry would represent more than 80% of the total. Some data are missing due to statistical privacy. It is the case for the id 8 which is the sector of Transportation equipment manufacture.
 
+\newpage
 
 # Statistical methods
 
-In this study several Bayesian models will be performed, first a Gaussian Bayesian model then a hierarchical Bayesian model. In both cases covariateswill be add to an initial model and by comparing the Deviance Information Criterion or DIC. Since a model with more parameters will always be preferrable to a "simpler" one, parsimony will also be used to select the best model. The goal is to have the best model but also the one that is 
+In this study several Bayesian models will be performed, first a Gaussian Bayesian model then a hierarchical Bayesian model. In both cases covariates will be add to an initial model and by comparing the Deviance Information Criterion or DIC. Since a model with more parameters will always be preferable to a "simpler" one, parsimony will also be used to select the best model. The goal is to have the best model but also the one that is 
 
 ## Gaussian Bayesian regression
 
-In the Gassian Bayesian model the point is to get the mean effect of the covariates on the salary. By performing such a model one wants to know how the covariates impact the salary. Among the different models that can be performed the best one will be used as the initial model in the hierarchical Bayesian models selection. The Gaussian Bayesian model is of this form:
+In the Gaussian Bayesian model the point is to get the mean effect of the covariates on the salary. By performing such a model one wants to know how the covariates impact the salary. Among the different models that can be performed the best one will be used as the initial model in the hierarchical Bayesian models selection. The Gaussian Bayesian model is of this form:
 
-TODO b2
 \begin{centering}
 
   $Y|X ~ N(\beta X,\tau_1)$
@@ -90,11 +93,11 @@ TODO b2
 
 \end{centering}
 
-The parameter $\beta$ is a vector and X is the matrix of the covaiates. The statistical model Gaussian with a linear expression of the covarites and the intercept as a mean and a variance of $\tau_1$. $\beta$ also follows a Gaussian distribution. Finally $\tau_2$ follows a Gamma with parameters a and b that are fixed to 0.01.
+The parameter $\beta$ is a vector and X is the matrix of the covariates. The statistical model Gaussian with a linear expression of the covariates and the intercept as a mean and a variance of $\tau_1$. $\beta$ also follows a Gaussian distribution. Finally $\tau_2$ follows a Gamma with parameters a and b that are fixed to 0.01.
 
 ## Gaussian hierarchical Bayesian regression
 
-A hierarchical Bayesian model is a model with random effects. Those random effects allow the model to add variance to the estimtates of the parameters of the covariates. It means that each sector has different values for the estimates of the covariates. This way each sector has more precise estimates and it is possible to see the differences between sectors. 
+A hierarchical Bayesian model is a model with random effects. Those random effects allow the model to add variance to the estimates of the parameters of the covariates. It means that each sector has different values for the estimates of the covariates. This way each sector has more precise estimates and it is possible to see the differences between sectors. 
 
 The initial model is the Gaussian Bayesian model that was selected. Then random effects are added to this model and the best model is selected based on the same selection process than before. 
 
@@ -103,7 +106,7 @@ The Gaussian hierarchical model is designed as follow:
 
 \begin{centering}
 
-  $Y|X ~ N(\beta X+b_i X_r,\tau_1)$
+  $Y|X ~ N(\beta X + b_{1i} X_r + b_{2i},\tau_1)$
   
   $\Pi(\beta) ~ N(\mu,\tau_2)$
   
@@ -115,8 +118,9 @@ The Gaussian hierarchical model is designed as follow:
 
 \end{centering}
 
-As previously X is a matrix of the covariate and $X_r$ is also a matrix of the covariate but it may be different from X since random effects can be added on different covariates. Again as before $a_1, b_1, a_2 and b_2$ ae all equal to 0.01.  
+As previously X is a matrix of the covariates and $X_r$ is also a matrix of the covariates but it may be different from X since random effects can be added on different covariates. Again as before $a_1, b_1, a_2 and b_2$ are all equal to 0.01.  
 
+\newpage
 
 # Descriptive analysis
 
@@ -140,7 +144,9 @@ ggplot(datamean, aes(spc, salaryMean)) + facet_wrap(facets=~ id, ncol=10) + geom
 
 As seen previously _SPC_ seems to have a negative impact on the salary for every sectors but sector 6 (Manufacture of food, drink and tobacco based products), sector 21 (Information and communication) and sector 30 (Arts and entertainment). This may be due to the definitions of the SPC. In most of the sectors they are ordered from 1 to 5 but in some other sectors this order can be different. 
 
-TODO spc2
+One can see that the relation between _spc_ and _salary_ seems to be quadratic. Therefore it could be useful to add a quadratic part to the _spc_ variable in the next regression models. 
+
+\newpage
 
 ## Influence of the variable _time_
 
@@ -182,17 +188,17 @@ One can see that the p-values for the tests performed on the whole dataset, on t
 
 ## Influence of the variable _sexe_
 
-TODO: legend is too big
-
 Inequality in the salary regarding the gender is a matter of discussion in France. The issue is that salaries are said to be higher for males than they are for females. Therefore some differences are expected.
 
 The means of the salaries for females and males were plotted for each Socio-Professional Category and it seems that no differences appear except maybe for the category 1. Figure \ref{barplotsexespc} shows the results.
 ```{r barplotsexespc, fig.cap="Barplot of the mean salary by sexe for each category. \\label{barplotsexespc}", fig.pos="H", fig.align='left'}
 data.m <- aggregate(data.frame(salary.m = data$salary), by = list(sexe = data$sexe, spc = data$spc,time = data$time), mean, na.rm=TRUE)
-ggplot(data.m,aes(x=factor(sexe),y=salary.m,fill=factor(sexe))) + geom_bar(stat = "identity") + facet_wrap(~ spc) + labs(x="Sexe", y="Mean salary") +scale_fill_discrete(name="Gender",  labels=c("Female", "Male"),guide = guide_legend(reverse=TRUE)) + theme(plot.title = element_text(size=16, face="bold"), legend.title = element_text(colour="black",size=18, face="bold"),legend.position=c(.85,.15),legend.background = element_rect(size=25),legend.text = element_text(size = 16))
+ggplot(data.m,aes(x=factor(sexe),y=salary.m,fill=factor(sexe))) + geom_bar(stat = "identity") + facet_wrap(~ spc) + labs(x="Sexe", y="Mean salary") +scale_fill_discrete(name="Gender",  labels=c("Female", "Male"),guide = guide_legend(reverse=TRUE)) + theme(plot.title = element_text(size=16, face="bold"), legend.title = element_text(colour="black",size=14, face="bold"),legend.position=c(.85,.15),legend.background = element_rect(size=25),legend.text = element_text(size = 10))
 ```
 
 For every categories the mean salary for males seems to be higher than the mean salary for females. A t-test confirmed this result. A significant mean of the differences of 2 was observed. It means that males have in mean a salary per hour higher by 2 euros than the one of the females.
+
+\newpage
 
 ## A linear regression
 
@@ -212,13 +218,14 @@ print(xtable(table.reg, digits=3, align=c("c","c","c"),caption="Results of the l
 
 As for the graphical analysis _spc_ has a negative impact on the salary (we consider here that the categories are ordered from 1 to 5). The variable _sexe_ has a quite important positive effect on the salary. It means that males are paid around 4 euros per hour more than females. The fact that the interaction between _sexe_ and _spc_ has a negative effect on the salary means that the positive effect of being a male does not counterbalance the negative impact of the _spc_. Finally _time_ has a small positive impact. It means that when you work in a full-time job, you earn around 0.8 euros more than a part-time job.
 
+\newpage
 
 # Gaussian Bayesian model 
 
 ```{r bug}
 library(R2WinBUGS)
-path.bug <- "C:/Users/Maxime/Desktop/Cours ERASMUS/Bayesian Analysis/Project/Bayesian-Project/modelBug/"
-path.WBS <- "C:/Users/Maxime/Desktop/Cours ERASMUS/Bayesian Analysis/Project/Bayesian-Project/winbugs14/WinBUGS14/"
+path.bug <- "C:/Users/Mathieu/Documents/Cours/2A/Erasmus/Cours/Bayesian analysis/Bayesian-Project/modelBug/"
+path.WBS <- "C:/Users/Mathieu/Documents/Logiciels/WinBuggs/WinBUGS14/"
 
 Iter <- 1000
 Burn <- 500
@@ -229,10 +236,24 @@ datalist <- list(salary=data$salary, time=data$time, sexe=data$sexe, spc=data$sp
 datalist2 <- list(salary=data$salary,time=data$time, sexe=data$sexe, spc=data$spc, spc2=(data$spc)^2, n=n)
 ```
 
-Before going trough the interpretation of a Bayesian Gaussian Regression, we have to choose which model is the best. For that we start with a simple model with three covariate: _time_, _sexe_ and _spc_. Then we tried to add _$spc^2$_ as explained in the descriptive part. Finally we try to add some interaction between covariates. To decide which model is the best, we use the DIC criteria and the error from the prediction.
+Before going trough the interpretation of a Bayesian Gaussian Regression, we have to choose which model is the best. For that we start with a simple model with three covariates: _time_, _sexe_ and _spc_. Then we tried to add _$spc^2$_ as explained in the descriptive part. Finally we try to add some interaction between covariates. To decide which model is the best, we use the DIC criteria and the error from the prediction.
 The results are presented below
 
-TABLE HERE
+\begin{table}[ht]
+\centering
+\begin{tabular}{ccc}
+  \hline
+ & DIC & res \\ 
+  \hline
+$\alpha + \beta_{1} time + \beta_2 sexe + \beta_3 spc$ & 3455.60 & 9686.56 \\ 
+$\alpha + \beta_{1} time + \beta_2 sexe + \beta_3 spc + \beta_4 spc^2$ & 2988.00 & 4518.68 \\ 
+$\alpha + \beta_{1} time + \beta_2 sexe + \beta_3 spc + \beta_4 spc*sexe$ & 3444.80 & 9492.39 \\ 
+ $\alpha + \beta_{1} time + \beta_2 sexe + \beta_3 spc + \beta_4 spc*sexe + \beta_5 spc^2$ & 2962.90 & 4324.22 \\ 
+   \hline
+\end{tabular}
+\caption{Table for the selection of the Bayesian models. 
+             \label{tableselectionmodel}} 
+\end{table}
 
 As you can see, the best model is the one with _$spc^2$_ and the interaction between _spc_ and _sexe_. However the sum of squares is still big. It means that our model does not predict well the future values. That is why we try to add some random effects in the next part. Now we have selected the model, we can go to the interpretation.
 
@@ -256,9 +277,26 @@ print(xtable(results, digits=4, align=c("c","c"), caption="Mean for the Bayesian
 
 # Gaussian hierarchical Bayesian model
 
-As for the Bayesian Gaussian Regression, we have to choose here the best model. We proceed the same way, trying to ass random effects to one covariate at a time. But at the end, we do not want to overparametrize the model, that is why we limit this study to 2 random effects maximum.
+As for the Bayesian Gaussian Regression, we have to choose here the best model. We proceed the same way, trying to ass random effects to one covariate at a time. But at the end, we do not want to over-parameterize the model, that is why we limit this study to 2 random effects maximum.
 
-TABLE HERE
+\begin{table}[ht]
+\centering
+\begin{tabular}{ccc}
+  \hline
+ & DIC2 & res2 \\ 
+  \hline
+$\alpha + \beta_{1} time + \beta_2 sexe + \beta_3 spc + \beta_4 spc*sexe + \beta_5 spc^2$ & 2962.90 & 4324.22 \\ 
+ $\alpha + \beta_{1} time + (\beta_2 + b_{i}) sexe + \beta_3 spc + \beta_4 spc*sexe + \beta_5 spc^2$ & 2881.20 & 2279.24 \\ 
+ $\alpha + (\beta_{1} + b_{i}) time + \beta_2 sexe + \beta_3 spc + \beta_4 spc*sexe + \beta_5 spc^2$ & 2964.10 & 4048.85 \\ 
+ $\alpha + \beta_{1} time + \beta_2 sexe + (\beta_3 + b_{i}) spc + \beta_4 spc*sexe + \beta_5 spc^2$ & 2970.00 & 4208.86 \\ 
+ $\alpha + \beta_{1} time + \beta_2 sexe + \beta_3 spc + \beta_4 spc*sexe + (\beta_5 + b_{i}) spc^2$ & 2986.10 & 4076.92 \\ 
+ $\alpha + b_{1i} + \beta_{1} time + \beta_2 sexe + \beta_3 spc + \beta_4 spc*sexe + (\beta_5 + b_{2i}) spc^2$ & 2869.30 & 1901.95 \\ 
+ $\alpha + b_{1i} + \beta_{1} time + \beta_2 sexe + \beta_3 spc + \beta_4 spc*sexe + (\beta_5 + b_{2i}) spc^2$ & 2682.40 & 1104.37 \\ 
+   \hline
+\end{tabular}
+\caption{Table for the selection of the hierarchical Bayesian models. 
+             \label{tableselectionmodel2}} 
+\end{table}
 
 You can see that the model with random effects on the _Intercept_ and _sexe_ is the best. Furthermore, the sum of squares is lower than in the Bayesian Gaussian Regression. This is our final model. 
 
@@ -268,22 +306,23 @@ inits221 <- list(list(tau=1,tau2=1, tau3=1), list(tau=2,tau2=2, tau3=2))
 model221 <- bugs(datalist2, inits=inits221, parameters.to.save=parameters221,model=paste(path.bug,"modelWin221.bug",sep=""),bugs.directory=path.WBS,n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
 ```
 
-In table \ref{resultsmodel2}, the coefficients of our final model are presented. It can be seen that they do not differ a lot from the previous interpretations. The main part here is the random effects on _Intercept_ and _sexe_. It means that we add variability for each subject. We can observe differences of each sector. But here, the variance added by the random effects does not the effect of a covariate. The sign of its coefficient will not change. The global effect will be the same.
+In table \ref{resultsmodel2}, the coefficients of our final model are presented. It can be seen that they do not differ a lot from the previous interpretations. The main part here is the random effects on _Intercept_ and _sexe_. It means that we add variability for each subject. We can observe differences of each sector. But here, the variance added by the random effects does not change the effect of a covariate. The sign of its coefficient will not change. The global effect will be the same.
 
 
 ```{r resultsmodel2, results='asis'}
-results2 <- t(as.data.frame(c(model221$mean[1],model221$mean[2],model221$mean[3],model221$mean[4],
-                             model221$mean[5],model221$mean[6])))
+results2 <- t(as.data.frame(c(model221$mean[1],model221$mean[2],model221$mean[3],model221$mean[4],model221$mean[5],model221$mean[6])))
 colnames(results2) <- c("mean")
 rownames(results2) <- c("intercept", "time", "sexe", "spc", "spc*sexe", "spc²")
 print(xtable(results2, digits=4, align=c("c","c"), caption="Mean for the hierarchical model. \\label{resultsmodel2}"))
 ```
 
+\newpage
 
 # Conclusion
 
-TODO further analysis
-TODO difficulties encountered
+The aim of this study was to describe the structure of the salary per hour in France by performing Bayesian models. After a descriptive analysis that gave us insights on the structure of the salary we performed several Bayesian regressions. The selection process led us to select a hierarchical model over a simple Bayesian model. Based on all of this it appeared that the Socio-Professional Category has a great impact on the salary; being in the first category -Higher managerial and professional positions- insures a better salary. The second major effect that we observed is the one of the gender. Males have higher salary than women. Those results were observed both in Gaussian Bayesian regressions and in hierarchical Gaussian Bayesian regressions. 
+
+As a further analysis one could try to do a cluster analysis in order to regroup the sectors that are similar in the way the salary is structured. Some data could be add to the dataset in order to specify the structure of the salary even more. For instance information on the age and on the number of workers by cells.
 
 # Bibliography
 
@@ -291,6 +330,7 @@ TODO difficulties encountered
 * [Introduction fo WinBUGS](http://homepage.stat.uiowa.edu/~gwoodwor/BBIText/AppendixBWinbugs.pdf)
 * [WinBUGS Training](https://www.uclouvain.be/cps/ucl/doc/stat/documents/WinBUGSTraining_smcs.pdf)
 
+\newpage
 
 # Appendix
 
@@ -315,3 +355,419 @@ print(xtable(sectors, align=c("c","c"), caption="Classification table of the Sec
 Return to section \nameref{dataset}.
 
 ## Code
+
+### WinBUGS code
+
+```{r code winBUGS,echo=TRUE,eval=FALSE}
+model{
+for(i in 1:n){
+salary[i]~dnorm(mu[i],tau)
+mu[i] <- alpha + beta1*time[i] + beta2*sexe[i] + beta3*spc[i] + beta4*spc[i]*sexe[i] + 
+beta5*spc2[i]
+}
+tau~dgamma(0.01,0.01)
+alpha~dnorm(0,0.01)
+beta1~dnorm(0,0.01)
+beta2~dnorm(0,0.01)
+beta3~dnorm(0,0.01)
+beta4~dnorm(0,0.01)
+beta5~dnorm(0,0.01)
+}
+
+###
+
+model{
+for(i in 1:n){
+salary[i]~dnorm(mu[i],tau)
+mu[i] <- alpha + beta1*time[i] + (beta2+b[i])*sexe[i] + beta3*spc[i] + beta4*spc[i]*sexe[i] +
+beta5*spc2[i] + b1[i]
+b[i]~dnorm(0,tau2)
+b1[i]~dnorm(0,tau3)
+}
+tau~dgamma(0.01,0.01)
+alpha~dnorm(0,0.01)
+beta1~dnorm(0,0.01)
+beta2~dnorm(0,0.01)
+beta3~dnorm(0,0.01)
+beta4~dnorm(0,0.01)
+beta5~dnorm(0,0.01)
+tau2~dgamma(0.01, 0.01)
+tau3~dgamma(0.01, 0.01)
+}
+```
+
+
+### R code
+
+```{r code,echo=TRUE,eval=FALSE}
+# Packages ----------------------------------------------------------------
+
+library("ggplot2")
+library("xtable")
+
+
+# Data --------------------------------------------------------------------
+
+data <- read.csv2("Data/data.csv",header=TRUE)
+data <- subset(data,time!="TP")
+
+data1 <- data[rep(1:nrow(data),each=5),]
+data2 <- data.frame(data$X1,data$X2,data$X3,data$X4,data$X5)
+data3 <- data.frame(data1$id,data1$time,data1$sexe)
+
+vec <- NULL
+for(i in 1:nrow(data2)){
+  vec1 <- data2[i,]
+  vec <- c(vec,t(vec1))
+}
+
+vec <- as.data.frame(vec)
+data4 <- data.frame(data3,vec)
+cat <- c(rep(c(1,2,3,4,5),132))
+
+data <- data.frame(data4,cat)
+colnames(data) <- c("id","time","sexe","salary","spc")
+attach(data)
+salary<-as.numeric(salary)
+sexe <- as.factor(sexe)
+time <- as.factor(time)
+spc <- as.factor(spc)
+
+
+# Descriptive analysis ----------------------------------------------------
+
+theme <- theme(plot.title = element_text(size=16, face="bold"), axis.title.x = element_text(
+              size=15), axis.title.y = element_text(size=15), axis.text.x = element_text(
+              size=15, face="bold"),axis.text.y = element_text(size=15, face="bold"))
+
+# SPC
+ggplot(data, aes(factor(spc), salary)) + geom_boxplot(aes(fill = factor(spc))) + 
+  xlab("Socio-Professional Category") + ylab("Salary") + guides(fill=guide_legend(title=NULL)) + 
+  ggtitle("Boxplot of the salary for each category") + theme
+
+datamean <- aggregate(data.frame(salaryMean = data$salary), by = list(id = data$id, spc = data$spc), 
+                      mean)
+
+ggplot(datamean, aes(spc, salaryMean)) + facet_wrap(facets=~ id, ncol=10) + 
+  geom_line(colour="blue") + geom_point(colour="red") + theme
+
+# Time
+ggplot(data, aes(factor(time), salary)) + geom_boxplot(aes(fill = factor(time))) +
+  labs(x="Time", y="Salary", title="Boxplot of the salary for each time") + theme +
+  scale_fill_manual(name="Time", values=c("orange", "mediumpurple"), labels=c("0"="Part-time", 
+  "1"="Full-time"))
+  
+ggplot(data, aes(factor(spc), salary)) + geom_boxplot(aes(fill = factor(time))) +
+  labs(x="SPC", y="Salary", title="Boxplot of the salary for each SPC and each time") + 
+  theme + scale_fill_manual(name="Time", values=c("orange", "mediumpurple"), labels=c("0"="Part-time", 
+  "1"="Full-time"))
+
+## Test on the differences between time1 and time0.
+data.sort <- data[with(data, order(id, spc)), ]
+row.names(data.sort) <- c(1:nrow(data.sort))
+data.sort.time0 <- NULL
+data.sort.time1 <- NULL
+for(i in 1:nrow(data.sort)){
+  newline <- data.sort[i,]
+  if(i%%2==0){
+    data.sort.time0 <- rbind(data.sort.time0, newline)
+  }
+  else{
+    data.sort.time1 <- rbind(data.sort.time1, newline)
+  }
+}
+data.time.paired <- as.data.frame(cbind(data.sort.time0$spc,data.sort.time0[,4],data.sort.time1[,4]))
+colnames(data.time.paired) <- c("spc", "salary0", "salary1")
+
+test.time.all <- t.test(data.time.paired[,2], data.time.paired[,3], paired=TRUE)
+
+data.time.paired.spc1 <- subset(data.time.paired, spc==1)
+data.time.paired.spc2 <- subset(data.time.paired, spc==2)
+data.time.paired.spc3 <- subset(data.time.paired, spc==3)
+data.time.paired.spc4 <- subset(data.time.paired, spc==4)
+data.time.paired.spc5 <- subset(data.time.paired, spc==5)
+
+test.time.spc1 <- t.test(data.time.paired.spc1[,2], data.time.paired.spc1[,3], paired=TRUE)
+test.time.spc2 <- t.test(data.time.paired.spc2[,2], data.time.paired.spc2[,3], paired=TRUE)
+test.time.spc3 <- t.test(data.time.paired.spc3[,2], data.time.paired.spc3[,3], paired=TRUE)
+test.time.spc4 <- t.test(data.time.paired.spc4[,2], data.time.paired.spc4[,3], paired=TRUE)
+test.time.spc5 <- t.test(data.time.paired.spc5[,2], data.time.paired.spc5[,3], paired=TRUE)
+
+table.test.time <- data.frame(c("dataset","category 1","category 2","category 3","category 4",
+                   "category 5"),c(test.time.all$p.value,test.time.spc1$p.value,
+                   test.time.spc2$p.value,test.time.spc3$p.value,test.time.spc4$p.value,
+                   test.time.spc5$p.value), c(test.time.all$estimate,test.time.spc1$estimate,
+                   test.time.spc2$estimate,test.time.spc3$estimate,test.time.spc4$estimate,
+                   test.time.spc5$estimate))
+colnames(table.test.time) <- c("","p-value","mean of the differences")
+print(xtable(table.test.time, align=c("c","c","c","c"), caption="P-values and mean of the differences 
+             of the tests. \\label{tabletesttime}", digits=3))
+
+salary.mean.spc <- aggregate(data.frame(salaryMean=data$salary),by=list(time=data$time,
+                             spc=data$spc),mean,na.rm=TRUE)
+(table.test.time[2,3]/salary.mean.spc[2,3])*100
+
+# Sexe
+data.m <- aggregate(data.frame(salary.m = data$salary), by = list(sexe = data$sexe, 
+                    spc = data$spc,time = data$time), mean, na.rm=TRUE)
+
+ggplot(subset(data.m,time==0),aes(x=factor(sexe),y=salary.m,fill=factor(sexe))) + 
+  geom_bar(stat = "identity") + facet_wrap(~ spc) + 
+  labs(title="Mean salary by gender and spc at time=0 (Part-Time)", x="Sexe", y="Mean salary") +
+  scale_fill_discrete(name="Gender",  labels=c("Female", "Male"),guide = guide_legend(reverse=TRUE)) + 
+  theme(plot.title = element_text(size=16, face="bold"), legend.title = element_text(colour="black",
+  size=18, face="bold"),legend.position=c(.85,.15),legend.background = element_rect(size=25),
+  legend.text = element_text(size = 16))
+ 
+ggplot(subset(data.m,time==0),aes(x=factor(sexe),y=salary.m,fill=factor(sexe))) + 
+  geom_bar(stat = "identity") + facet_wrap(~ spc) + 
+  labs(title="Mean salary by gender and spc at time=1 (Full Time)", x="Sexe", y="Mean salary") +
+  scale_fill_discrete(name="Gender",  labels=c("Female", "Male"),guide = guide_legend(reverse=TRUE)) + 
+  theme(plot.title = element_text(size=16, face="bold"),legend.title = element_text(colour="black",
+  size=18, face="bold"),legend.position=c(.85,.15),legend.background = element_rect(size=25),
+  legend.text = element_text(size = 16))
+
+ggplot(data.m,aes(x=factor(sexe),y=salary.m,fill=factor(sexe))) + geom_bar(stat = "identity") + 
+  facet_wrap(~ spc) + labs(title="Mean salary by gender and spc", x="Sexe", y="Mean salary") + 
+  scale_fill_discrete(name="Gender",labels=c("Female","Male"),guide = guide_legend(reverse=TRUE)) +
+  theme(plot.title = element_text(size=16, face="bold"),legend.title = element_text(colour="black",
+  size=18, face="bold"),legend.position=c(.85,.15),legend.background = element_rect(size=25),
+  legend.text = element_text(size = 16))
+
+## Test on the differences between time1 and time0.
+data.sort2 <- data[with(data, order(id, spc, time)), ]
+row.names(data.sort2) <- c(1:nrow(data.sort2))
+data.sort.sexe0 <- NULL
+data.sort.sexe1 <- NULL
+for(i in 1:nrow(data.sort2)){
+  newline <- data.sort2[i,]
+  if(i%%2==0){
+    data.sort.sexe0 <- rbind(data.sort.sexe0, newline)
+  }
+  else{
+    data.sort.sexe1 <- rbind(data.sort.sexe1, newline)
+  }
+}
+data.sexe.paired <- as.data.frame(cbind(data.sort.sexe0$spc,data.sort.sexe0[,4],data.sort.sexe1[,4]))
+colnames(data.sexe.paired) <- c("spc", "salary0", "salary1")
+
+test.sexe.all <- t.test(data.sexe.paired[,2], data.sexe.paired[,3], paired=TRUE)
+
+# Linear regression
+data.spc2 <- cbind(data,data$spc^2)
+colnames(data.spc2) <- c("id","time","sexe","salary","spc","spc2")
+
+reg <- lm(salary~time+sexe*spc, data=data)
+summary(reg)
+
+reg.spc2 <- lm(salary~time+sexe*spc+spc2, data=data.spc2)
+summary(reg.spc2)
+
+anova(reg,reg.spc2)
+
+table.reg <- data.frame(coefficients(reg.spc2),summary(reg.spc2)[[4]][,4])
+colnames(table.reg) <- c("estimates","p-value")
+
+
+# Missings ----------------------------------------------------------------
+
+dataMissing <- data[which(is.na(data$salary)),]
+
+length(dataMissing)
+
+id1 <- data[which(data$id==1),]
+# Missing in the data
+id8 <- data[which(data$id==8),]
+# Secret data
+id22 <- data[which(data$id==22),]
+# Missing in the data
+
+
+# Bayesian model ----------------------------------------------------------
+
+library(R2WinBUGS)
+
+path.bug <- "C:/Users/Mathieu/Documents/Cours/2A/Erasmus/Cours/Bayesian analysis/Bayesian-Project/modelBug/"
+path.WBS <- "C:/Users/Mathieu/Documents/Logiciels/WinBuggs/WinBUGS14/"
+
+Iter <- 1000
+Burn <- 500
+Chain <- 2
+Thin <- 1
+n <- nrow(data)
+
+datalist <- list(salary=data$salary, time=data$time, sexe=data$sexe, spc=data$spc, n=n)
+datalist2 <- list(salary=data$salary,time=data$time, sexe=data$sexe, spc=data$spc, 
+                  spc2=(data$spc)^2, n=n)
+
+# sexe,time and spc
+parameters10 <- c("alpha","beta1","beta2","beta3","tau","mu")
+inits10 <- list(list(tau=1),list(tau=5))
+model10 <- bugs(datalist,inits=inits10,parameters.to.save=parameters10,
+               model=paste(path.bug,"modelWin10.bug",sep=""),bugs.directory=path.WBS,
+               n.iter=(Iter*Thin+Burn),n.burnin=Burn,n.thin=Thin,n.chains=Chain, DIC=F,debug=T)
+print(model10, digits=4)
+# DIC=3455.6
+
+# Sexe, time, spc and spc²
+parameters11 <- c("alpha", "beta1", "beta2", "beta3","beta4", "tau", "mu")
+inits11 <- list(list(tau=1), list(tau=5))
+model11 <- bugs(datalist2, inits=inits11, parameters.to.save=parameters11,
+                model=paste(path.bug,"modelWin11.bug",sep=""),
+                bugs.directory=path.WBS,               
+                n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+print(model11, digits=4)
+# DIC=2987.5
+
+# sexe, time, spc and spc*sexe
+parameters12 <- c("alpha", "beta1", "beta2", "beta3","beta4", "tau", "mu")
+inits12 <- list(list(tau=1), list(tau=5))
+model12 <- bugs(datalist, inits=inits12, parameters.to.save=parameters12,
+                model=paste(path.bug,"modelWin12.bug",sep=""),
+                bugs.directory=path.WBS,               
+                n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+print(model12, digits=4)
+# DIC=3444.8
+
+# sexe, time, spc, spc*sexe and spc²
+parameters13 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau", "mu")
+inits13 <- list(list(tau=1), list(tau=5))
+model13 <- bugs(datalist2, inits=inits13, parameters.to.save=parameters13,
+             model=paste(path.bug,"modelWin13.bug",sep=""),
+             bugs.directory=path.WBS,               
+             n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+print(model13, digits=4) 
+# DIC=2962.9
+
+results <- t(as.data.frame(c(model13$mean[1],model13$mean[2],model13$mean[3],model13$mean[4],
+             model13$mean[5],model13$mean[6])))
+colnames(results) <- c("mean")
+rownames(results) <- c("intercept", "time", "sexe", "spc", "spc*sexe", "spc²")
+
+DIC <- c(3455.6,2988.0,3444.8,2962.9)
+
+pred10 <- model10$mean$mu
+res10 <- pred10 - salary
+s10 <- sum(res10^2,na.rm=TRUE)
+
+pred11 <- model11$mean$mu
+res11 <- pred11 - salary
+s11 <- sum(res11^2,na.rm=TRUE)
+
+pred12 <- model12$mean$mu
+res12 <- pred12 - salary
+s12 <- sum(res12^2,na.rm=TRUE)
+
+pred13 <- model13$mean$mu
+res13 <- pred13 - salary
+s13 <- sum(res13^2,na.rm=TRUE)
+
+res<-c(s10,s11,s12,s13)
+
+tab1 <- data.frame(DIC,res)
+
+print(xtable(tab1,align=c("c","c","c"),caption="Table for the selection of the Bayesian models. 
+             \\label{tableselectionmodel}"))
+
+
+# Hierarchical Bayesian model ---------------------------------------------
+
+# Random effects on time
+parameters21 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau","tau2", "mu")
+inits21 <- list(list(tau=1,tau2=1), list(tau=2,tau2=2))
+model21 <- bugs(datalist2, inits=inits21, parameters.to.save=parameters21,
+               model=paste(path.bug,"modelWin21.bug",sep=""),
+               bugs.directory=path.WBS,               
+               n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+print(model21, digits=4) 
+# DIC=2964.1
+
+# Random effects on sexe
+parameters22 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau","tau2", "mu")
+inits22 <- list(list(tau=1,tau2=1), list(tau=2,tau2=2))
+model22 <- bugs(datalist2, inits=inits22, parameters.to.save=parameters22,
+               model=paste(path.bug,"modelWin22.bug",sep=""),
+               bugs.directory=path.WBS,               
+               n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+print(model22, digits=4) 
+# DIC=2881.2
+
+# Random effects on spc
+parameters23 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau","tau2", "mu")
+inits23 <- list(list(tau=1,tau2=1), list(tau=2,tau2=2))
+model23 <- bugs(datalist2, inits=inits23, parameters.to.save=parameters23,
+               model=paste(path.bug,"modelWin23.bug",sep=""),
+               bugs.directory=path.WBS,               
+               n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+print(model23, digits=4)
+# DIC=2970.0
+
+# Random effects on spc²
+parameters24 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau","tau2", "mu")
+inits24 <- list(list(tau=1,tau2=1), list(tau=2,tau2=2))
+model24 <- bugs(datalist2, inits=inits24, parameters.to.save=parameters24,
+               model=paste(path.bug,"modelWin24.bug",sep=""),
+               bugs.directory=path.WBS,               
+               n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+print(model24, digits=4)
+# DIC=2986.1
+
+# Random effects on spc² and the intercept
+parameters241 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau","tau2", "tau3", "mu")
+inits241 <- list(list(tau=1,tau2=1, tau3=1), list(tau=2,tau2=2, tau3=2))
+model241 <- bugs(datalist2, inits=inits241, parameters.to.save=parameters241,
+                 model=paste(path.bug,"modelWin241.bug",sep=""),
+                 bugs.directory=path.WBS,               
+                 n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+print(model241, digits=4) 
+# DIC=2869.3
+
+# Random effects sexe and intercept
+parameters221 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau","tau2", "tau3", "mu")
+inits221 <- list(list(tau=1,tau2=1, tau3=1), list(tau=2,tau2=2, tau3=2))
+model221 <- bugs(datalist2, inits=inits221, parameters.to.save=parameters221,
+                model=paste(path.bug,"modelWin221.bug",sep=""),
+                bugs.directory=path.WBS,               
+                n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+print(model221, digits=4) 
+# DIC=2682.4
+
+results2 <- t(as.data.frame(c(model221$mean[1],model221$mean[2],model221$mean[3],model221$mean[4],
+                             model221$mean[5],model221$mean[6])))
+colnames(results2) <- c("mean")
+rownames(results2) <- c("intercept", "time", "sexe", "spc", "spc*sexe", "spc²")
+
+DIC2 <- c(2962.9,2881.2,2964.1,2970.0,2986.1,2869.3,2682.4)
+
+pred22 <- model22$mean$mu
+res22 <- pred22 - salary
+s22 <- sum(res22^2,na.rm=TRUE)
+
+pred21 <- model21$mean$mu
+res21 <- pred21 - salary
+s21 <- sum(res21^2,na.rm=TRUE)
+
+pred23 <- model23$mean$mu
+res23 <- pred23 - salary
+s23 <- sum(res23^2,na.rm=TRUE)
+
+pred24 <- model24$mean$mu
+res24 <- pred24 - salary
+s24 <- sum(res24^2,na.rm=TRUE)
+
+pred241 <- model241$mean$mu
+res241 <- pred241 - salary
+s241 <- sum(res241^2,na.rm=TRUE)
+
+pred221 <- model221$mean$mu
+res221 <- pred221 - salary
+s221 <- sum(res221^2,na.rm=TRUE)
+
+res2 <- c(s13,s22,s21,s23,s24,s241,s221)
+
+tab2 <- data.frame(DIC2,res2)
+
+print(xtable(tab2,align=c("c","c","c"),caption="Table for the selection of the hierarchical
+Bayesian models. \\label{tableselectionmodel}"))
+```
+

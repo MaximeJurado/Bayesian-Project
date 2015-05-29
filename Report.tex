@@ -1,0 +1,1114 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\ErrorTok}[1]{\textbf{{#1}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=blue,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{0}
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+\setlength{\droptitle}{-2em}
+  \title{Salaries in the industry, trade and services in 2011}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Maxime Jurado and Mathieu Marauri}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \date{}
+  \predate{}\postdate{}
+
+
+\usepackage{float} \usepackage{graphicx}
+
+
+\begin{document}
+
+
+\begin{titlepage}
+
+\mbox{}
+\begin{center}
+\Huge{Salaries in the industry, trade and services in 2011 in France}
+\end{center}
+\vspace*{1 in}
+
+\vspace*{2cm}\mbox{}
+
+\begin{center}
+\includegraphics[width=12cm]{logo_upc.jpg}
+\end{center}
+\smallskip
+\begin{center}
+\Large
+\begin{tabular}{c}
+\sc Facultat de Matem\`atiques i Estad\'istica\\
+\sc M\`aster en Estad\'istica i Investigaci\'o Operativa \\
+
+\end{tabular}
+\normalsize
+\end{center}
+\smallskip
+
+\vspace{3cm}
+
+\large
+  \begin{flushright}
+    \vspace*{1cm}\mbox{}
+$
+\begin{array}{lcl}
+\mbox{Author} &:& \mbox{Maxime Jurado and Mathieu Marauri}\\
+\end{array}
+$
+\end{flushright}
+
+\vspace*{0.5 in}
+
+\begin{center}
+Barcelona, Spain
+\end{center}
+\normalsize
+\end{titlepage}
+
+\newpage
+
+
+{
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\newpage
+
+\section{Abstract}\label{abstract}
+
+We analyzed the impact of the gender, socio-professional categories and
+time (part-time / full-time job) on the salary. We performed Bayesian
+Gaussian Regression and Gaussian hierarchical Bayesian regression (with
+random effects) to carry this study. Both of them leaded to same
+conclusion. If we order the socio-professional categories from 1 to 5, 1
+being considered the ``best'', people from category 1 will earn more
+than people in 5. We also see that men earn more than women.
+
+\section{Introduction}\label{introduction}
+
+The structure of the salary in the industry, the services or the trade
+is a matter of importance in the society. It can reflects some
+inequalities, regarding the gender for instance, or some tendencies. The
+aim of this study is to analyse the effect of several indicators such as
+the Socio-Professional Category or the gender on the salary.
+
+Performing such an analysis on data coming from France is for us really
+interesting because we have several preconceptions about the impact of
+the gender for example. Studying those data will allow us to either
+confirm or deny these preconceptions.
+
+By performing Bayesian models the effects of the indicators will be
+known. Those effects will be quantified. It will provide useful
+knowledge on the structure of the salary.
+
+\section{Dataset}\label{dataset}
+
+\label{dataset}
+
+The dataset comes from the \emph{Institut National de la Statistique et
+des Etudes Economiques} or INSEE in France. It is the statistical
+institute of France. The dataset contains 33 sectors of activity that
+are identified by the \emph{id} variable. The classification can be
+found in table \ref{tableIndexSectors}.
+
+The variables reported in this study are listed below:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Time is an indicator which takes value 1 for a full-time work and 0
+  for a part-time work. \emph{time}
+\item
+  Sexe is a binary variable with value 1 for male and 0 for female.
+  \emph{sexe}
+\item
+  Socio-Professional Category: it takes values between 1 and 5. Table
+  \ref{tableIndexSpc} shows the classification. \emph{spc}
+\item
+  Salary: it is the response variable. \emph{salary}
+\end{itemize}
+
+The salary is the average gross income for an hour. For instance it can
+be the average income of female employees working full-time in the
+extraction industry.
+
+In the original dataset there were a cell by combination of the
+different variables. It was built so that no cell contains less than 5
+entries and that no entry would represent more than 80\% of the total.
+Some data are missing due to statistical privacy. It is the case for the
+id 8 which is the sector of Transportation equipment manufacture.
+
+\newpage
+
+\section{Statistical methods}\label{statistical-methods}
+
+In this study several Bayesian models will be performed, first a
+Gaussian Bayesian model then a hierarchical Bayesian model. In both
+cases covariates will be add to an initial model and by comparing the
+Deviance Information Criterion or DIC. Since a model with more
+parameters will always be preferable to a ``simpler'' one, parsimony
+will also be used to select the best model. The goal is to have the best
+model but also the one that is
+
+\subsection{Gaussian Bayesian
+regression}\label{gaussian-bayesian-regression}
+
+In the Gaussian Bayesian model the point is to get the mean effect of
+the covariates on the salary. By performing such a model one wants to
+know how the covariates impact the salary. Among the different models
+that can be performed the best one will be used as the initial model in
+the hierarchical Bayesian models selection. The Gaussian Bayesian model
+is of this form:
+
+\begin{centering}
+
+  $Y|X ~ N(\beta X,\tau_1)$
+  
+  $\Pi(\beta) ~ N(\mu,\tau_2)$
+  
+  $\Pi(\tau_1) ~ Gamma(a,b)$
+
+\end{centering}
+
+The parameter \(\beta\) is a vector and X is the matrix of the
+covariates. The statistical model Gaussian with a linear expression of
+the covariates and the intercept as a mean and a variance of \(\tau_1\).
+\(\beta\) also follows a Gaussian distribution. Finally \(\tau_2\)
+follows a Gamma with parameters a and b that are fixed to 0.01.
+
+\subsection{Gaussian hierarchical Bayesian
+regression}\label{gaussian-hierarchical-bayesian-regression}
+
+A hierarchical Bayesian model is a model with random effects. Those
+random effects allow the model to add variance to the estimates of the
+parameters of the covariates. It means that each sector has different
+values for the estimates of the covariates. This way each sector has
+more precise estimates and it is possible to see the differences between
+sectors.
+
+The initial model is the Gaussian Bayesian model that was selected. Then
+random effects are added to this model and the best model is selected
+based on the same selection process than before.
+
+The Gaussian hierarchical model is designed as follow:
+
+\begin{centering}
+
+  $Y|X ~ N(\beta X + b_{1i} X_r + b_{2i},\tau_1)$
+  
+  $\Pi(\beta) ~ N(\mu,\tau_2)$
+  
+  $b_i ~N(0,\tau_{3,i})$
+  
+  $\Pi(\tau_1) ~ Gamma(a_1,b_1)$
+  
+  $\Pi(\tau_{3,i}) ~ Gamma(a_2,b_2)$
+
+\end{centering}
+
+As previously X is a matrix of the covariates and \(X_r\) is also a
+matrix of the covariates but it may be different from X since random
+effects can be added on different covariates. Again as before
+\(a_1, b_1, a_2 and b_2\) are all equal to 0.01.
+
+\newpage
+
+\section{Descriptive analysis}\label{descriptive-analysis}
+
+An exploration of the data through a descriptive analysis gives first
+insights on the behavior of the variables. The point here is to see
+graphically if some variables seem to have an impact on the response
+variable, the salary. A basic linear regression and some tests give also
+some insights.
+
+\subsection{Influence of the variable
+\emph{spc}}\label{influence-of-the-variable-spc}
+
+The first idea is that the salary is supposed to be different based on
+the different Socio-Professional Categories. The following graph (Figure
+\ref{BoxplotCat}) shows the mean of the salary by SPC.
+
+\begin{figure}[H]
+
+\includegraphics{Report_files/figure-latex/boxplotcat-1} \hfill{}
+
+\caption{Boxplot of the salary for each category. \label{BoxplotCat}}\label{fig:boxplotcat}
+\end{figure}
+
+One can clearly see that being in the category 1 (Higher managerial and
+professional positions) increases the salary as compared to the other
+categories. If one considers the categories to be ordered from 1 to 5
+then he would be able to say that \emph{SPC} seems to have a negative
+impact on the salary.
+
+In order to see more clearly the way \emph{SPC} influences the salary
+Figure \ref{completeplot} shows the evolution of the salary for each SPC
+for each sector. The means were calculated on all the values of salary
+for the SPC by id.
+
+\begin{figure}[H]
+
+\includegraphics{Report_files/figure-latex/completeplot-1} \hfill{}
+
+\caption{Evolution of the salary for each SPC by id. \label{completeplot}}\label{fig:completeplot}
+\end{figure}
+
+As seen previously \emph{SPC} seems to have a negative impact on the
+salary for every sectors but sector 6 (Manufacture of food, drink and
+tobacco based products), sector 21 (Information and communication) and
+sector 30 (Arts and entertainment). This may be due to the definitions
+of the SPC. In most of the sectors they are ordered from 1 to 5 but in
+some other sectors this order can be different.
+
+One can see that the relation between \emph{spc} and \emph{salary} seems
+to be quadratic. Therefore it could be useful to add a quadratic part to
+the \emph{spc} variable in the next regression models.
+
+\newpage
+
+\subsection{Influence of the variable
+\emph{time}}\label{influence-of-the-variable-time}
+
+The salary is given per hour, hence no differences between full-time and
+part-time jobs should be observed. The following figure confirms this.
+
+\begin{figure}[H]
+
+\includegraphics{Report_files/figure-latex/boxplottime-1} \hfill{}
+
+\caption{Boxplot of the salary for each time. \label{boxplottime}}\label{fig:boxplottime}
+\end{figure}
+
+The salaries for the full-time workers ant the salaries for the
+part-time workers seem to be the same.
+
+The same graph was repeated for each category and the following results
+were obtained. Figure \ref{boxplotspctime}.
+
+\begin{figure}[H]
+
+\includegraphics{Report_files/figure-latex/boxplotspctime-1} \hfill{}
+
+\caption{Boxplot of the salary for each SPC and each time. \label{boxplotspctime}}\label{fig:boxplotspctime}
+\end{figure}
+
+One could say that for some categories a small difference is observed.
+For instance salaries for full-time workers in the category of the
+higher managerial and professional positions seem to be higher than the
+ones for the part-time workers.
+
+A t-test was performed to see if there is a difference between the
+salaries of full-time workers and part-time workers. This test was
+performed on the whole dataset and then by category. Table
+\ref{tabletesttime} shows the results.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{ccc}
+  \hline
+ & p-value & mean of the differences \\ 
+  \hline
+ dataset & 0.000 & -0.788 \\ 
+ category 1 & 0.000 & -1.982 \\ 
+ category 2 & 0.298 & -0.277 \\ 
+ category 3 & 0.000 & -1.027 \\ 
+ category 4 & 0.316 & -0.188 \\ 
+ category 5 & 0.051 & -0.427 \\ 
+   \hline
+\end{tabular}
+\caption{P-values and mean of the differences 
+             of the tests. \label{tabletesttime}} 
+\end{table}
+
+One can see that the p-values for the tests performed on the whole
+dataset, on the category 1 and on the category 3 are below 0.05. In
+those cases the mean of the differences can be up to almost 2 euros per
+hour. It represents a difference of 6.2\%.
+
+\subsection{Influence of the variable
+\emph{sexe}}\label{influence-of-the-variable-sexe}
+
+Inequality in the salary regarding the gender is a matter of discussion
+in France. The issue is that salaries are said to be higher for males
+than they are for females. Therefore some differences are expected.
+
+The means of the salaries for females and males were plotted for each
+Socio-Professional Category and it seems that no differences appear
+except maybe for the category 1. Figure \ref{barplotsexespc} shows the
+results.
+
+\begin{figure}[H]
+
+\includegraphics{Report_files/figure-latex/barplotsexespc-1} \hfill{}
+
+\caption{Barplot of the mean salary by sexe for each category. \label{barplotsexespc}}\label{fig:barplotsexespc}
+\end{figure}
+
+For every categories the mean salary for males seems to be higher than
+the mean salary for females. A t-test confirmed this result. A
+significant mean of the differences of 2 was observed. It means that
+males have in mean a salary per hour higher by 2 euros than the one of
+the females.
+
+\newpage
+
+\subsection{A linear regression}\label{a-linear-regression}
+
+A basic linear regression was performed to see the impact of the
+covariates on the salary. The model that was used is:
+\(Salary = \beta_0 + \beta_1time + \beta_2sexe +\beta_3spc + \beta_4sexe*spc + \beta_4*spc^2\)
+
+The following table (Table \ref{tablereg}) shows the estimates and the
+p-values obtained with the linear regression model.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccc}
+  \hline
+ & estimates & p-value \\ 
+  \hline
+(Intercept) & 40.218 & 0.000 \\ 
+  time & 0.788 & 0.000 \\ 
+  sexe & 4.370 & 0.000 \\ 
+  spc & -14.144 & 0.000 \\ 
+  spc² & 1.728 & 0.000 \\ 
+  sexe:spc & -0.798 & 0.000 \\ 
+   \hline
+\end{tabular}
+\caption{Results of the linear regression. \label{tablereg}} 
+\end{table}
+
+As for the graphical analysis \emph{spc} has a negative impact on the
+salary (we consider here that the categories are ordered from 1 to 5).
+The variable \emph{sexe} has a quite important positive effect on the
+salary. It means that males are paid around 4 euros per hour more than
+females. The fact that the interaction between \emph{sexe} and
+\emph{spc} has a negative effect on the salary means that the positive
+effect of being a male does not counterbalance the negative impact of
+the \emph{spc}. Finally \emph{time} has a small positive impact. It
+means that when you work in a full-time job, you earn around 0.8 euros
+more than a part-time job.
+
+\newpage
+
+\section{Gaussian Bayesian model}\label{gaussian-bayesian-model}
+
+Before going trough the interpretation of a Bayesian Gaussian
+Regression, we have to choose which model is the best. For that we start
+with a simple model with three covariates: \emph{time}, \emph{sexe} and
+\emph{spc}. Then we tried to add \emph{\(spc^2\)} as explained in the
+descriptive part. Finally we try to add some interaction between
+covariates. To decide which model is the best, we use the DIC criteria
+and the error from the prediction. The results are presented below
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{ccc}
+  \hline
+ & DIC & res \\ 
+  \hline
+$\alpha + \beta_{1} time + \beta_2 sexe + \beta_3 spc$ & 3455.60 & 9686.56 \\ 
+$\alpha + \beta_{1} time + \beta_2 sexe + \beta_3 spc + \beta_4 spc^2$ & 2988.00 & 4518.68 \\ 
+$\alpha + \beta_{1} time + \beta_2 sexe + \beta_3 spc + \beta_4 spc*sexe$ & 3444.80 & 9492.39 \\ 
+ $\alpha + \beta_{1} time + \beta_2 sexe + \beta_3 spc + \beta_4 spc*sexe + \beta_5 spc^2$ & 2962.90 & 4324.22 \\ 
+   \hline
+\end{tabular}
+\caption{Table for the selection of the Bayesian models. 
+             \label{tableselectionmodel}} 
+\end{table}
+
+As you can see, the best model is the one with \emph{\(spc^2\)} and the
+interaction between \emph{spc} and \emph{sexe}. However the sum of
+squares is still big. It means that our model does not predict well the
+future values. That is why we try to add some random effects in the next
+part. Now we have selected the model, we can go to the interpretation.
+
+In table \ref{resultsmodel} we can see the results of the Bayesian
+Gaussian Regression that we choose above. The coefficients are very
+similar to those obtained in the descriptive part. Thus the
+interpretation is the same as in \refname{A linear regression}. We still
+have this negative impact of \emph{spc} and the interaction between
+\emph{sexe} and \emph{spc}. We also find again the positive impact of
+\emph{sexe} that does not counterbalance the effect of \emph{spc}.
+Finally the impact of \emph{time} is still positive.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{cc}
+  \hline
+ & mean \\ 
+  \hline
+intercept & 40.0549 \\ 
+  time & 0.8032 \\ 
+  sexe & 4.4220 \\ 
+  spc & -14.0450 \\ 
+  spc*sexe & -0.8104 \\ 
+  spc² & 1.7135 \\ 
+   \hline
+\end{tabular}
+\caption{Mean for the Bayesian model. \label{resultsmodel}} 
+\end{table}
+
+\section{Gaussian hierarchical Bayesian
+model}\label{gaussian-hierarchical-bayesian-model}
+
+As for the Bayesian Gaussian Regression, we have to choose here the best
+model. We proceed the same way, trying to ass random effects to one
+covariate at a time. But at the end, we do not want to over-parameterize
+the model, that is why we limit this study to 2 random effects maximum.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{ccc}
+  \hline
+ & DIC2 & res2 \\ 
+  \hline
+$\alpha + \beta_{1} time + \beta_2 sexe + \beta_3 spc + \beta_4 spc*sexe + \beta_5 spc^2$ & 2962.90 & 4324.22 \\ 
+ $\alpha + \beta_{1} time + (\beta_2 + b_{i}) sexe + \beta_3 spc + \beta_4 spc*sexe + \beta_5 spc^2$ & 2881.20 & 2279.24 \\ 
+ $\alpha + (\beta_{1} + b_{i}) time + \beta_2 sexe + \beta_3 spc + \beta_4 spc*sexe + \beta_5 spc^2$ & 2964.10 & 4048.85 \\ 
+ $\alpha + \beta_{1} time + \beta_2 sexe + (\beta_3 + b_{i}) spc + \beta_4 spc*sexe + \beta_5 spc^2$ & 2970.00 & 4208.86 \\ 
+ $\alpha + \beta_{1} time + \beta_2 sexe + \beta_3 spc + \beta_4 spc*sexe + (\beta_5 + b_{i}) spc^2$ & 2986.10 & 4076.92 \\ 
+ $\alpha + b_{1i} + \beta_{1} time + \beta_2 sexe + \beta_3 spc + \beta_4 spc*sexe + (\beta_5 + b_{2i}) spc^2$ & 2869.30 & 1901.95 \\ 
+ $\alpha + b_{1i} + \beta_{1} time + \beta_2 sexe + \beta_3 spc + \beta_4 spc*sexe + (\beta_5 + b_{2i}) spc^2$ & 2682.40 & 1104.37 \\ 
+   \hline
+\end{tabular}
+\caption{Table for the selection of the hierarchical Bayesian models. 
+             \label{tableselectionmodel2}} 
+\end{table}
+
+You can see that the model with random effects on the \emph{Intercept}
+and \emph{sexe} is the best. Furthermore, the sum of squares is lower
+than in the Bayesian Gaussian Regression. This is our final model.
+
+In table \ref{resultsmodel2}, the coefficients of our final model are
+presented. It can be seen that they do not differ a lot from the
+previous interpretations. The main part here is the random effects on
+\emph{Intercept} and \emph{sexe}. It means that we add variability for
+each subject. We can observe differences of each sector. But here, the
+variance added by the random effects does not change the effect of a
+covariate. The sign of its coefficient will not change. The global
+effect will be the same.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{cc}
+  \hline
+ & mean \\ 
+  \hline
+intercept & 39.6747 \\ 
+  time & 0.6752 \\ 
+  sexe & 4.3804 \\ 
+  spc & -13.6565 \\ 
+  spc*sexe & -0.7962 \\ 
+  spc² & 1.6482 \\ 
+   \hline
+\end{tabular}
+\caption{Mean for the hierarchical model. \label{resultsmodel2}} 
+\end{table}
+
+\newpage
+
+\section{Conclusion}\label{conclusion}
+
+The aim of this study was to describe the structure of the salary per
+hour in France by performing Bayesian models. After a descriptive
+analysis that gave us insights on the structure of the salary we
+performed several Bayesian regressions. The selection process led us to
+select a hierarchical model over a simple Bayesian model. Based on all
+of this it appeared that the Socio-Professional Category has a great
+impact on the salary; being in the first category -Higher managerial and
+professional positions- insures a better salary. The second major effect
+that we observed is the one of the gender. Males have higher salary than
+women. Those results were observed both in Gaussian Bayesian regressions
+and in hierarchical Gaussian Bayesian regressions.
+
+As a further analysis one could try to do a cluster analysis in order to
+regroup the sectors that are similar in the way the salary is
+structured. Some data could be add to the dataset in order to specify
+the structure of the salary even more. For instance information on the
+age and on the number of workers by cells.
+
+\vspace{3cm}
+
+\section{Bibliography}\label{bibliography}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  \href{http://www.insee.fr/fr/themes/detail.asp?reg_id=0\&ref_id=ir-irsocdads2011\&page=irweb/irsocdads2011/dd/irsocdads2011_t10.htm}{INSEE
+  T101 Salaire brut horaire, par âge et catégorie socioprofessionnelle
+  simplifiée}
+\item
+  \href{http://homepage.stat.uiowa.edu/~gwoodwor/BBIText/AppendixBWinbugs.pdf}{Introduction
+  fo WinBUGS}
+\item
+  \href{https://www.uclouvain.be/cps/ucl/doc/stat/documents/WinBUGSTraining_smcs.pdf}{WinBUGS
+  Training}
+\end{itemize}
+
+\newpage
+
+\section{Appendix}\label{appendix}
+
+\subsection{Classification tables}\label{classification-tables}
+
+Here are presented the classification tables for the Socio-Professional
+Categories (Table \ref{tableIndexSpc}) and for the Sectors (Table
+\ref{tableIndexSectors}).
+
+\begin{table}[H]
+\centering
+\begin{tabular}{cc}
+  \hline
+ & Category \\ 
+  \hline
+1 & Higher managerial and professional positions  \\ 
+  2 & Intermediate occupations \\ 
+  3 & Employee \\ 
+  4 & Skilled worker \\ 
+  5 & Unskilled worker \\ 
+   \hline
+\end{tabular}
+\caption{Classification table of the Socio-Professional Categories. \label{tableIndexSpc}} 
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{cc}
+  \hline
+ & Sector \\ 
+  \hline
+1 & Agriculture, silviculture and fishing \\ 
+  2 & Manufacturing industry, extraction industry \\ 
+  3 & Extraction industry, energy, water, trash management and remediation \\ 
+  4 & Extraction industry \\ 
+  5 & Water production and distribution, remediation, trash management \\ 
+  6 & Manufacture of food, drink and tobacco based products \\ 
+  7 & Electric, electronic and computer components manufacture \\ 
+  8 & Transportation equipment manufacture \\ 
+  9 & Other industrial products manufacture \\ 
+  10 & Textile, clothing industry, leather and shoe industry \\ 
+  11 & Wood working, paper and printing industry \\ 
+  12 & Manufacture of rubber and plastic materials and other non metallic products \\ 
+  13 & Metalworking industry and production of metallic products except machine and equipment \\ 
+  14 & Other manufacture industry, repair and installation of machines and equipment \\ 
+  15 & Construction \\ 
+  16 & Wholesale trade and retailing, transport, accommodation and restoration \\ 
+  17 & Trade, automobile and motorcycle repairs \\ 
+  18 & Transportation and stocking \\ 
+  19 & Accommodation and food service industry \\ 
+  20 & Diverse services \\ 
+  21 & Information and communication \\ 
+  22 & Publishing, audiovisual media and airing \\ 
+  23 & Computer activities and information services \\ 
+  24 & Financial and insurance activities \\ 
+  25 & Scientific and technical activities, administrative and support services \\ 
+  26 & Legal, accounting, management, architecture, control and technical analysis activities \\ 
+  27 & Other specialized activities, scientific and technical \\ 
+  28 & Administrative services and support activities \\ 
+  29 & Other service activities \\ 
+  30 & Arts and entertainment \\ 
+  31 & Other service activities  \\ 
+  32 & Public administration, teaching, health and social action \\ 
+  33 & Medico-social accommodation, social, and social action without accommodation \\ 
+   \hline
+\end{tabular}
+\caption{Classification table of the Sectors. \label{tableIndexSectors}} 
+\end{table}
+
+Return to section \nameref{dataset}.
+
+\subsection{Code}\label{code}
+
+\subsubsection{WinBUGS code}\label{winbugs-code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\{}
+\NormalTok{for(i in }\DecValTok{1}\NormalTok{:n)\{}
+\NormalTok{salary[i]~}\KeywordTok{dnorm}\NormalTok{(mu[i],tau)}
+\NormalTok{mu[i] <-}\StringTok{ }\NormalTok{alpha +}\StringTok{ }\NormalTok{beta1*time[i] +}\StringTok{ }\NormalTok{beta2*sexe[i] +}\StringTok{ }\NormalTok{beta3*spc[i] +}\StringTok{ }\NormalTok{beta4*spc[i]*sexe[i] +}\StringTok{ }
+\NormalTok{beta5*spc2[i]}
+\NormalTok{\}}
+\NormalTok{tau~}\KeywordTok{dgamma}\NormalTok{(}\FloatTok{0.01}\NormalTok{,}\FloatTok{0.01}\NormalTok{)}
+\NormalTok{alpha~}\KeywordTok{dnorm}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.01}\NormalTok{)}
+\NormalTok{beta1~}\KeywordTok{dnorm}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.01}\NormalTok{)}
+\NormalTok{beta2~}\KeywordTok{dnorm}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.01}\NormalTok{)}
+\NormalTok{beta3~}\KeywordTok{dnorm}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.01}\NormalTok{)}
+\NormalTok{beta4~}\KeywordTok{dnorm}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.01}\NormalTok{)}
+\NormalTok{beta5~}\KeywordTok{dnorm}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.01}\NormalTok{)}
+\NormalTok{\}}
+
+\NormalTok{###}
+
+\NormalTok{model\{}
+\NormalTok{for(i in }\DecValTok{1}\NormalTok{:n)\{}
+\NormalTok{salary[i]~}\KeywordTok{dnorm}\NormalTok{(mu[i],tau)}
+\NormalTok{mu[i] <-}\StringTok{ }\NormalTok{alpha +}\StringTok{ }\NormalTok{beta1*time[i] +}\StringTok{ }\NormalTok{(beta2+b[i])*sexe[i] +}\StringTok{ }\NormalTok{beta3*spc[i] +}\StringTok{ }\NormalTok{beta4*spc[i]*sexe[i] +}
+\NormalTok{beta5*spc2[i] +}\StringTok{ }\NormalTok{b1[i]}
+\NormalTok{b[i]~}\KeywordTok{dnorm}\NormalTok{(}\DecValTok{0}\NormalTok{,tau2)}
+\NormalTok{b1[i]~}\KeywordTok{dnorm}\NormalTok{(}\DecValTok{0}\NormalTok{,tau3)}
+\NormalTok{\}}
+\NormalTok{tau~}\KeywordTok{dgamma}\NormalTok{(}\FloatTok{0.01}\NormalTok{,}\FloatTok{0.01}\NormalTok{)}
+\NormalTok{alpha~}\KeywordTok{dnorm}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.01}\NormalTok{)}
+\NormalTok{beta1~}\KeywordTok{dnorm}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.01}\NormalTok{)}
+\NormalTok{beta2~}\KeywordTok{dnorm}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.01}\NormalTok{)}
+\NormalTok{beta3~}\KeywordTok{dnorm}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.01}\NormalTok{)}
+\NormalTok{beta4~}\KeywordTok{dnorm}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.01}\NormalTok{)}
+\NormalTok{beta5~}\KeywordTok{dnorm}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.01}\NormalTok{)}
+\NormalTok{tau2~}\KeywordTok{dgamma}\NormalTok{(}\FloatTok{0.01}\NormalTok{, }\FloatTok{0.01}\NormalTok{)}
+\NormalTok{tau3~}\KeywordTok{dgamma}\NormalTok{(}\FloatTok{0.01}\NormalTok{, }\FloatTok{0.01}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{R code}\label{r-code}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Packages ----------------------------------------------------------------}
+
+\KeywordTok{library}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(}\StringTok{"xtable"}\NormalTok{)}
+
+
+\CommentTok{# Data --------------------------------------------------------------------}
+
+\NormalTok{data <-}\StringTok{ }\KeywordTok{read.csv2}\NormalTok{(}\StringTok{"Data/data.csv"}\NormalTok{,}\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{data <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(data,time!=}\StringTok{"TP"}\NormalTok{)}
+
+\NormalTok{data1 <-}\StringTok{ }\NormalTok{data[}\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{:}\KeywordTok{nrow}\NormalTok{(data),}\DataTypeTok{each=}\DecValTok{5}\NormalTok{),]}
+\NormalTok{data2 <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(data$X1,data$X2,data$X3,data$X4,data$X5)}
+\NormalTok{data3 <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(data1$id,data1$time,data1$sexe)}
+
+\NormalTok{vec <-}\StringTok{ }\OtherTok{NULL}
+\NormalTok{for(i in }\DecValTok{1}\NormalTok{:}\KeywordTok{nrow}\NormalTok{(data2))\{}
+  \NormalTok{vec1 <-}\StringTok{ }\NormalTok{data2[i,]}
+  \NormalTok{vec <-}\StringTok{ }\KeywordTok{c}\NormalTok{(vec,}\KeywordTok{t}\NormalTok{(vec1))}
+\NormalTok{\}}
+
+\NormalTok{vec <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(vec)}
+\NormalTok{data4 <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(data3,vec)}
+\NormalTok{cat <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{),}\DecValTok{132}\NormalTok{))}
+
+\NormalTok{data <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(data4,cat)}
+\KeywordTok{colnames}\NormalTok{(data) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"id"}\NormalTok{,}\StringTok{"time"}\NormalTok{,}\StringTok{"sexe"}\NormalTok{,}\StringTok{"salary"}\NormalTok{,}\StringTok{"spc"}\NormalTok{)}
+\KeywordTok{attach}\NormalTok{(data)}
+\NormalTok{salary<-}\KeywordTok{as.numeric}\NormalTok{(salary)}
+\NormalTok{sexe <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(sexe)}
+\NormalTok{time <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(time)}
+\NormalTok{spc <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(spc)}
+
+
+\CommentTok{# Descriptive analysis ----------------------------------------------------}
+
+\NormalTok{theme <-}\StringTok{ }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{plot.title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{16}\NormalTok{, }\DataTypeTok{face=}\StringTok{"bold"}\NormalTok{), }\DataTypeTok{axis.title.x =} \KeywordTok{element_text}\NormalTok{(}
+              \DataTypeTok{size=}\DecValTok{15}\NormalTok{), }\DataTypeTok{axis.title.y =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{15}\NormalTok{), }\DataTypeTok{axis.text.x =} \KeywordTok{element_text}\NormalTok{(}
+              \DataTypeTok{size=}\DecValTok{15}\NormalTok{, }\DataTypeTok{face=}\StringTok{"bold"}\NormalTok{),}\DataTypeTok{axis.text.y =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{15}\NormalTok{, }\DataTypeTok{face=}\StringTok{"bold"}\NormalTok{))}
+
+\CommentTok{# SPC}
+\KeywordTok{ggplot}\NormalTok{(data, }\KeywordTok{aes}\NormalTok{(}\KeywordTok{factor}\NormalTok{(spc), salary)) +}\StringTok{ }\KeywordTok{geom_boxplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =} \KeywordTok{factor}\NormalTok{(spc))) +}\StringTok{ }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Socio-Professional Category"}\NormalTok{) +}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Salary"}\NormalTok{) +}\StringTok{ }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{fill=}\KeywordTok{guide_legend}\NormalTok{(}\DataTypeTok{title=}\OtherTok{NULL}\NormalTok{)) +}\StringTok{ }
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Boxplot of the salary for each category"}\NormalTok{) +}\StringTok{ }\NormalTok{theme}
+
+\NormalTok{datamean <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{salaryMean =} \NormalTok{data$salary), }\DataTypeTok{by =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{id =} \NormalTok{data$id, }\DataTypeTok{spc =} \NormalTok{data$spc), }
+                      \NormalTok{mean)}
+
+\KeywordTok{ggplot}\NormalTok{(datamean, }\KeywordTok{aes}\NormalTok{(spc, salaryMean)) +}\StringTok{ }\KeywordTok{facet_wrap}\NormalTok{(}\DataTypeTok{facets=}\NormalTok{~}\StringTok{ }\NormalTok{id, }\DataTypeTok{ncol=}\DecValTok{10}\NormalTok{) +}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{colour=}\StringTok{"blue"}\NormalTok{) +}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{colour=}\StringTok{"red"}\NormalTok{) +}\StringTok{ }\NormalTok{theme}
+
+\CommentTok{# Time}
+\KeywordTok{ggplot}\NormalTok{(data, }\KeywordTok{aes}\NormalTok{(}\KeywordTok{factor}\NormalTok{(time), salary)) +}\StringTok{ }\KeywordTok{geom_boxplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =} \KeywordTok{factor}\NormalTok{(time))) +}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{"Time"}\NormalTok{, }\DataTypeTok{y=}\StringTok{"Salary"}\NormalTok{, }\DataTypeTok{title=}\StringTok{"Boxplot of the salary for each time"}\NormalTok{) +}\StringTok{ }\NormalTok{theme +}
+\StringTok{  }\KeywordTok{scale_fill_manual}\NormalTok{(}\DataTypeTok{name=}\StringTok{"Time"}\NormalTok{, }\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{"orange"}\NormalTok{, }\StringTok{"mediumpurple"}\NormalTok{), }\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"0"}\NormalTok{=}\StringTok{"Part-time"}\NormalTok{, }
+  \StringTok{"1"}\NormalTok{=}\StringTok{"Full-time"}\NormalTok{))}
+  
+\KeywordTok{ggplot}\NormalTok{(data, }\KeywordTok{aes}\NormalTok{(}\KeywordTok{factor}\NormalTok{(spc), salary)) +}\StringTok{ }\KeywordTok{geom_boxplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =} \KeywordTok{factor}\NormalTok{(time))) +}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{"SPC"}\NormalTok{, }\DataTypeTok{y=}\StringTok{"Salary"}\NormalTok{, }\DataTypeTok{title=}\StringTok{"Boxplot of the salary for each SPC and each time"}\NormalTok{) +}\StringTok{ }
+\StringTok{  }\NormalTok{theme +}\StringTok{ }\KeywordTok{scale_fill_manual}\NormalTok{(}\DataTypeTok{name=}\StringTok{"Time"}\NormalTok{, }\DataTypeTok{values=}\KeywordTok{c}\NormalTok{(}\StringTok{"orange"}\NormalTok{, }\StringTok{"mediumpurple"}\NormalTok{), }\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"0"}\NormalTok{=}\StringTok{"Part-time"}\NormalTok{, }
+  \StringTok{"1"}\NormalTok{=}\StringTok{"Full-time"}\NormalTok{))}
+
+\NormalTok{## Test on the differences between time1 and time0.}
+\NormalTok{data.sort <-}\StringTok{ }\NormalTok{data[}\KeywordTok{with}\NormalTok{(data, }\KeywordTok{order}\NormalTok{(id, spc)), ]}
+\KeywordTok{row.names}\NormalTok{(data.sort) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{:}\KeywordTok{nrow}\NormalTok{(data.sort))}
+\NormalTok{data.sort.time0 <-}\StringTok{ }\OtherTok{NULL}
+\NormalTok{data.sort.time1 <-}\StringTok{ }\OtherTok{NULL}
+\NormalTok{for(i in }\DecValTok{1}\NormalTok{:}\KeywordTok{nrow}\NormalTok{(data.sort))\{}
+  \NormalTok{newline <-}\StringTok{ }\NormalTok{data.sort[i,]}
+  \NormalTok{if(i%%}\DecValTok{2}\NormalTok{==}\DecValTok{0}\NormalTok{)\{}
+    \NormalTok{data.sort.time0 <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(data.sort.time0, newline)}
+  \NormalTok{\}}
+  \NormalTok{else\{}
+    \NormalTok{data.sort.time1 <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(data.sort.time1, newline)}
+  \NormalTok{\}}
+\NormalTok{\}}
+\NormalTok{data.time.paired <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(data.sort.time0$spc,data.sort.time0[,}\DecValTok{4}\NormalTok{],data.sort.time1[,}\DecValTok{4}\NormalTok{]))}
+\KeywordTok{colnames}\NormalTok{(data.time.paired) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"spc"}\NormalTok{, }\StringTok{"salary0"}\NormalTok{, }\StringTok{"salary1"}\NormalTok{)}
+
+\NormalTok{test.time.all <-}\StringTok{ }\KeywordTok{t.test}\NormalTok{(data.time.paired[,}\DecValTok{2}\NormalTok{], data.time.paired[,}\DecValTok{3}\NormalTok{], }\DataTypeTok{paired=}\OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{data.time.paired.spc1 <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(data.time.paired, spc==}\DecValTok{1}\NormalTok{)}
+\NormalTok{data.time.paired.spc2 <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(data.time.paired, spc==}\DecValTok{2}\NormalTok{)}
+\NormalTok{data.time.paired.spc3 <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(data.time.paired, spc==}\DecValTok{3}\NormalTok{)}
+\NormalTok{data.time.paired.spc4 <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(data.time.paired, spc==}\DecValTok{4}\NormalTok{)}
+\NormalTok{data.time.paired.spc5 <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(data.time.paired, spc==}\DecValTok{5}\NormalTok{)}
+
+\NormalTok{test.time.spc1 <-}\StringTok{ }\KeywordTok{t.test}\NormalTok{(data.time.paired.spc1[,}\DecValTok{2}\NormalTok{], data.time.paired.spc1[,}\DecValTok{3}\NormalTok{], }\DataTypeTok{paired=}\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{test.time.spc2 <-}\StringTok{ }\KeywordTok{t.test}\NormalTok{(data.time.paired.spc2[,}\DecValTok{2}\NormalTok{], data.time.paired.spc2[,}\DecValTok{3}\NormalTok{], }\DataTypeTok{paired=}\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{test.time.spc3 <-}\StringTok{ }\KeywordTok{t.test}\NormalTok{(data.time.paired.spc3[,}\DecValTok{2}\NormalTok{], data.time.paired.spc3[,}\DecValTok{3}\NormalTok{], }\DataTypeTok{paired=}\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{test.time.spc4 <-}\StringTok{ }\KeywordTok{t.test}\NormalTok{(data.time.paired.spc4[,}\DecValTok{2}\NormalTok{], data.time.paired.spc4[,}\DecValTok{3}\NormalTok{], }\DataTypeTok{paired=}\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{test.time.spc5 <-}\StringTok{ }\KeywordTok{t.test}\NormalTok{(data.time.paired.spc5[,}\DecValTok{2}\NormalTok{], data.time.paired.spc5[,}\DecValTok{3}\NormalTok{], }\DataTypeTok{paired=}\OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{table.test.time <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"dataset"}\NormalTok{,}\StringTok{"category 1"}\NormalTok{,}\StringTok{"category 2"}\NormalTok{,}\StringTok{"category 3"}\NormalTok{,}\StringTok{"category 4"}\NormalTok{,}
+                   \StringTok{"category 5"}\NormalTok{),}\KeywordTok{c}\NormalTok{(test.time.all$p.value,test.time.spc1$p.value,}
+                   \NormalTok{test.time.spc2$p.value,test.time.spc3$p.value,test.time.spc4$p.value,}
+                   \NormalTok{test.time.spc5$p.value), }\KeywordTok{c}\NormalTok{(test.time.all$estimate,test.time.spc1$estimate,}
+                   \NormalTok{test.time.spc2$estimate,test.time.spc3$estimate,test.time.spc4$estimate,}
+                   \NormalTok{test.time.spc5$estimate))}
+\KeywordTok{colnames}\NormalTok{(table.test.time) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{""}\NormalTok{,}\StringTok{"p-value"}\NormalTok{,}\StringTok{"mean of the differences"}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(}\KeywordTok{xtable}\NormalTok{(table.test.time, }\DataTypeTok{align=}\KeywordTok{c}\NormalTok{(}\StringTok{"c"}\NormalTok{,}\StringTok{"c"}\NormalTok{,}\StringTok{"c"}\NormalTok{,}\StringTok{"c"}\NormalTok{), }\DataTypeTok{caption=}\StringTok{"P-values and mean of the differences }
+\StringTok{             of the tests. }\CharTok{\textbackslash{}\textbackslash{}}\StringTok{label\{tabletesttime\}"}\NormalTok{, }\DataTypeTok{digits=}\DecValTok{3}\NormalTok{))}
+
+\NormalTok{salary.mean.spc <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{salaryMean=}\NormalTok{data$salary),}\DataTypeTok{by=}\KeywordTok{list}\NormalTok{(}\DataTypeTok{time=}\NormalTok{data$time,}
+                             \DataTypeTok{spc=}\NormalTok{data$spc),mean,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{(table.test.time[}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{]/salary.mean.spc[}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{])*}\DecValTok{100}
+
+\CommentTok{# Sexe}
+\NormalTok{data.m <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{salary.m =} \NormalTok{data$salary), }\DataTypeTok{by =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{sexe =} \NormalTok{data$sexe, }
+                    \DataTypeTok{spc =} \NormalTok{data$spc,}\DataTypeTok{time =} \NormalTok{data$time), mean, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
+
+\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{subset}\NormalTok{(data.m,time==}\DecValTok{0}\NormalTok{),}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\KeywordTok{factor}\NormalTok{(sexe),}\DataTypeTok{y=}\NormalTok{salary.m,}\DataTypeTok{fill=}\KeywordTok{factor}\NormalTok{(sexe))) +}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{) +}\StringTok{ }\KeywordTok{facet_wrap}\NormalTok{(~}\StringTok{ }\NormalTok{spc) +}\StringTok{ }
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Mean salary by gender and spc at time=0 (Part-Time)"}\NormalTok{, }\DataTypeTok{x=}\StringTok{"Sexe"}\NormalTok{, }\DataTypeTok{y=}\StringTok{"Mean salary"}\NormalTok{) +}
+\StringTok{  }\KeywordTok{scale_fill_discrete}\NormalTok{(}\DataTypeTok{name=}\StringTok{"Gender"}\NormalTok{,  }\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"Female"}\NormalTok{, }\StringTok{"Male"}\NormalTok{),}\DataTypeTok{guide =} \KeywordTok{guide_legend}\NormalTok{(}\DataTypeTok{reverse=}\OtherTok{TRUE}\NormalTok{)) +}\StringTok{ }
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{plot.title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{16}\NormalTok{, }\DataTypeTok{face=}\StringTok{"bold"}\NormalTok{), }\DataTypeTok{legend.title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{colour=}\StringTok{"black"}\NormalTok{,}
+  \DataTypeTok{size=}\DecValTok{18}\NormalTok{, }\DataTypeTok{face=}\StringTok{"bold"}\NormalTok{),}\DataTypeTok{legend.position=}\KeywordTok{c}\NormalTok{(.}\DecValTok{85}\NormalTok{,.}\DecValTok{15}\NormalTok{),}\DataTypeTok{legend.background =} \KeywordTok{element_rect}\NormalTok{(}\DataTypeTok{size=}\DecValTok{25}\NormalTok{),}
+  \DataTypeTok{legend.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{16}\NormalTok{))}
+ 
+\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{subset}\NormalTok{(data.m,time==}\DecValTok{0}\NormalTok{),}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\KeywordTok{factor}\NormalTok{(sexe),}\DataTypeTok{y=}\NormalTok{salary.m,}\DataTypeTok{fill=}\KeywordTok{factor}\NormalTok{(sexe))) +}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{) +}\StringTok{ }\KeywordTok{facet_wrap}\NormalTok{(~}\StringTok{ }\NormalTok{spc) +}\StringTok{ }
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Mean salary by gender and spc at time=1 (Full Time)"}\NormalTok{, }\DataTypeTok{x=}\StringTok{"Sexe"}\NormalTok{, }\DataTypeTok{y=}\StringTok{"Mean salary"}\NormalTok{) +}
+\StringTok{  }\KeywordTok{scale_fill_discrete}\NormalTok{(}\DataTypeTok{name=}\StringTok{"Gender"}\NormalTok{,  }\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"Female"}\NormalTok{, }\StringTok{"Male"}\NormalTok{),}\DataTypeTok{guide =} \KeywordTok{guide_legend}\NormalTok{(}\DataTypeTok{reverse=}\OtherTok{TRUE}\NormalTok{)) +}\StringTok{ }
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{plot.title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{16}\NormalTok{, }\DataTypeTok{face=}\StringTok{"bold"}\NormalTok{),}\DataTypeTok{legend.title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{colour=}\StringTok{"black"}\NormalTok{,}
+  \DataTypeTok{size=}\DecValTok{18}\NormalTok{, }\DataTypeTok{face=}\StringTok{"bold"}\NormalTok{),}\DataTypeTok{legend.position=}\KeywordTok{c}\NormalTok{(.}\DecValTok{85}\NormalTok{,.}\DecValTok{15}\NormalTok{),}\DataTypeTok{legend.background =} \KeywordTok{element_rect}\NormalTok{(}\DataTypeTok{size=}\DecValTok{25}\NormalTok{),}
+  \DataTypeTok{legend.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{16}\NormalTok{))}
+
+\KeywordTok{ggplot}\NormalTok{(data.m,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\KeywordTok{factor}\NormalTok{(sexe),}\DataTypeTok{y=}\NormalTok{salary.m,}\DataTypeTok{fill=}\KeywordTok{factor}\NormalTok{(sexe))) +}\StringTok{ }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{) +}\StringTok{ }
+\StringTok{  }\KeywordTok{facet_wrap}\NormalTok{(~}\StringTok{ }\NormalTok{spc) +}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Mean salary by gender and spc"}\NormalTok{, }\DataTypeTok{x=}\StringTok{"Sexe"}\NormalTok{, }\DataTypeTok{y=}\StringTok{"Mean salary"}\NormalTok{) +}\StringTok{ }
+\StringTok{  }\KeywordTok{scale_fill_discrete}\NormalTok{(}\DataTypeTok{name=}\StringTok{"Gender"}\NormalTok{,}\DataTypeTok{labels=}\KeywordTok{c}\NormalTok{(}\StringTok{"Female"}\NormalTok{,}\StringTok{"Male"}\NormalTok{),}\DataTypeTok{guide =} \KeywordTok{guide_legend}\NormalTok{(}\DataTypeTok{reverse=}\OtherTok{TRUE}\NormalTok{)) +}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{plot.title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{16}\NormalTok{, }\DataTypeTok{face=}\StringTok{"bold"}\NormalTok{),}\DataTypeTok{legend.title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{colour=}\StringTok{"black"}\NormalTok{,}
+  \DataTypeTok{size=}\DecValTok{18}\NormalTok{, }\DataTypeTok{face=}\StringTok{"bold"}\NormalTok{),}\DataTypeTok{legend.position=}\KeywordTok{c}\NormalTok{(.}\DecValTok{85}\NormalTok{,.}\DecValTok{15}\NormalTok{),}\DataTypeTok{legend.background =} \KeywordTok{element_rect}\NormalTok{(}\DataTypeTok{size=}\DecValTok{25}\NormalTok{),}
+  \DataTypeTok{legend.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{16}\NormalTok{))}
+
+\NormalTok{## Test on the differences between time1 and time0.}
+\NormalTok{data.sort2 <-}\StringTok{ }\NormalTok{data[}\KeywordTok{with}\NormalTok{(data, }\KeywordTok{order}\NormalTok{(id, spc, time)), ]}
+\KeywordTok{row.names}\NormalTok{(data.sort2) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{:}\KeywordTok{nrow}\NormalTok{(data.sort2))}
+\NormalTok{data.sort.sexe0 <-}\StringTok{ }\OtherTok{NULL}
+\NormalTok{data.sort.sexe1 <-}\StringTok{ }\OtherTok{NULL}
+\NormalTok{for(i in }\DecValTok{1}\NormalTok{:}\KeywordTok{nrow}\NormalTok{(data.sort2))\{}
+  \NormalTok{newline <-}\StringTok{ }\NormalTok{data.sort2[i,]}
+  \NormalTok{if(i%%}\DecValTok{2}\NormalTok{==}\DecValTok{0}\NormalTok{)\{}
+    \NormalTok{data.sort.sexe0 <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(data.sort.sexe0, newline)}
+  \NormalTok{\}}
+  \NormalTok{else\{}
+    \NormalTok{data.sort.sexe1 <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(data.sort.sexe1, newline)}
+  \NormalTok{\}}
+\NormalTok{\}}
+\NormalTok{data.sexe.paired <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(data.sort.sexe0$spc,data.sort.sexe0[,}\DecValTok{4}\NormalTok{],data.sort.sexe1[,}\DecValTok{4}\NormalTok{]))}
+\KeywordTok{colnames}\NormalTok{(data.sexe.paired) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"spc"}\NormalTok{, }\StringTok{"salary0"}\NormalTok{, }\StringTok{"salary1"}\NormalTok{)}
+
+\NormalTok{test.sexe.all <-}\StringTok{ }\KeywordTok{t.test}\NormalTok{(data.sexe.paired[,}\DecValTok{2}\NormalTok{], data.sexe.paired[,}\DecValTok{3}\NormalTok{], }\DataTypeTok{paired=}\OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{# Linear regression}
+\NormalTok{data.spc2 <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(data,data$spc^}\DecValTok{2}\NormalTok{)}
+\KeywordTok{colnames}\NormalTok{(data.spc2) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"id"}\NormalTok{,}\StringTok{"time"}\NormalTok{,}\StringTok{"sexe"}\NormalTok{,}\StringTok{"salary"}\NormalTok{,}\StringTok{"spc"}\NormalTok{,}\StringTok{"spc2"}\NormalTok{)}
+
+\NormalTok{reg <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(salary~time+sexe*spc, }\DataTypeTok{data=}\NormalTok{data)}
+\KeywordTok{summary}\NormalTok{(reg)}
+
+\NormalTok{reg.spc2 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(salary~time+sexe*spc+spc2, }\DataTypeTok{data=}\NormalTok{data.spc2)}
+\KeywordTok{summary}\NormalTok{(reg.spc2)}
+
+\KeywordTok{anova}\NormalTok{(reg,reg.spc2)}
+
+\NormalTok{table.reg <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\KeywordTok{coefficients}\NormalTok{(reg.spc2),}\KeywordTok{summary}\NormalTok{(reg.spc2)[[}\DecValTok{4}\NormalTok{]][,}\DecValTok{4}\NormalTok{])}
+\KeywordTok{colnames}\NormalTok{(table.reg) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"estimates"}\NormalTok{,}\StringTok{"p-value"}\NormalTok{)}
+
+
+\CommentTok{# Missings ----------------------------------------------------------------}
+
+\NormalTok{dataMissing <-}\StringTok{ }\NormalTok{data[}\KeywordTok{which}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(data$salary)),]}
+
+\KeywordTok{length}\NormalTok{(dataMissing)}
+
+\NormalTok{id1 <-}\StringTok{ }\NormalTok{data[}\KeywordTok{which}\NormalTok{(data$id==}\DecValTok{1}\NormalTok{),]}
+\CommentTok{# Missing in the data}
+\NormalTok{id8 <-}\StringTok{ }\NormalTok{data[}\KeywordTok{which}\NormalTok{(data$id==}\DecValTok{8}\NormalTok{),]}
+\CommentTok{# Secret data}
+\NormalTok{id22 <-}\StringTok{ }\NormalTok{data[}\KeywordTok{which}\NormalTok{(data$id==}\DecValTok{22}\NormalTok{),]}
+\CommentTok{# Missing in the data}
+
+
+\CommentTok{# Bayesian model ----------------------------------------------------------}
+
+\KeywordTok{library}\NormalTok{(R2WinBUGS)}
+
+\NormalTok{path.bug <-}\StringTok{ "C:/Users/Mathieu/Documents/Cours/2A/Erasmus/Cours/Bayesian analysis/Bayesian-Project/modelBug/"}
+\NormalTok{path.WBS <-}\StringTok{ "C:/Users/Mathieu/Documents/Logiciels/WinBuggs/WinBUGS14/"}
+
+\NormalTok{Iter <-}\StringTok{ }\DecValTok{1000}
+\NormalTok{Burn <-}\StringTok{ }\DecValTok{500}
+\NormalTok{Chain <-}\StringTok{ }\DecValTok{2}
+\NormalTok{Thin <-}\StringTok{ }\DecValTok{1}
+\NormalTok{n <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(data)}
+
+\NormalTok{datalist <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{salary=}\NormalTok{data$salary, }\DataTypeTok{time=}\NormalTok{data$time, }\DataTypeTok{sexe=}\NormalTok{data$sexe, }\DataTypeTok{spc=}\NormalTok{data$spc, }\DataTypeTok{n=}\NormalTok{n)}
+\NormalTok{datalist2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{salary=}\NormalTok{data$salary,}\DataTypeTok{time=}\NormalTok{data$time, }\DataTypeTok{sexe=}\NormalTok{data$sexe, }\DataTypeTok{spc=}\NormalTok{data$spc, }
+                  \DataTypeTok{spc2=}\NormalTok{(data$spc)^}\DecValTok{2}\NormalTok{, }\DataTypeTok{n=}\NormalTok{n)}
+
+\CommentTok{# sexe,time and spc}
+\NormalTok{parameters10 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{,}\StringTok{"beta1"}\NormalTok{,}\StringTok{"beta2"}\NormalTok{,}\StringTok{"beta3"}\NormalTok{,}\StringTok{"tau"}\NormalTok{,}\StringTok{"mu"}\NormalTok{)}
+\NormalTok{inits10 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{1}\NormalTok{),}\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{5}\NormalTok{))}
+\NormalTok{model10 <-}\StringTok{ }\KeywordTok{bugs}\NormalTok{(datalist,}\DataTypeTok{inits=}\NormalTok{inits10,}\DataTypeTok{parameters.to.save=}\NormalTok{parameters10,}
+               \DataTypeTok{model=}\KeywordTok{paste}\NormalTok{(path.bug,}\StringTok{"modelWin10.bug"}\NormalTok{,}\DataTypeTok{sep=}\StringTok{""}\NormalTok{),}\DataTypeTok{bugs.directory=}\NormalTok{path.WBS,}
+               \DataTypeTok{n.iter=}\NormalTok{(Iter*Thin+Burn),}\DataTypeTok{n.burnin=}\NormalTok{Burn,}\DataTypeTok{n.thin=}\NormalTok{Thin,}\DataTypeTok{n.chains=}\NormalTok{Chain, }\DataTypeTok{DIC=}\NormalTok{F,}\DataTypeTok{debug=}\NormalTok{T)}
+\KeywordTok{print}\NormalTok{(model10, }\DataTypeTok{digits=}\DecValTok{4}\NormalTok{)}
+\CommentTok{# DIC=3455.6}
+
+\CommentTok{# Sexe, time, spc and spc²}
+\NormalTok{parameters11 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta1"}\NormalTok{, }\StringTok{"beta2"}\NormalTok{, }\StringTok{"beta3"}\NormalTok{,}\StringTok{"beta4"}\NormalTok{, }\StringTok{"tau"}\NormalTok{, }\StringTok{"mu"}\NormalTok{)}
+\NormalTok{inits11 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{1}\NormalTok{), }\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{5}\NormalTok{))}
+\NormalTok{model11 <-}\StringTok{ }\KeywordTok{bugs}\NormalTok{(datalist2, }\DataTypeTok{inits=}\NormalTok{inits11, }\DataTypeTok{parameters.to.save=}\NormalTok{parameters11,}
+                \DataTypeTok{model=}\KeywordTok{paste}\NormalTok{(path.bug,}\StringTok{"modelWin11.bug"}\NormalTok{,}\DataTypeTok{sep=}\StringTok{""}\NormalTok{),}
+                \DataTypeTok{bugs.directory=}\NormalTok{path.WBS,               }
+                \DataTypeTok{n.iter=}\NormalTok{(Iter*Thin+Burn),}\DataTypeTok{n.burnin=}\NormalTok{Burn, }\DataTypeTok{n.thin=}\NormalTok{Thin, }\DataTypeTok{n.chains=}\NormalTok{Chain, }\DataTypeTok{DIC=}\NormalTok{T, }\DataTypeTok{debug=}\NormalTok{T)}
+\KeywordTok{print}\NormalTok{(model11, }\DataTypeTok{digits=}\DecValTok{4}\NormalTok{)}
+\CommentTok{# DIC=2987.5}
+
+\CommentTok{# sexe, time, spc and spc*sexe}
+\NormalTok{parameters12 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta1"}\NormalTok{, }\StringTok{"beta2"}\NormalTok{, }\StringTok{"beta3"}\NormalTok{,}\StringTok{"beta4"}\NormalTok{, }\StringTok{"tau"}\NormalTok{, }\StringTok{"mu"}\NormalTok{)}
+\NormalTok{inits12 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{1}\NormalTok{), }\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{5}\NormalTok{))}
+\NormalTok{model12 <-}\StringTok{ }\KeywordTok{bugs}\NormalTok{(datalist, }\DataTypeTok{inits=}\NormalTok{inits12, }\DataTypeTok{parameters.to.save=}\NormalTok{parameters12,}
+                \DataTypeTok{model=}\KeywordTok{paste}\NormalTok{(path.bug,}\StringTok{"modelWin12.bug"}\NormalTok{,}\DataTypeTok{sep=}\StringTok{""}\NormalTok{),}
+                \DataTypeTok{bugs.directory=}\NormalTok{path.WBS,               }
+                \DataTypeTok{n.iter=}\NormalTok{(Iter*Thin+Burn),}\DataTypeTok{n.burnin=}\NormalTok{Burn, }\DataTypeTok{n.thin=}\NormalTok{Thin, }\DataTypeTok{n.chains=}\NormalTok{Chain, }\DataTypeTok{DIC=}\NormalTok{T, }\DataTypeTok{debug=}\NormalTok{T)}
+\KeywordTok{print}\NormalTok{(model12, }\DataTypeTok{digits=}\DecValTok{4}\NormalTok{)}
+\CommentTok{# DIC=3444.8}
+
+\CommentTok{# sexe, time, spc, spc*sexe and spc²}
+\NormalTok{parameters13 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta1"}\NormalTok{, }\StringTok{"beta2"}\NormalTok{, }\StringTok{"beta3"}\NormalTok{,}\StringTok{"beta4"}\NormalTok{,}\StringTok{"beta5"}\NormalTok{, }\StringTok{"tau"}\NormalTok{, }\StringTok{"mu"}\NormalTok{)}
+\NormalTok{inits13 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{1}\NormalTok{), }\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{5}\NormalTok{))}
+\NormalTok{model13 <-}\StringTok{ }\KeywordTok{bugs}\NormalTok{(datalist2, }\DataTypeTok{inits=}\NormalTok{inits13, }\DataTypeTok{parameters.to.save=}\NormalTok{parameters13,}
+             \DataTypeTok{model=}\KeywordTok{paste}\NormalTok{(path.bug,}\StringTok{"modelWin13.bug"}\NormalTok{,}\DataTypeTok{sep=}\StringTok{""}\NormalTok{),}
+             \DataTypeTok{bugs.directory=}\NormalTok{path.WBS,               }
+             \DataTypeTok{n.iter=}\NormalTok{(Iter*Thin+Burn),}\DataTypeTok{n.burnin=}\NormalTok{Burn, }\DataTypeTok{n.thin=}\NormalTok{Thin, }\DataTypeTok{n.chains=}\NormalTok{Chain, }\DataTypeTok{DIC=}\NormalTok{T, }\DataTypeTok{debug=}\NormalTok{T)}
+\KeywordTok{print}\NormalTok{(model13, }\DataTypeTok{digits=}\DecValTok{4}\NormalTok{) }
+\CommentTok{# DIC=2962.9}
+
+\NormalTok{results <-}\StringTok{ }\KeywordTok{t}\NormalTok{(}\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{c}\NormalTok{(model13$mean[}\DecValTok{1}\NormalTok{],model13$mean[}\DecValTok{2}\NormalTok{],model13$mean[}\DecValTok{3}\NormalTok{],model13$mean[}\DecValTok{4}\NormalTok{],}
+             \NormalTok{model13$mean[}\DecValTok{5}\NormalTok{],model13$mean[}\DecValTok{6}\NormalTok{])))}
+\KeywordTok{colnames}\NormalTok{(results) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"mean"}\NormalTok{)}
+\KeywordTok{rownames}\NormalTok{(results) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"intercept"}\NormalTok{, }\StringTok{"time"}\NormalTok{, }\StringTok{"sexe"}\NormalTok{, }\StringTok{"spc"}\NormalTok{, }\StringTok{"spc*sexe"}\NormalTok{, }\StringTok{"spc²"}\NormalTok{)}
+
+\NormalTok{DIC <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{3455.6}\NormalTok{,}\FloatTok{2988.0}\NormalTok{,}\FloatTok{3444.8}\NormalTok{,}\FloatTok{2962.9}\NormalTok{)}
+
+\NormalTok{pred10 <-}\StringTok{ }\NormalTok{model10$mean$mu}
+\NormalTok{res10 <-}\StringTok{ }\NormalTok{pred10 -}\StringTok{ }\NormalTok{salary}
+\NormalTok{s10 <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(res10^}\DecValTok{2}\NormalTok{,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{pred11 <-}\StringTok{ }\NormalTok{model11$mean$mu}
+\NormalTok{res11 <-}\StringTok{ }\NormalTok{pred11 -}\StringTok{ }\NormalTok{salary}
+\NormalTok{s11 <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(res11^}\DecValTok{2}\NormalTok{,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{pred12 <-}\StringTok{ }\NormalTok{model12$mean$mu}
+\NormalTok{res12 <-}\StringTok{ }\NormalTok{pred12 -}\StringTok{ }\NormalTok{salary}
+\NormalTok{s12 <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(res12^}\DecValTok{2}\NormalTok{,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{pred13 <-}\StringTok{ }\NormalTok{model13$mean$mu}
+\NormalTok{res13 <-}\StringTok{ }\NormalTok{pred13 -}\StringTok{ }\NormalTok{salary}
+\NormalTok{s13 <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(res13^}\DecValTok{2}\NormalTok{,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{res<-}\KeywordTok{c}\NormalTok{(s10,s11,s12,s13)}
+
+\NormalTok{tab1 <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(DIC,res)}
+
+\KeywordTok{print}\NormalTok{(}\KeywordTok{xtable}\NormalTok{(tab1,}\DataTypeTok{align=}\KeywordTok{c}\NormalTok{(}\StringTok{"c"}\NormalTok{,}\StringTok{"c"}\NormalTok{,}\StringTok{"c"}\NormalTok{),}\DataTypeTok{caption=}\StringTok{"Table for the selection of the Bayesian models. }
+\StringTok{             }\CharTok{\textbackslash{}\textbackslash{}}\StringTok{label\{tableselectionmodel\}"}\NormalTok{))}
+
+
+\CommentTok{# Hierarchical Bayesian model ---------------------------------------------}
+
+\CommentTok{# Random effects on time}
+\NormalTok{parameters21 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta1"}\NormalTok{, }\StringTok{"beta2"}\NormalTok{, }\StringTok{"beta3"}\NormalTok{,}\StringTok{"beta4"}\NormalTok{,}\StringTok{"beta5"}\NormalTok{, }\StringTok{"tau"}\NormalTok{,}\StringTok{"tau2"}\NormalTok{, }\StringTok{"mu"}\NormalTok{)}
+\NormalTok{inits21 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{1}\NormalTok{,}\DataTypeTok{tau2=}\DecValTok{1}\NormalTok{), }\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{2}\NormalTok{,}\DataTypeTok{tau2=}\DecValTok{2}\NormalTok{))}
+\NormalTok{model21 <-}\StringTok{ }\KeywordTok{bugs}\NormalTok{(datalist2, }\DataTypeTok{inits=}\NormalTok{inits21, }\DataTypeTok{parameters.to.save=}\NormalTok{parameters21,}
+               \DataTypeTok{model=}\KeywordTok{paste}\NormalTok{(path.bug,}\StringTok{"modelWin21.bug"}\NormalTok{,}\DataTypeTok{sep=}\StringTok{""}\NormalTok{),}
+               \DataTypeTok{bugs.directory=}\NormalTok{path.WBS,               }
+               \DataTypeTok{n.iter=}\NormalTok{(Iter*Thin+Burn),}\DataTypeTok{n.burnin=}\NormalTok{Burn, }\DataTypeTok{n.thin=}\NormalTok{Thin, }\DataTypeTok{n.chains=}\NormalTok{Chain, }\DataTypeTok{DIC=}\NormalTok{T, }\DataTypeTok{debug=}\NormalTok{T)}
+\KeywordTok{print}\NormalTok{(model21, }\DataTypeTok{digits=}\DecValTok{4}\NormalTok{) }
+\CommentTok{# DIC=2964.1}
+
+\CommentTok{# Random effects on sexe}
+\NormalTok{parameters22 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta1"}\NormalTok{, }\StringTok{"beta2"}\NormalTok{, }\StringTok{"beta3"}\NormalTok{,}\StringTok{"beta4"}\NormalTok{,}\StringTok{"beta5"}\NormalTok{, }\StringTok{"tau"}\NormalTok{,}\StringTok{"tau2"}\NormalTok{, }\StringTok{"mu"}\NormalTok{)}
+\NormalTok{inits22 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{1}\NormalTok{,}\DataTypeTok{tau2=}\DecValTok{1}\NormalTok{), }\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{2}\NormalTok{,}\DataTypeTok{tau2=}\DecValTok{2}\NormalTok{))}
+\NormalTok{model22 <-}\StringTok{ }\KeywordTok{bugs}\NormalTok{(datalist2, }\DataTypeTok{inits=}\NormalTok{inits22, }\DataTypeTok{parameters.to.save=}\NormalTok{parameters22,}
+               \DataTypeTok{model=}\KeywordTok{paste}\NormalTok{(path.bug,}\StringTok{"modelWin22.bug"}\NormalTok{,}\DataTypeTok{sep=}\StringTok{""}\NormalTok{),}
+               \DataTypeTok{bugs.directory=}\NormalTok{path.WBS,               }
+               \DataTypeTok{n.iter=}\NormalTok{(Iter*Thin+Burn),}\DataTypeTok{n.burnin=}\NormalTok{Burn, }\DataTypeTok{n.thin=}\NormalTok{Thin, }\DataTypeTok{n.chains=}\NormalTok{Chain, }\DataTypeTok{DIC=}\NormalTok{T, }\DataTypeTok{debug=}\NormalTok{T)}
+\KeywordTok{print}\NormalTok{(model22, }\DataTypeTok{digits=}\DecValTok{4}\NormalTok{) }
+\CommentTok{# DIC=2881.2}
+
+\CommentTok{# Random effects on spc}
+\NormalTok{parameters23 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta1"}\NormalTok{, }\StringTok{"beta2"}\NormalTok{, }\StringTok{"beta3"}\NormalTok{,}\StringTok{"beta4"}\NormalTok{,}\StringTok{"beta5"}\NormalTok{, }\StringTok{"tau"}\NormalTok{,}\StringTok{"tau2"}\NormalTok{, }\StringTok{"mu"}\NormalTok{)}
+\NormalTok{inits23 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{1}\NormalTok{,}\DataTypeTok{tau2=}\DecValTok{1}\NormalTok{), }\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{2}\NormalTok{,}\DataTypeTok{tau2=}\DecValTok{2}\NormalTok{))}
+\NormalTok{model23 <-}\StringTok{ }\KeywordTok{bugs}\NormalTok{(datalist2, }\DataTypeTok{inits=}\NormalTok{inits23, }\DataTypeTok{parameters.to.save=}\NormalTok{parameters23,}
+               \DataTypeTok{model=}\KeywordTok{paste}\NormalTok{(path.bug,}\StringTok{"modelWin23.bug"}\NormalTok{,}\DataTypeTok{sep=}\StringTok{""}\NormalTok{),}
+               \DataTypeTok{bugs.directory=}\NormalTok{path.WBS,               }
+               \DataTypeTok{n.iter=}\NormalTok{(Iter*Thin+Burn),}\DataTypeTok{n.burnin=}\NormalTok{Burn, }\DataTypeTok{n.thin=}\NormalTok{Thin, }\DataTypeTok{n.chains=}\NormalTok{Chain, }\DataTypeTok{DIC=}\NormalTok{T, }\DataTypeTok{debug=}\NormalTok{T)}
+\KeywordTok{print}\NormalTok{(model23, }\DataTypeTok{digits=}\DecValTok{4}\NormalTok{)}
+\CommentTok{# DIC=2970.0}
+
+\CommentTok{# Random effects on spc²}
+\NormalTok{parameters24 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta1"}\NormalTok{, }\StringTok{"beta2"}\NormalTok{, }\StringTok{"beta3"}\NormalTok{,}\StringTok{"beta4"}\NormalTok{,}\StringTok{"beta5"}\NormalTok{, }\StringTok{"tau"}\NormalTok{,}\StringTok{"tau2"}\NormalTok{, }\StringTok{"mu"}\NormalTok{)}
+\NormalTok{inits24 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{1}\NormalTok{,}\DataTypeTok{tau2=}\DecValTok{1}\NormalTok{), }\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{2}\NormalTok{,}\DataTypeTok{tau2=}\DecValTok{2}\NormalTok{))}
+\NormalTok{model24 <-}\StringTok{ }\KeywordTok{bugs}\NormalTok{(datalist2, }\DataTypeTok{inits=}\NormalTok{inits24, }\DataTypeTok{parameters.to.save=}\NormalTok{parameters24,}
+               \DataTypeTok{model=}\KeywordTok{paste}\NormalTok{(path.bug,}\StringTok{"modelWin24.bug"}\NormalTok{,}\DataTypeTok{sep=}\StringTok{""}\NormalTok{),}
+               \DataTypeTok{bugs.directory=}\NormalTok{path.WBS,               }
+               \DataTypeTok{n.iter=}\NormalTok{(Iter*Thin+Burn),}\DataTypeTok{n.burnin=}\NormalTok{Burn, }\DataTypeTok{n.thin=}\NormalTok{Thin, }\DataTypeTok{n.chains=}\NormalTok{Chain, }\DataTypeTok{DIC=}\NormalTok{T, }\DataTypeTok{debug=}\NormalTok{T)}
+\KeywordTok{print}\NormalTok{(model24, }\DataTypeTok{digits=}\DecValTok{4}\NormalTok{)}
+\CommentTok{# DIC=2986.1}
+
+\CommentTok{# Random effects on spc² and the intercept}
+\NormalTok{parameters241 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta1"}\NormalTok{, }\StringTok{"beta2"}\NormalTok{, }\StringTok{"beta3"}\NormalTok{,}\StringTok{"beta4"}\NormalTok{,}\StringTok{"beta5"}\NormalTok{, }\StringTok{"tau"}\NormalTok{,}\StringTok{"tau2"}\NormalTok{, }\StringTok{"tau3"}\NormalTok{, }\StringTok{"mu"}\NormalTok{)}
+\NormalTok{inits241 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{1}\NormalTok{,}\DataTypeTok{tau2=}\DecValTok{1}\NormalTok{, }\DataTypeTok{tau3=}\DecValTok{1}\NormalTok{), }\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{2}\NormalTok{,}\DataTypeTok{tau2=}\DecValTok{2}\NormalTok{, }\DataTypeTok{tau3=}\DecValTok{2}\NormalTok{))}
+\NormalTok{model241 <-}\StringTok{ }\KeywordTok{bugs}\NormalTok{(datalist2, }\DataTypeTok{inits=}\NormalTok{inits241, }\DataTypeTok{parameters.to.save=}\NormalTok{parameters241,}
+                 \DataTypeTok{model=}\KeywordTok{paste}\NormalTok{(path.bug,}\StringTok{"modelWin241.bug"}\NormalTok{,}\DataTypeTok{sep=}\StringTok{""}\NormalTok{),}
+                 \DataTypeTok{bugs.directory=}\NormalTok{path.WBS,               }
+                 \DataTypeTok{n.iter=}\NormalTok{(Iter*Thin+Burn),}\DataTypeTok{n.burnin=}\NormalTok{Burn, }\DataTypeTok{n.thin=}\NormalTok{Thin, }\DataTypeTok{n.chains=}\NormalTok{Chain, }\DataTypeTok{DIC=}\NormalTok{T, }\DataTypeTok{debug=}\NormalTok{T)}
+\KeywordTok{print}\NormalTok{(model241, }\DataTypeTok{digits=}\DecValTok{4}\NormalTok{) }
+\CommentTok{# DIC=2869.3}
+
+\CommentTok{# Random effects sexe and intercept}
+\NormalTok{parameters221 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta1"}\NormalTok{, }\StringTok{"beta2"}\NormalTok{, }\StringTok{"beta3"}\NormalTok{,}\StringTok{"beta4"}\NormalTok{,}\StringTok{"beta5"}\NormalTok{, }\StringTok{"tau"}\NormalTok{,}\StringTok{"tau2"}\NormalTok{, }\StringTok{"tau3"}\NormalTok{, }\StringTok{"mu"}\NormalTok{)}
+\NormalTok{inits221 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{1}\NormalTok{,}\DataTypeTok{tau2=}\DecValTok{1}\NormalTok{, }\DataTypeTok{tau3=}\DecValTok{1}\NormalTok{), }\KeywordTok{list}\NormalTok{(}\DataTypeTok{tau=}\DecValTok{2}\NormalTok{,}\DataTypeTok{tau2=}\DecValTok{2}\NormalTok{, }\DataTypeTok{tau3=}\DecValTok{2}\NormalTok{))}
+\NormalTok{model221 <-}\StringTok{ }\KeywordTok{bugs}\NormalTok{(datalist2, }\DataTypeTok{inits=}\NormalTok{inits221, }\DataTypeTok{parameters.to.save=}\NormalTok{parameters221,}
+                \DataTypeTok{model=}\KeywordTok{paste}\NormalTok{(path.bug,}\StringTok{"modelWin221.bug"}\NormalTok{,}\DataTypeTok{sep=}\StringTok{""}\NormalTok{),}
+                \DataTypeTok{bugs.directory=}\NormalTok{path.WBS,               }
+                \DataTypeTok{n.iter=}\NormalTok{(Iter*Thin+Burn),}\DataTypeTok{n.burnin=}\NormalTok{Burn, }\DataTypeTok{n.thin=}\NormalTok{Thin, }\DataTypeTok{n.chains=}\NormalTok{Chain, }\DataTypeTok{DIC=}\NormalTok{T, }\DataTypeTok{debug=}\NormalTok{T)}
+\KeywordTok{print}\NormalTok{(model221, }\DataTypeTok{digits=}\DecValTok{4}\NormalTok{) }
+\CommentTok{# DIC=2682.4}
+
+\NormalTok{results2 <-}\StringTok{ }\KeywordTok{t}\NormalTok{(}\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{c}\NormalTok{(model221$mean[}\DecValTok{1}\NormalTok{],model221$mean[}\DecValTok{2}\NormalTok{],model221$mean[}\DecValTok{3}\NormalTok{],model221$mean[}\DecValTok{4}\NormalTok{],}
+                             \NormalTok{model221$mean[}\DecValTok{5}\NormalTok{],model221$mean[}\DecValTok{6}\NormalTok{])))}
+\KeywordTok{colnames}\NormalTok{(results2) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"mean"}\NormalTok{)}
+\KeywordTok{rownames}\NormalTok{(results2) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"intercept"}\NormalTok{, }\StringTok{"time"}\NormalTok{, }\StringTok{"sexe"}\NormalTok{, }\StringTok{"spc"}\NormalTok{, }\StringTok{"spc*sexe"}\NormalTok{, }\StringTok{"spc²"}\NormalTok{)}
+
+\NormalTok{DIC2 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{2962.9}\NormalTok{,}\FloatTok{2881.2}\NormalTok{,}\FloatTok{2964.1}\NormalTok{,}\FloatTok{2970.0}\NormalTok{,}\FloatTok{2986.1}\NormalTok{,}\FloatTok{2869.3}\NormalTok{,}\FloatTok{2682.4}\NormalTok{)}
+
+\NormalTok{pred22 <-}\StringTok{ }\NormalTok{model22$mean$mu}
+\NormalTok{res22 <-}\StringTok{ }\NormalTok{pred22 -}\StringTok{ }\NormalTok{salary}
+\NormalTok{s22 <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(res22^}\DecValTok{2}\NormalTok{,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{pred21 <-}\StringTok{ }\NormalTok{model21$mean$mu}
+\NormalTok{res21 <-}\StringTok{ }\NormalTok{pred21 -}\StringTok{ }\NormalTok{salary}
+\NormalTok{s21 <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(res21^}\DecValTok{2}\NormalTok{,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{pred23 <-}\StringTok{ }\NormalTok{model23$mean$mu}
+\NormalTok{res23 <-}\StringTok{ }\NormalTok{pred23 -}\StringTok{ }\NormalTok{salary}
+\NormalTok{s23 <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(res23^}\DecValTok{2}\NormalTok{,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{pred24 <-}\StringTok{ }\NormalTok{model24$mean$mu}
+\NormalTok{res24 <-}\StringTok{ }\NormalTok{pred24 -}\StringTok{ }\NormalTok{salary}
+\NormalTok{s24 <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(res24^}\DecValTok{2}\NormalTok{,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{pred241 <-}\StringTok{ }\NormalTok{model241$mean$mu}
+\NormalTok{res241 <-}\StringTok{ }\NormalTok{pred241 -}\StringTok{ }\NormalTok{salary}
+\NormalTok{s241 <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(res241^}\DecValTok{2}\NormalTok{,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{pred221 <-}\StringTok{ }\NormalTok{model221$mean$mu}
+\NormalTok{res221 <-}\StringTok{ }\NormalTok{pred221 -}\StringTok{ }\NormalTok{salary}
+\NormalTok{s221 <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(res221^}\DecValTok{2}\NormalTok{,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
+
+\NormalTok{res2 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(s13,s22,s21,s23,s24,s241,s221)}
+
+\NormalTok{tab2 <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(DIC2,res2)}
+
+\KeywordTok{print}\NormalTok{(}\KeywordTok{xtable}\NormalTok{(tab2,}\DataTypeTok{align=}\KeywordTok{c}\NormalTok{(}\StringTok{"c"}\NormalTok{,}\StringTok{"c"}\NormalTok{,}\StringTok{"c"}\NormalTok{),}\DataTypeTok{caption=}\StringTok{"Table for the selection of the hierarchical}
+\StringTok{Bayesian models. }\CharTok{\textbackslash{}\textbackslash{}}\StringTok{label\{tableselectionmodel\}"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\end{document}
