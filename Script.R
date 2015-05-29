@@ -27,6 +27,10 @@ data <- data.frame(data4,cat)
 colnames(data) <- c("id","time","sexe","salary","spc")
 attach(data)
 salary<-as.numeric(salary)
+sexe <- as.factor(sexe)
+time <- as.factor(time)
+spc <- as.factor(spc)
+
 
 # Descriptive analysis ----------------------------------------------------
 
@@ -168,3 +172,36 @@ id8 <- data[which(data$id==8),]
 # Secret data
 id22 <- data[which(data$id==22),]
 # Missing in the data
+
+
+# Bayesian model ----------------------------------------------------------
+
+library(R2WinBUGS)
+
+path.bug <- "C:/Users/Mathieu/Documents/Cours/2A/Erasmus/Cours/Bayesian analysis/Bayesian-Project/"
+path.WBS <- "C:/Users/Mathieu/Documents/Logiciels/WinBuggs/WinBUGS14/"
+
+Iter <- 1000
+Burn <- 500
+Chain <- 2
+Thin <- 1
+n <- nrow(data)
+
+datalist <- list(salary=data$salary, time=data$time, sexe=data$sexe, spc=data$spc,n=n)
+
+parameters1 <- c("alpha","beta1","beta2","beta3","tau","mu")
+inits1 <- list(list(tau=1),list(tau=5))
+
+model1 <- bugs(datalist1,inits=inits1,parameters.to.save=parameters1,
+               model=paste(path.bug,"modelWin1.bug",sep=""),bugs.directory=path.WBS,
+               n.iter=(Iter*Thin+Burn),n.burnin=Burn,n.thin=Thin,n.chains=Chain, DIC=F,debug=T)
+print(model1, digits=4)
+
+parameters2 <- c("alpha", "beta1", "beta2", "beta3", "tau1", "tau2", "mu")
+inits2 <- list(list(tau1=1,tau2=1), list(tau1=2,tau2=2))
+
+model2 <- bugs(datalist, inits=inits2, parameters.to.save=parameters2,
+               model=paste(path.bug,"modelWin2.bug",sep=""),
+               bugs.directory=path.WBS,               
+               n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+print(model2, digits=4)
