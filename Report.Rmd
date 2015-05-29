@@ -1,5 +1,5 @@
 ---
-title: "Bayesian Analysis Project"
+title: "Salaries in the industry, trade and services in 2011"
 author: "Maxime Jurado and Mathieu Marauri"
 date: "Tuesday, May 26, 2015"
 output:
@@ -11,7 +11,6 @@ output:
 header-includes: \usepackage{float} \usepackage{graphicx}
 ---
 
-TODO: find a title
 
 ```{r initial_chunk, echo = FALSE, warning = FALSE, message = FALSE}
 library("knitr")
@@ -51,12 +50,16 @@ TODO: abstract
 
 # Introduction
 
-TODO: introduction
+The structure of the salary in the industry, the services or the trade is a matter of importance in the society. It can reflects some inequalities, regarding the gender for instance, or some tendencies. The aim of this study is to analyse the effect of several indicators such as the Socio-Professional Category or the gender on the salary. 
+
+Performing such an analysis on data coming from France is for us really interesting because we have several preconceptions about the impact of the gender for example. Studying those data will allow us to either confirm or deny these preconceptions. 
+
+By performing Bayesian models the effects of the indicators will be known. Those effects will be quantified. It will provide useful knowledge on the structure of the salary. 
 
 # Dataset
 \label{dataset}
 
-The dataset comes from the *Institut National de la Statistique et des Etudes Economiques* or INSEE in France. It is the statistical instuitute of France. The dataset contains 33 sectors of activity that are identified by the *id* variable. The classification can be found in table \ref{tableIndexSectors}. 
+The dataset comes from the *Institut National de la Statistique et des Etudes Economiques* or INSEE in France. It is the statistical institute of France. The dataset contains 33 sectors of activity that are identified by the *id* variable. The classification can be found in table \ref{tableIndexSectors}. 
 
 The variables reported in this study are listed below:
 
@@ -65,13 +68,60 @@ The variables reported in this study are listed below:
 * Socio-Professional Category: it takes values between 1 and 5. Table \ref{tableIndexSpc} shows the classification. _spc_
 * Salary: it is the response variable. _salary_
 
-The salary is the average gross income for an hour. For instance it can be the average income of female employees working full-time in the extractive industry.
+The salary is the average gross income for an hour. For instance it can be the average income of female employees working full-time in the extraction industry.
 
-TODO: something about the construction of the dataset (more than 5 per cell...)
+In the original dataset there were a cell by combination of the different variables. It was built so that no cell contains less than 5 entries and that no entry would represent more than 80% of the total. Some data are missing due to statistical privacy. It is the case for the id 8 which is the sector of Transportation equipment manufacture.
+
+
+# Statistical methods
+
+In this study several Bayesian models will be performed, first a Gaussian Bayesian model then a hierarchical Bayesian model. In both cases covariateswill be add to an initial model and by comparing the Deviance Information Criterion or DIC. Since a model with more parameters will always be preferrable to a "simpler" one, parsimony will also be used to select the best model. The goal is to have the best model but also the one that is 
+
+## Gaussian Bayesian regression
+
+In the Gassian Bayesian model the point is to get the mean effect of the covariates on the salary. By performing such a model one wants to know how the covariates impact the salary. Among the different models that can be performed the best one will be used as the initial model in the hierarchical Bayesian models selection. The Gaussian Bayesian model is of this form:
+
+\begin{centering}
+
+  $Y|X ~ N(\beta X,\tau_1)$
+  
+  $\Pi(\beta) ~ N(\mu,\tau_2)$
+  
+  $\Pi(\tau_1) ~ Gamma(a,b)$
+
+\end{centering}
+
+The parameter $\beta$ is a vector and X is the matrix of the covaiates. The statistical model Gaussian with a linear expression of the covarites and the intercept as a mean and a variance of $\tau_1$. $\beta$ also follows a Gaussian distribution. Finally $\tau_2$ follows a Gamma with parameters a and b that are fixed to 0.01.
+
+## Gaussian hierarchical Bayesian regression
+
+A hierarchical Bayesian model is a model with random effects. Those random effects allow the model to add variance to the estimtates of the parameters of the covariates. It means that each sector has different values for the estimates of the covariates. This way each sector has more precise estimates and it is possible to see the differences between sectors. 
+
+The initial model is the Gaussian Bayesian model that was selected. Then random effects are added to this model and the best model is selected based on the same selection process than before. 
+
+
+The Gaussian hierarchical model is designed as follow:
+
+\begin{centering}
+
+  $Y|X ~ N(\beta X+b_i X_r,\tau_1)$
+  
+  $\Pi(\beta) ~ N(\mu,\tau_2)$
+  
+  $b_i ~N(0,\tau_{3,i})$
+  
+  $\Pi(\tau_1) ~ Gamma(a_1,b_1)$
+  
+  $\Pi(\tau_{3,i}) ~ Gamma(a_2,b_2)$
+
+\end{centering}
+
+As previously X is a matrix of the covariate and $X_r$ is also a matrix of the covariate but it may be different from X since random effects can be added on different covariates. Again as before $a_1, b_1, a_2 and b_2$ ae all equal to 0.01.  
+
 
 # Descriptive analysis
 
-An exploration of the data through a descriptive analysis gives first insights on the behavior of the variables. The point here is to see graphically if some varirables seem to have an impact on the response variable, the salary. A basic linear regression and some tests give also some insights.
+An exploration of the data through a descriptive analysis gives first insights on the behavior of the variables. The point here is to see graphically if some variables seem to have an impact on the response variable, the salary. A basic linear regression and some tests give also some insights.
 
 ## Influence of the variable _spc_
 
@@ -89,7 +139,7 @@ datamean <- aggregate(data.frame(salaryMean = data$salary), by = list(id = data$
 ggplot(datamean, aes(spc, salaryMean)) + facet_wrap(facets=~ id, ncol=10) + geom_line(colour="blue") + geom_point(colour="red") + theme
 ```
 
-As seen previously _SPC_ seems to have a negative impact on the salary for every sectors but sector 6 (Manufacture of food, drink and tabacoo based products), sector 21 (Information and communication) and sector 30 (Arts and entertainment). This may be due to the definitions of the SPC. In most of the sectors they are ordered from 1 to 5 but in some other sectors this order can be different. 
+As seen previously _SPC_ seems to have a negative impact on the salary for every sectors but sector 6 (Manufacture of food, drink and tobacco based products), sector 21 (Information and communication) and sector 30 (Arts and entertainment). This may be due to the definitions of the SPC. In most of the sectors they are ordered from 1 to 5 but in some other sectors this order can be different. 
 
 ## Influence of the variable _time_
 
@@ -100,7 +150,7 @@ ggplot(data, aes(factor(time), salary)) + geom_boxplot(aes(fill = factor(time)))
 
 The salaries for the full-time workers ant the salaries for the part-time workers seem to be the same. 
 
-The same graph was repeated for each category and the followinf results were obtained. Figure \ref{boxplotspctime}.
+The same graph was repeated for each category and the following results were obtained. Figure \ref{boxplotspctime}.
 ```{r boxplotspctime, fig.cap="Boxplot of the salary for each SPC and each time. \\label{boxplotspctime}", fig.pos="H", fig.align='left'}
 ggplot(data, aes(factor(spc), salary)) + geom_boxplot(aes(fill = factor(time))) + labs(x="SPC", y="Salary") + theme + scale_fill_manual(name="Time", values=c("orange", "mediumpurple"), labels=c("0"="Part-time", "1"="Full-time"))
 ```
@@ -131,6 +181,8 @@ One can see that the p-values for the tests performed on the whole dataset, on t
 
 ## Influence of the variable _sexe_
 
+TODO: legend is too big
+
 Inequality in the salary regarding the gender is a matter of discussion in France. The issue is that salaries are said to be higher for males than they are for females. Therefore some differences are expected.
 
 The means of the salaries for females and males were plotted for each Socio-Professional Category and it seems that no differences appear except maybe for the category 1. Figure \ref{barplotsexespc} shows the results.
@@ -149,15 +201,16 @@ A basic linear regression was performed to see the impact of the covariates on t
 The following table (Table \ref{tablereg}) shows the estimates and the p-values obtained with the linear regression model.
 
 ```{r reg, results='asis'}
-reg <- lm(salary~time+sexe*spc, data=data)
-table.reg <- data.frame(coefficients(reg),summary(reg)[[4]][,4])
+data.spc2 <- cbind(data,data$spc^2)
+colnames(data.spc2) <- c("id","time","sexe","salary","spc","spc2")
+reg.spc2 <- lm(salary~time+sexe*spc+spc2, data=data.spc2)
+table.reg <- data.frame(coefficients(reg.spc2),summary(reg.spc2)[[4]][,4])
 colnames(table.reg) <- c("estimates","p-value")
 print(xtable(table.reg, digits=3, align=c("c","c","c"),caption="Results of the linear regression. \\label{tablereg}"))
 ```
 
-As for the graphical analysis _spc_ has a negative impact on th salary (we consider here that the categories are ordered from 1 to 5). The variable _sexe_ has a quite important positive effect on the salary. It means that males are paid around 4 euros per hour more than females. The fact that the interaction between _sexe_ and _spc_ has a negative effect on the salary means that the positive effect of being a male does not counterbalance the negative impact of the _spc_. 
+As for the graphical analysis _spc_ has a negative impact on the salary (we consider here that the categories are ordered from 1 to 5). The variable _sexe_ has a quite important positive effect on the salary. It means that males are paid around 4 euros per hour more than females. The fact that the interaction between _sexe_ and _spc_ has a negative effect on the salary means that the positive effect of being a male does not counterbalance the negative impact of the _spc_. 
 
-# Statistical methods
 
 # Bayesian model 
 
@@ -187,4 +240,6 @@ colnames(sectors) <- "Sector"
 print(xtable(sectors, align=c("c","c"), caption="Classification table of the Sectors. \\label{tableIndexSectors}"))
 ```
 
-Reurn to section \nameref{dataset}.
+Return to section \nameref{dataset}.
+
+## Code
