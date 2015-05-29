@@ -1,0 +1,6 @@
+model{
+for(i in 1:n){
+salary~dgamma(mu,tau)
+mu~dbeta(1,1)
+tau~dbeta(1,1)
+}
