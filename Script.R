@@ -242,6 +242,34 @@ results <- t(as.data.frame(c(model13$mean[1],model13$mean[2],model13$mean[3],mod
 colnames(results) <- c("mean")
 rownames(results) <- c("intercept", "time", "sexe", "spc", "spc*sexe", "spc²")
 
+DIC <- c(3455.6,2988.0,3444.8,2962.9)
+
+pred10 <- model10$mean$mu
+res10 <- pred10 - salary
+s10 <- sum(res10^2,na.rm=TRUE)
+
+pred11 <- model11$mean$mu
+res11 <- pred11 - salary
+s11 <- sum(res11^2,na.rm=TRUE)
+
+pred12 <- model12$mean$mu
+res12 <- pred12 - salary
+s12 <- sum(res12^2,na.rm=TRUE)
+
+pred13 <- model13$mean$mu
+res13 <- pred13 - salary
+s13 <- sum(res13^2,na.rm=TRUE)
+
+res<-c(s10,s11,s12,s13)
+
+tab1 <- data.frame(DIC,res)
+
+print(xtable(tab1,align=c("c","c","c"),caption="Table for the selection of the Bayesian models. 
+             \\label{tableselectionmodel}"))
+
+
+# Hierarchical Bayesian model ---------------------------------------------
+
 # Random effects on time
 parameters21 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau","tau2", "mu")
 inits21 <- list(list(tau=1,tau2=1), list(tau=2,tau2=2))
@@ -282,6 +310,16 @@ model24 <- bugs(datalist2, inits=inits24, parameters.to.save=parameters24,
 print(model24, digits=4)
 # DIC=2986.1
 
+# Random effects on spc² and the intercept
+parameters241 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau","tau2", "tau3", "mu")
+inits241 <- list(list(tau=1,tau2=1, tau3=1), list(tau=2,tau2=2, tau3=2))
+model241 <- bugs(datalist2, inits=inits241, parameters.to.save=parameters241,
+                 model=paste(path.bug,"modelWin241.bug",sep=""),
+                 bugs.directory=path.WBS,               
+                 n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
+print(model241, digits=4) 
+# DIC=2869.3
+
 # Random effects sexe and intercept
 parameters221 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau","tau2", "tau3", "mu")
 inits221 <- list(list(tau=1,tau2=1, tau3=1), list(tau=2,tau2=2, tau3=2))
@@ -296,3 +334,36 @@ results2 <- t(as.data.frame(c(model221$mean[1],model221$mean[2],model221$mean[3]
                              model221$mean[5],model221$mean[6])))
 colnames(results2) <- c("mean")
 rownames(results2) <- c("intercept", "time", "sexe", "spc", "spc*sexe", "spc²")
+
+DIC2 <- c(2962.9,2881.2,2964.1,2970.0,2986.1,2869.3,2682.4)
+
+pred22 <- model22$mean$mu
+res22 <- pred22 - salary
+s22 <- sum(res22^2,na.rm=TRUE)
+
+pred21 <- model21$mean$mu
+res21 <- pred21 - salary
+s21 <- sum(res21^2,na.rm=TRUE)
+
+pred23 <- model23$mean$mu
+res23 <- pred23 - salary
+s23 <- sum(res23^2,na.rm=TRUE)
+
+pred24 <- model24$mean$mu
+res24 <- pred24 - salary
+s24 <- sum(res24^2,na.rm=TRUE)
+
+pred241 <- model241$mean$mu
+res241 <- pred241 - salary
+s241 <- sum(res241^2,na.rm=TRUE)
+
+pred221 <- model221$mean$mu
+res221 <- pred221 - salary
+s221 <- sum(res221^2,na.rm=TRUE)
+
+res2 <- c(s13,s22,s21,s23,s24,s241,s221)
+
+tab2 <- data.frame(DIC2,res2)
+
+print(xtable(tab2,align=c("c","c","c"),caption="Table for the selection of the hierarchical Bayesian models. 
+             \\label{tableselectionmodel}"))
