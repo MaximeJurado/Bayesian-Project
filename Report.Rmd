@@ -46,8 +46,6 @@ salary<-as.numeric(salary)
 
 # Abstract
 
-TODO: abstract
-
 # Introduction
 
 The structure of the salary in the industry, the services or the trade is a matter of importance in the society. It can reflects some inequalities, regarding the gender for instance, or some tendencies. The aim of this study is to analyse the effect of several indicators such as the Socio-Professional Category or the gender on the salary. 
@@ -81,6 +79,7 @@ In this study several Bayesian models will be performed, first a Gaussian Bayesi
 
 In the Gassian Bayesian model the point is to get the mean effect of the covariates on the salary. By performing such a model one wants to know how the covariates impact the salary. Among the different models that can be performed the best one will be used as the initial model in the hierarchical Bayesian models selection. The Gaussian Bayesian model is of this form:
 
+TODO b2
 \begin{centering}
 
   $Y|X ~ N(\beta X,\tau_1)$
@@ -141,6 +140,8 @@ ggplot(datamean, aes(spc, salaryMean)) + facet_wrap(facets=~ id, ncol=10) + geom
 
 As seen previously _SPC_ seems to have a negative impact on the salary for every sectors but sector 6 (Manufacture of food, drink and tobacco based products), sector 21 (Information and communication) and sector 30 (Arts and entertainment). This may be due to the definitions of the SPC. In most of the sectors they are ordered from 1 to 5 but in some other sectors this order can be different. 
 
+TODO spc2
+
 ## Influence of the variable _time_
 
 The salary is given per hour, hence no differences between full-time and part-time jobs should be observed. The following figure confirms this.
@@ -196,28 +197,29 @@ For every categories the mean salary for males seems to be higher than the mean 
 ## A linear regression
 
 A basic linear regression was performed to see the impact of the covariates on the salary. The model that was used is:
-  $Salary = \beta_0 + \beta_1time + \beta_2sexe +\beta_3spc + \beta_4sexe*spc$
+  $Salary = \beta_0 + \beta_1time + \beta_2sexe +\beta_3spc + \beta_4sexe*spc + \beta_4*spc^2$
 
 The following table (Table \ref{tablereg}) shows the estimates and the p-values obtained with the linear regression model.
 
 ```{r reg, results='asis'}
 data.spc2 <- cbind(data,data$spc^2)
-colnames(data.spc2) <- c("id","time","sexe","salary","spc","spc2")
-reg.spc2 <- lm(salary~time+sexe*spc+spc2, data=data.spc2)
+colnames(data.spc2) <- c("id","time","sexe","salary","spc","spc²")
+reg.spc2 <- lm(salary~time+sexe*spc+spc², data=data.spc2)
 table.reg <- data.frame(coefficients(reg.spc2),summary(reg.spc2)[[4]][,4])
 colnames(table.reg) <- c("estimates","p-value")
 print(xtable(table.reg, digits=3, align=c("c","c","c"),caption="Results of the linear regression. \\label{tablereg}"))
 ```
 
-As for the graphical analysis _spc_ has a negative impact on the salary (we consider here that the categories are ordered from 1 to 5). The variable _sexe_ has a quite important positive effect on the salary. It means that males are paid around 4 euros per hour more than females. The fact that the interaction between _sexe_ and _spc_ has a negative effect on the salary means that the positive effect of being a male does not counterbalance the negative impact of the _spc_. 
+As for the graphical analysis _spc_ has a negative impact on the salary (we consider here that the categories are ordered from 1 to 5). The variable _sexe_ has a quite important positive effect on the salary. It means that males are paid around 4 euros per hour more than females. The fact that the interaction between _sexe_ and _spc_ has a negative effect on the salary means that the positive effect of being a male does not counterbalance the negative impact of the _spc_. Finally _time_ has a small positive impact. It means that when you work in a full-time job, you earn around 0.8 euros more than a part-time job.
 
 
 # Gaussian Bayesian model 
 
 ```{r bug}
 library(R2WinBUGS)
-path.bug <- "C:/Users/Mathieu/Documents/Cours/2A/Erasmus/Cours/Bayesian analysis/Bayesian-Project/modelBug/"
-path.WBS <- "C:/Users/Mathieu/Documents/Logiciels/WinBuggs/WinBUGS14/"
+path.bug <- "C:/Users/Maxime/Desktop/Cours ERASMUS/Bayesian Analysis/Project/Bayesian-Project/modelBug/"
+path.WBS <- "C:/Users/Maxime/Desktop/Cours ERASMUS/Bayesian Analysis/Project/Bayesian-Project/winbugs14/WinBUGS14/"
+
 Iter <- 1000
 Burn <- 500
 Chain <- 2
@@ -227,6 +229,13 @@ datalist <- list(salary=data$salary, time=data$time, sexe=data$sexe, spc=data$sp
 datalist2 <- list(salary=data$salary,time=data$time, sexe=data$sexe, spc=data$spc, spc2=(data$spc)^2, n=n)
 ```
 
+Before going trough the interpretation of a Bayesian Gaussian Regression, we have to choose which model is the best. For that we start with a simple model with three covariate: _time_, _sexe_ and _spc_. Then we tried to add _$spc^2$_ as explained in the descriptive part. Finally we try to add some interaction between covariates. To decide which model is the best, we use the DIC criteria and the error from the prediction.
+The results are presented below
+
+TABLE HERE
+
+As you can see, the best model is the one with _$spc^2$_ and the interaction between _spc_ and _sexe_. However the sum of squares is still big. It means that our model does not predict well the future values. That is why we try to add some random effects in the next part. Now we have selected the model, we can go to the interpretation.
+
 
 ```{r model}
 parameters13 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau", "mu")
@@ -234,16 +243,24 @@ inits13 <- list(list(tau=1), list(tau=5))
 model13 <- bugs(datalist2, inits=inits13, parameters.to.save=parameters13,model=paste(path.bug,"modelWin13.bug",sep=""),bugs.directory=path.WBS,n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
 ```
 
+In table \ref{resultsmodel} we can see the results of the Bayesian Gaussian Regression that we choose above. The coefficients are very similar to those obtained in the descriptive part. Thus the interpretation is the same as in \refname{A linear regression}. We still have this negative impact of _spc_ and the interaction between _sexe_ and _spc_. We also find again the positive impact of _sexe_ that does not counterbalance the effect of _spc_. Finally the impact of _time_ is still positive.
+
 ```{r resultsmodel, results='asis'}
 results <- t(as.data.frame(c(model13$mean[1],model13$mean[2],model13$mean[3],model13$mean[4],
              model13$mean[5],model13$mean[6])))
 colnames(results) <- c("mean")
 rownames(results) <- c("intercept", "time", "sexe", "spc", "spc*sexe", "spc²")
-print(xtable(results, digits=4, align=c("c","c"), caption="Mean for the Bayesian model."))
+print(xtable(results, digits=4, align=c("c","c"), caption="Mean for the Bayesian model. \\label{resultsmodel}"))
 ```
 
 
 # Gaussian hierarchical Bayesian model
+
+As for the Bayesian Gaussian Regression, we have to choose here the best model. We proceed the same way, trying to ass random effects to one covariate at a time. But at the end, we do not want to overparametrize the model, that is why we limit this study to 2 random effects maximum.
+
+TABLE HERE
+
+You can see that the model with random effects on the _Intercept_ and _sexe_ is the best. Furthermore, the sum of squares is lower than in the Bayesian Gaussian Regression. This is our final model. 
 
 ```{r model2}
 parameters221 <- c("alpha", "beta1", "beta2", "beta3","beta4","beta5", "tau","tau2", "tau3", "mu")
@@ -251,18 +268,29 @@ inits221 <- list(list(tau=1,tau2=1, tau3=1), list(tau=2,tau2=2, tau3=2))
 model221 <- bugs(datalist2, inits=inits221, parameters.to.save=parameters221,model=paste(path.bug,"modelWin221.bug",sep=""),bugs.directory=path.WBS,n.iter=(Iter*Thin+Burn),n.burnin=Burn, n.thin=Thin, n.chains=Chain, DIC=T, debug=T)
 ```
 
+In table \ref{resultsmodel2}, the coefficients of our final model are presented. It can be seen that they do not differ a lot from the previous interpretations. The main part here is the random effects on _Intercept_ and _sexe_. It means that we add variability for each subject. We can observe differences of each sector. But here, the variance added by the random effects does not the effect of a covariate. The sign of its coefficient will not change. The global effect will be the same.
+
+
 ```{r resultsmodel2, results='asis'}
 results2 <- t(as.data.frame(c(model221$mean[1],model221$mean[2],model221$mean[3],model221$mean[4],
                              model221$mean[5],model221$mean[6])))
 colnames(results2) <- c("mean")
 rownames(results2) <- c("intercept", "time", "sexe", "spc", "spc*sexe", "spc²")
-print(xtable(results2, digits=4, align=c("c","c"), caption="Mean for the hierarchical model."))
+print(xtable(results2, digits=4, align=c("c","c"), caption="Mean for the hierarchical model. \\label{resultsmodel2}"))
 ```
 
 
 # Conclusion
 
+TODO further analysis
+TODO difficulties encountered
+
 # Bibliography
+
+* [INSEE T101 Salaire brut horaire, par âge et catégorie socioprofessionnelle simplifiée](http://www.insee.fr/fr/themes/detail.asp?reg_id=0&ref_id=ir-irsocdads2011&page=irweb/irsocdads2011/dd/irsocdads2011_t10.htm)
+* [Introduction fo WinBUGS](http://homepage.stat.uiowa.edu/~gwoodwor/BBIText/AppendixBWinbugs.pdf)
+* [WinBUGS Training](https://www.uclouvain.be/cps/ucl/doc/stat/documents/WinBUGSTraining_smcs.pdf)
+
 
 # Appendix
 
